@@ -1,0 +1,83 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://models/rammer.tres" type="ArrayMesh" id=1]
+[ext_resource path="res://scenes/enemies/BaseShip.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/EnemyRammer.gd" type="Script" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.94902, 0.74902, 0.4, 1 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.965539, 1, 0.362473, 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "blowback"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("ShipMesh:rotation_degrees:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 90, -0.25, 0, 0.108094, 347, 46, -0.25, 0, 0.231652, 28, 90, -0.0830877, 4, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 0.4 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("ShipMesh:rotation_degrees:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 180, -0.25, 0, 0.0958107, 1223, 37.8209, -0.25, 0, 0.218316, 73.1791, 180, -0.236455, -160, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 0.4 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("ShipMesh:rotation_degrees:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.0947578, 1099, -133.735, -0.25, 0, 0.247796, 61.7349, 0, -0.0946692, -17, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 0.4 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:speed")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0.2, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.1, 0.4 )
+}
+
+[node name="EnemyRammer" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+health = 50
+hit_damage = 0
+
+[node name="ShipMesh" parent="." index="0"]
+transform = Transform( -0.0159076, -0.00107318, -1.58876e-06, -1.85417e-06, 2.55401e-05, -0.00999997, 0.00171709, -0.00994221, -2.55169e-05, 0, 0, -0.02 )
+mesh = ExtResource( 1 )
+material/0 = SubResource( 1 )
+material/1 = SubResource( 2 )
+material/2 = null
+
+[node name="ShipCollision" parent="." index="1"]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0.01, -0.02 )
+
+[node name="AnimationPlayer" parent="." index="3"]
+anims/blowback = SubResource( 3 )
+
+[node name="TargetPosition" type="Position3D" parent="." index="4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5 )
+
+[node name="SpinupPosition" type="Position3D" parent="." index="5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+
+[node name="Spinup" type="Timer" parent="." index="6"]
+
+[connection signal="timeout" from="Spinup" to="." method="_on_Spinup_timeout"]

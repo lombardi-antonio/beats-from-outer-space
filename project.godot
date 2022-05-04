@@ -1,0 +1,56 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[  ]
+_global_script_class_icons={
+}
+
+[application]
+
+config/name="beats-from-outer-space"
+run/main_scene="res://scenes/space.tscn"
+
+[autoload]
+
+space="*res://scripts/space.gd"
+UserData="*res://addons/github-integration/scripts/user_data.gd"
+IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
+RestHandler="*res://addons/github-integration/scripts/RestHandler.gd"
+
+[display]
+
+window/size/width=190
+window/size/height=320
+window/size/test_width=760
+window/size/test_height=1280
+window/handheld/orientation="portrait"
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_width"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "github-integration" )
+
+[environment]
+
+layer_1=false
+
+[layer_names]
+
+3d_physics/layer_1="environment"
+3d_physics/layer_2="ships"
+
+[nt]
+
+layer_1=false
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

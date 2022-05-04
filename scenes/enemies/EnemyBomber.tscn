@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scripts/EnemyBomber.gd" type="Script" id=1]
+[ext_resource path="res://models/spaceCraft5.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/bomber_projectile.tscn" type="PackedScene" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.368627, 0.368627, 0.368627, 1 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.454902, 1, 0.756863, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.666667, 0.796078, 0.960784, 1 )
+
+[sub_resource type="CapsuleShape" id=4]
+radius = 0.0283135
+height = 0.124508
+
+[node name="EnemyBomber" type="Area" groups=[
+"enemies",
+]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 1 )
+projectile = ExtResource( 3 )
+
+[node name="spaceCraft5" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.01, -3.25841e-09, 5.30863e-16, 0, -1.62921e-09, -0.01, 3.25841e-09, -0.01, 1.62921e-09, 0, 0, -0.035 )
+material/0 = SubResource( 1 )
+material/1 = SubResource( 2 )
+material/3 = SubResource( 3 )
+
+[node name="ShipCollision" type="CollisionShape" parent="."]
+shape = SubResource( 4 )
+
+[node name="Cooldown" type="Timer" parent="."]
+
+[node name="TripleShotCooldown" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Berrel" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0, 0.07 )
+[connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
+[connection signal="timeout" from="TripleShotCooldown" to="." method="_on_TripleShotCooldown_timeout"]
