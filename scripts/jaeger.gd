@@ -1,4 +1,4 @@
-extends KinematicBody
+extends Area
 
 onready var space = $"/root/space"
 onready var animation = $animation_player
@@ -19,6 +19,8 @@ signal was_defeated()
 func _ready():
 	if not dead:
 		collision.disabled = true
+
+	return connect("body_entered", self, "_on_body_entered")
 
 
 func _process(_delta):
@@ -65,3 +67,9 @@ func _on_timer_timeout():
 func remove_self():
 	hide()
 	queue_free()
+
+
+func _on_body_entered(body):
+	if body.name == "vapor_falcon":
+		body.deal_damage(health)
+		deal_damage(health)

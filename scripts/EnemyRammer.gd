@@ -1,4 +1,21 @@
-extends "BaseShip.gd"
+extends Area
+
+onready var space = $"/root/space"
+onready var mesh = $ShipMesh
+onready var collision = $ShipCollision
+onready var cooldown = $Cooldown
+onready var animation = $AnimationPlayer
+
+export var speed = 1.0
+export var health = 10
+export var damage = 10
+export var hit_damage = 20
+export var points = 5
+
+var dead = false
+var can_shoot = true
+
+signal was_defeated()
 
 onready var target = $TargetPosition
 onready var spinup = $Spinup
@@ -11,6 +28,8 @@ var spiup_started = false
 func _ready():
 	if collision:
 		collision.disabled = true
+
+	return connect("body_entered", self, "_on_body_entered")
 
 
 func _process(delta):
@@ -47,3 +66,20 @@ func _on_Spinup_timeout():
 	spinup_ended = true
 	if collision:
 		collision.disabled = false
+
+
+func deal_damage(_damage):
+	#animation.play("blowback")
+	health -= _damage
+	if health <= 0:
+		dead = true
+		if collision: collision.queue_free()
+		hide()
+		space.points += points
+		emit_signal("was_defeated")
+
+
+func _on_body_entered(body):
+	if body.name == "vapor_falcon":
+		body.deal_damage(hit_damage)
+		deal_damage(health)
