@@ -6,7 +6,9 @@
 radius = 0.0283135
 height = 0.124508
 
-[node name="BaseShip" type="Area" groups=["enemies"]]
+[node name="BaseShip" type="Area" groups=[
+"enemies",
+]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )

@@ -12,8 +12,6 @@ func _ready():
 	if collision:
 		collision.disabled = true
 
-	connect("body_entered", self, "_on_body_entered")
-
 
 func _process(delta):
 	if dead:
@@ -49,9 +47,3 @@ func _on_Spinup_timeout():
 	spinup_ended = true
 	if collision:
 		collision.disabled = false
-
-
-func _on_body_entered(body):
-	if body.is_in_group("player"):
-		body.deal_damage(hit_damage)
-		queue_free()

@@ -9,25 +9,17 @@ albedo_color = Color( 0.368627, 0.368627, 0.368627, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.454902, 1, 0.756863, 1 )
-emission_enabled = true
-emission = Color( 0.317647, 0.94902, 0.592157, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
 
 [sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.666667, 0.796078, 0.960784, 1 )
-emission_enabled = true
-emission = Color( 0, 0.478431, 0.541176, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
 
 [sub_resource type="CapsuleShape" id=4]
 radius = 0.0283135
 height = 0.124508
 
-[node name="EnemyBomber" type="Area" groups=["enemies"]]
+[node name="EnemyBomber" type="Area" groups=[
+"enemies",
+]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
@@ -51,6 +43,5 @@ wait_time = 0.1
 
 [node name="Berrel" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0, 0.07 )
-
 [connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
 [connection signal="timeout" from="TripleShotCooldown" to="." method="_on_TripleShotCooldown_timeout"]
