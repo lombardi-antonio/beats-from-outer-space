@@ -6,9 +6,19 @@
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.94902, 0.74902, 0.4, 1 )
+emission_enabled = true
+emission = Color( 0.909804, 0.298039, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.965539, 1, 0.362473, 1 )
+albedo_color = Color( 0.921569, 1, 0.360784, 1 )
+emission_enabled = true
+emission = Color( 0.94902, 0.890196, 0.00784314, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
 
 [sub_resource type="Animation" id=3]
 resource_name = "blowback"
@@ -57,7 +67,6 @@ tracks/3/keys = {
 [node name="EnemyRammer" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
 health = 50
-hit_damage = 0
 
 [node name="ShipMesh" parent="." index="0"]
 transform = Transform( -0.0159076, -0.00107318, -1.58876e-06, -1.85417e-06, 2.55401e-05, -0.00999997, 0.00171709, -0.00994221, -2.55169e-05, 0, 0, -0.02 )

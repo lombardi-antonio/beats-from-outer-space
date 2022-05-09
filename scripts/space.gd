@@ -37,7 +37,7 @@ func _on_spawner_defeated():
 
 func _spawn(spawner: PackedScene):
 	var new_spawn = spawner.instance()
-	new_spawn.translation = Vector3(0, 0.25, -1.7)
+	new_spawn.translation = Vector3(0, 0, -1.7)
 	add_child(new_spawn)
 	new_spawn.connect("defeated", self, "_on_spawner_defeated")
 
