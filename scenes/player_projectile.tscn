@@ -15,7 +15,7 @@ rings = 6
 albedo_color = Color( 0.0509804, 0.898039, 0.658824, 1 )
 metallic_specular = 0.0
 emission_enabled = true
-emission = Color( 0.121569, 1, 0.670588, 1 )
+emission = Color( 0.0705882, 0.607843, 0.447059, 1 )
 emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
@@ -36,7 +36,9 @@ emission_energy = 0.64
 emission_operator = 0
 emission_on_uv2 = false
 
-[node name="player_projectile" type="Area" groups=["projectile"]]
+[node name="player_projectile" type="Area" groups=[
+"projectile",
+]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
