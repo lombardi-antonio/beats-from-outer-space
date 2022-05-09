@@ -8,6 +8,7 @@ export var shooting_delay = 0.2 # seconds
 export var projectile : PackedScene
 
 onready var space = $"/root/space"
+onready var background = $"../UniverseMesh"
 onready var timer = $timer
 onready var death_time_out = $DeathTimeOut
 onready var simple_weapon = $simple_weapon
@@ -71,6 +72,8 @@ func move_to_position(delta):
 	var direction = transform.origin.direction_to(Vector3(next_pos.x, transform.origin.y, next_pos.z - offset))
 	var distance = transform.origin.distance_to(Vector3(next_pos.x, transform.origin.y, next_pos.z - offset))
 	var reach = speed * space.time_scale * delta
+
+	background.mesh.material.uv1_offset += Vector3(direction.x, -direction.z * .5, direction.y) * distance * space.time_scale * .1
 
 	if distance > reach:
 		transform.origin += direction * reach
