@@ -69,7 +69,7 @@ func _on_Spinup_timeout():
 
 
 func deal_damage(_damage):
-	#animation.play("blowback")
+	animation.play("blowback")
 	health -= _damage
 	if health <= 0:
 		dead = true
