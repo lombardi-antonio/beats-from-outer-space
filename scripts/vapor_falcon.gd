@@ -9,15 +9,16 @@ export var projectile : PackedScene
 
 onready var space = $"/root/space"
 onready var background = $"../UniverseMesh"
-onready var timer = $timer
-onready var death_time_out = $DeathTimeOut
-onready var simple_weapon = $simple_weapon
-onready var double_weapon = $double_weapon
-onready var tripple_weapon = $tripple_weapon
-onready var max_weapon = $max_weapon
-onready var weapon_mesh = $weapon_mesh
-onready var Animation = $AnimationPlayer
-onready var explosion = $Particles
+onready var timer : Timer = $timer
+onready var death_time_out : Timer = $DeathTimeOut
+onready var simple_weapon : Spatial = $simple_weapon
+onready var double_weapon : Spatial = $double_weapon
+onready var tripple_weapon : Spatial = $tripple_weapon
+onready var max_weapon : Spatial = $max_weapon
+onready var weapon_mesh : Spatial = $weapon_mesh
+onready var Animation : AnimationPlayer = $AnimationPlayer
+onready var explosion : Particles = $Explosion
+onready var pary : Particles = $Pary
 
 signal was_defeated()
 
@@ -27,6 +28,7 @@ var global_position = Vector2.ZERO
 var screen_touch = false
 var path = []
 var dead = false
+var pary_prerec = false
 
 
 func add_to_path(position):
@@ -77,6 +79,13 @@ func move_to_position(delta):
 
 	if distance > reach:
 		transform.origin += direction * reach
+		if pary_prerec && direction.z > 0.5:
+			Animation.play("pary")
+			pary.emitting = true
+			pary_prerec = false
+
+		elif direction.z < 0:
+			pary_prerec = true
 
 	elif distance < reach:
 
