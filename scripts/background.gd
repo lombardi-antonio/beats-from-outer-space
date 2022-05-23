@@ -45,4 +45,4 @@ func rewind(delta):
 
 
 func _on_vapor_falcon_was_defeated():
-	rewinding = true
+	rewinding = false
