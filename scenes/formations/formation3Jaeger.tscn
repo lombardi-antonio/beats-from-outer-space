@@ -7,6 +7,7 @@
 script = ExtResource( 2 )
 
 [node name="jaeger" parent="." instance=ExtResource( 1 )]
+can_load_attack = true
 
 [node name="jaeger2" parent="." instance=ExtResource( 1 )]
 transform = Transform( -0.01, 0, -1.50996e-09, 0, 0.01, 0, 1.50996e-09, 0, -0.01, -0.499653, 0, -0.200162 )

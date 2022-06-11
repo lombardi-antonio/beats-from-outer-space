@@ -69,7 +69,7 @@ func _on_Spinup_timeout():
 
 
 func deal_damage(_damage):
-	#animation.play("blowback")
+	animation.play("blowback")
 	health -= _damage
 	if health <= 0:
 		dead = true
@@ -77,6 +77,14 @@ func deal_damage(_damage):
 		hide()
 		space.points += points
 		emit_signal("was_defeated")
+
+
+func got_parried():
+	pass
+
+
+func shrapnel_damage():
+	deal_damage(health)
 
 
 func _on_body_entered(body):

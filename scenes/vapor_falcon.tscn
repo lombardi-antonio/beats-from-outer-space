@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://scenes/player_projectile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/vapor_falcon.gd" type="Script" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://models/_defaultMat.material" type="Material" id=5]
 [ext_resource path="res://models/glass.material" type="Material" id=6]
 [ext_resource path="res://sprites/fire_01.png" type="Texture" id=7]
+[ext_resource path="res://sprites/ParyParticle.png" type="Texture" id=8]
+[ext_resource path="res://scenes/ParyArea.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "spaceCraft4"
@@ -93,6 +95,39 @@ albedo_color = Color( 0.352941, 0.458824, 0.517647, 1 )
 metallic_specular = 0.0
 roughness = 0.0
 
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("ship_mesh:rotation_degrees:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 90, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("ship_mesh:rotation_degrees:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 4.05311e-09, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("ship_mesh:rotation_degrees:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
 [sub_resource type="Animation" id=9]
 resource_name = "blowback"
 length = 0.2
@@ -160,7 +195,61 @@ tracks/2/keys = {
 "values": [ Vector3( 1, 1, 1 ), Vector3( 0.5, 0.5, 0.5 ) ]
 }
 
-[sub_resource type="SpatialMaterial" id=11]
+[sub_resource type="Animation" id=19]
+resource_name = "pary"
+tracks/0/type = "transform"
+tracks/0/path = NodePath("ship_mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray(  )
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("ship_mesh:rotation_degrees:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 90, -0.25, 0, 0.25, 0, 90, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("ship_mesh:rotation_degrees:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 4.05311e-09, -0.25, 0, 0.25, 0, 360, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("ship_mesh:rotation_degrees:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "set_state_to_move"
+} ]
+}
+
+[sub_resource type="SpatialMaterial" id=22]
 flags_unshaded = true
 vertex_color_use_as_albedo = true
 params_blend_mode = 1
@@ -172,7 +261,7 @@ albedo_texture = ExtResource( 7 )
 
 [sub_resource type="Gradient" id=12]
 offsets = PoolRealArray( 0.416526, 0.939292, 1 )
-colors = PoolColorArray( 1, 0, 0, 1, 0.994111, 0.753794, 0, 1, 0.992188, 1, 0, 1 )
+colors = PoolColorArray( 0.966338, 0.0144229, 0.0144229, 1, 0.952158, 0.474165, 0, 1, 0.895288, 0.975595, 0.0187215, 1 )
 
 [sub_resource type="GradientTexture" id=13]
 gradient = SubResource( 12 )
@@ -183,9 +272,17 @@ _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.308892, 1 ), 0.0, 0.0, 0, 
 [sub_resource type="CurveTexture" id=15]
 curve = SubResource( 14 )
 
-[sub_resource type="ParticlesMaterial" id=16]
+[sub_resource type="Curve" id=20]
+_data = [ Vector2( 0, 0.238919 ), 0.0, -2.00805, 0, 0, Vector2( 1, 1 ), -1.8378, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=21]
+curve = SubResource( 20 )
+
+[sub_resource type="ParticlesMaterial" id=23]
+trail_divisor = 4
+trail_size_modifier = SubResource( 21 )
 emission_shape = 1
-emission_sphere_radius = 0.5
+emission_sphere_radius = 2.0
 spread = 0.0
 gravity = Vector3( 0, 0, 0 )
 angular_velocity = 30.0
@@ -195,9 +292,48 @@ scale = 2.5
 scale_random = 0.5
 scale_curve = SubResource( 15 )
 color_ramp = SubResource( 13 )
-anim_speed = 2.0
+anim_speed = 7.86
 
-[sub_resource type="QuadMesh" id=17]
+[sub_resource type="QuadMesh" id=24]
+
+[sub_resource type="SpatialMaterial" id=25]
+flags_transparent = true
+flags_unshaded = true
+vertex_color_use_as_albedo = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 8 )
+
+[sub_resource type="Gradient" id=26]
+offsets = PoolRealArray( 0, 0.911765, 1 )
+colors = PoolColorArray( 0.157782, 1, 0.782866, 1, 0.948068, 0.549107, 0.960938, 1, 0.40494, 0.359808, 0.9375, 1 )
+
+[sub_resource type="GradientTexture" id=27]
+gradient = SubResource( 26 )
+
+[sub_resource type="ParticlesMaterial" id=28]
+trail_divisor = 4
+trail_size_modifier = SubResource( 21 )
+emission_shape = 5
+emission_ring_radius = 2.0
+emission_ring_inner_radius = 0.0
+emission_ring_height = 1.0
+emission_ring_axis = Vector3( 0, 1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 30.0
+angular_velocity_random = 1.0
+tangential_accel = 0.6
+scale = 2.5
+scale_random = 0.5
+scale_curve = SubResource( 15 )
+color_ramp = SubResource( 27 )
+anim_speed = 7.86
+
+[sub_resource type="QuadMesh" id=29]
 
 [node name="vapor_falcon" type="KinematicBody" groups=["player"]]
 transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0 )
@@ -205,6 +341,7 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 2 )
 projectile = ExtResource( 1 )
+pary_area = ExtResource( 9 )
 
 [node name="ship_mesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 7.07401e-11, -3.09215e-18, 0, -4.37114e-08, -1, -7.07401e-11, 1, -4.37114e-08, 0, 0, 0 )
@@ -270,19 +407,37 @@ mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 18 )
 anims/blowback = SubResource( 9 )
 anims/death = SubResource( 10 )
+anims/pary = SubResource( 19 )
 
 [node name="DeathTimeOut" type="Timer" parent="."]
 wait_time = 2.0
 
-[node name="Particles" type="Particles" parent="."]
-material_override = SubResource( 11 )
+[node name="Explosion" type="Particles" parent="."]
+material_override = SubResource( 22 )
 emitting = false
 amount = 60
-lifetime = 1.5
+lifetime = 2.0
 one_shot = true
-process_material = SubResource( 16 )
-draw_pass_1 = SubResource( 17 )
+speed_scale = 2.0
+process_material = SubResource( 23 )
+draw_pass_1 = SubResource( 24 )
+
+[node name="Pary" type="Particles" parent="."]
+material_override = SubResource( 25 )
+emitting = false
+amount = 50
+lifetime = 0.6
+one_shot = true
+speed_scale = 2.0
+process_material = SubResource( 28 )
+draw_pass_1 = SubResource( 29 )
+
+[node name="ParyTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
 
 [connection signal="timeout" from="DeathTimeOut" to="." method="_on_DeathTimeOut_timeout"]
+[connection signal="timeout" from="ParyTimer" to="." method="_on_ParyTimer_timeout"]

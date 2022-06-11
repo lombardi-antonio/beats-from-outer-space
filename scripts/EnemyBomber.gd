@@ -62,6 +62,13 @@ func deal_damage(damage):
 		emit_signal("was_defeated")
 
 
+func got_parried():
+	pass
+
+func shrapnel_damage():
+	pass
+
+
 func _on_body_entered(body):
 	if body.name == "vapor_falcon":
 		body.deal_damage(hit_damage)

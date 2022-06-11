@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/ParyArea.gd" type="Script" id=1]
+
+[sub_resource type="CylinderShape" id=30]
+radius = 0.197886
+height = 0.2
+
+[node name="ParyArea" type="Area"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 30 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true

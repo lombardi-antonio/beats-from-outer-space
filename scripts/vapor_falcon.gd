@@ -6,27 +6,41 @@ export var offset = 0.2 # pixel
 export(int, "simple", "double", "tripple", "max") var weapon
 export var shooting_delay = 0.2 # seconds
 export var projectile : PackedScene
+export var pary_area : PackedScene
 
 onready var space = $"/root/space"
 onready var background = $"../UniverseMesh"
-onready var timer = $timer
-onready var death_time_out = $DeathTimeOut
-onready var simple_weapon = $simple_weapon
-onready var double_weapon = $double_weapon
-onready var tripple_weapon = $tripple_weapon
-onready var max_weapon = $max_weapon
-onready var weapon_mesh = $weapon_mesh
-onready var Animation = $AnimationPlayer
-onready var explosion = $Particles
+onready var timer : Timer = $timer
+onready var death_time_out : Timer = $DeathTimeOut
+onready var simple_weapon : Spatial = $simple_weapon
+onready var double_weapon : Spatial = $double_weapon
+onready var tripple_weapon : Spatial = $tripple_weapon
+onready var max_weapon : Spatial = $max_weapon
+onready var weapon_mesh : Spatial = $weapon_mesh
+onready var Animation : AnimationPlayer = $AnimationPlayer
+onready var explosion : Particles = $Explosion
+onready var pary : Particles = $Pary
+onready var pary_timer : Timer = $ParyTimer
 
 signal was_defeated()
 
-var can_shoot = true
-var viewport_rect = Vector2.ZERO
-var global_position = Vector2.ZERO
-var screen_touch = false
-var path = []
-var dead = false
+var state: int
+var screen_touch: bool = false
+var dead: bool = false
+var can_shoot: bool = true
+var pary_prerec: bool = false
+var is_parying: bool = false
+var viewport_rect: Vector2 = Vector2.ZERO
+var global_position: Vector2 = Vector2.ZERO
+var path: Array = []
+
+
+enum STATE {
+	IDLE,
+	MOOVING,
+	PARY,
+	DEATH
+}
 
 
 func add_to_path(position):
@@ -38,18 +52,35 @@ func _ready():
 	viewport_rect = get_viewport().get_visible_rect().size
 	timer.set_wait_time(shooting_delay)
 	timer.connect("timeout", self, "on_shoot_delay_timeout")
+	state = STATE.MOOVING
 
 
 func _physics_process(delta):
-	move_to_position(delta)
-	if screen_touch and timer.paused:
-		timer.paused = false
-	if screen_touch and can_shoot:
-		shoot()
-		can_shoot = false
-		timer.start()
-	if !screen_touch:
-		timer.paused = true
+
+	# State Maschine
+	match state:
+		STATE.IDLE:
+			pass
+		STATE.MOOVING:
+			move_to_position(delta)
+			if screen_touch and timer.paused:
+				timer.paused = false
+			if screen_touch and can_shoot:
+				shoot()
+				can_shoot = false
+				timer.start()
+			if !screen_touch:
+				timer.paused = true
+			pass
+		STATE.PARY:
+			is_parying = true
+			Animation.play("pary")
+			var new_pary = pary_area.instance()
+			get_parent().add_child(new_pary)
+			new_pary.translation = global_transform.origin
+			pass
+		STATE.DEATH:
+			pass
 
 	if weapon == 3:
 		weapon_mesh.visible = true
@@ -61,6 +92,11 @@ func _physics_process(delta):
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
 		screen_touch = event.pressed
+
+
+func set_state_to_move():
+	state = STATE.MOOVING
+	is_parying = false
 
 
 func move_to_position(delta):
@@ -77,6 +113,15 @@ func move_to_position(delta):
 
 	if distance > reach:
 		transform.origin += direction * reach
+		if pary_prerec && direction.z > 0.5:
+			state = STATE.PARY
+			pary.emitting = true
+			pary_prerec = false
+
+		elif direction.z < 0:
+			pary_prerec = true
+			pary_timer.start()
+
 
 	elif distance < reach:
 
@@ -139,6 +184,7 @@ func deal_damage(damage):
 	Animation.play("blowback")
 	health -= damage
 	if health <= 0:
+		state = STATE.DEATH
 		dead = true
 		health = 0
 		death_time_out.start()
@@ -151,6 +197,10 @@ func level_cleared():
 	if space.time_scale >= .35:
 		space.time_scale = .35
 	add_to_path(Vector3(0.0, 0.25, -1.5))
+
+
+func _on_ParyTimer_timeout():
+	pary_prerec = false
 
 
 func _on_DeathTimeOut_timeout():
