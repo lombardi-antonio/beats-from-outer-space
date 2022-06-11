@@ -6,6 +6,7 @@ export var offset = 0.2 # pixel
 export(int, "simple", "double", "tripple", "max") var weapon
 export var shooting_delay = 0.2 # seconds
 export var projectile : PackedScene
+export var pary_area : PackedScene
 
 onready var space = $"/root/space"
 onready var background = $"../UniverseMesh"
@@ -74,6 +75,9 @@ func _physics_process(delta):
 		STATE.PARY:
 			is_parying = true
 			Animation.play("pary")
+			var new_pary = pary_area.instance()
+			get_parent().add_child(new_pary)
+			new_pary.translation = global_transform.origin
 			pass
 		STATE.DEATH:
 			pass

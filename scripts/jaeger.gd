@@ -3,8 +3,9 @@ extends Area
 onready var space = $"/root/space"
 onready var animation = $animation_player
 onready var timer = $timer
-onready var collision = $collistion
+onready var collision = $Collision
 onready var loaded_shot_timer: Timer = $LoadedShotTimer
+onready var loading_particles: Particles = $LoadingParticles
 
 export var speed = 1
 export var health = 30
@@ -25,19 +26,21 @@ func _ready():
 		collision.disabled = true
 
 	if can_load_attack:
-		timer.wait_time = 1.5
-		loaded_shot_timer.start()
+		timer.wait_time = 3.0
 
-	return connect("body_entered", self, "_on_body_entered")
+	connect("body_entered", self, "_on_body_entered")
+	connect("area_entered", self, "_on_area_entered")
 
 
 func _process(_delta):
 	if space.time_scale < 1:
 		timer.paused = true
 		loaded_shot_timer.paused = true
+		loading_particles.speed_scale = space.time_scale
 	else:
 		timer.paused = false
 		loaded_shot_timer.paused = false
+		loading_particles.speed_scale = 1.0
 
 	if not dead:
 		if collision && collision.disabled && collision.global_transform.origin.z >= -3.15:
@@ -71,13 +74,24 @@ func deal_damage(damage):
 		emit_signal("was_defeated")
 
 
+func shrapnel_damage():
+	# add pary explotion
+	pass
+
+
 func _on_timer_timeout():
-	can_shoot = true
+	if can_load_attack && randi() % 3 == 0:
+		is_loading_shot = true
+		loaded_shot_timer.start()
+		loading_particles.emitting = true
+	else:
+		can_shoot = true
 
 
 func _on_LoadedShotTimer_timeout():
 	can_shoot = false
 	_start_loaded_shot()
+	is_loading_shot = false
 
 
 func _start_loaded_shot():
@@ -89,6 +103,7 @@ func _shoot_loaded_shot():
 	if dead:
 		return
 
+	loading_particles.emitting = false
 	var new_projectile = projectile.instance()
 	get_tree().get_root().add_child(new_projectile)
 	new_projectile.translation = global_transform.origin
@@ -103,19 +118,44 @@ func remove_self():
 
 func _on_body_entered(body):
 	if body.name == "vapor_falcon":
-		if not is_loading_shot:
-			body.deal_damage(health)
-			deal_damage(health)
-		else:
-			if body.is_parying:
-				got_parried()
+		if is_loading_shot:
+			return
+		body.deal_damage(health)
+		deal_damage(health)
 
 
 func got_parried():
-	# explode animation
+	if not is_loading_shot: return
 	animation.play("explosion")
 
 
 func spawn_shrapnel():
-	# TODO: spawn 6-8 shrapnel
-	pass
+	# spawn 6-8 shrapnel
+	for i in range(3):
+		var new_shrapnel = shrapnel.instance()
+		get_tree().get_root().add_child(new_shrapnel)
+		new_shrapnel.translation = global_transform.origin
+		new_shrapnel.direction = Vector3(1, 0, i + -1.3)
+		new_shrapnel.speed = rand_range(0.4, 1.0)
+
+	for i in range(3):
+		var new_shrapnel = shrapnel.instance()
+		get_tree().get_root().add_child(new_shrapnel)
+		new_shrapnel.translation = global_transform.origin
+		new_shrapnel.direction = Vector3(-1, 0, i + -1.3)
+		new_shrapnel.speed = rand_range(0.4, 1.0)
+
+	var new_shrapnel_front = shrapnel.instance()
+	get_tree().get_root().add_child(new_shrapnel_front)
+	new_shrapnel_front.translation = global_transform.origin
+	new_shrapnel_front.direction = Vector3(0, 0, -1)
+	new_shrapnel_front.speed = rand_range(0.4, 1.0)
+
+
+	var new_shrapnel_back = shrapnel.instance()
+	get_tree().get_root().add_child(new_shrapnel_back)
+	new_shrapnel_back.translation = global_transform.origin
+	new_shrapnel_back.direction = Vector3(0, 0, 1)
+	new_shrapnel_back.speed = rand_range(0.4, 1.0)
+
+	deal_damage(health)
