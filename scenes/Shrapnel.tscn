@@ -34,7 +34,7 @@ size = Vector3( 0.5, 0.5, 0.5 )
 albedo_color = Color( 0.219608, 0.219608, 0.219608, 1 )
 
 [node name="Shrapnel" type="Area" groups=["projectile"]]
-transform = Transform( 2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )

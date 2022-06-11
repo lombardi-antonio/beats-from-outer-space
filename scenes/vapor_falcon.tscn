@@ -7,7 +7,7 @@
 [ext_resource path="res://models/_defaultMat.material" type="Material" id=5]
 [ext_resource path="res://models/glass.material" type="Material" id=6]
 [ext_resource path="res://sprites/fire_01.png" type="Texture" id=7]
-[ext_resource path="res://sprites/ring-particel-final.png" type="Texture" id=8]
+[ext_resource path="res://sprites/ParyParticle.png" type="Texture" id=8]
 [ext_resource path="res://scenes/ParyArea.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ArrayMesh" id=1]
@@ -297,6 +297,7 @@ anim_speed = 7.86
 [sub_resource type="QuadMesh" id=24]
 
 [sub_resource type="SpatialMaterial" id=25]
+flags_transparent = true
 flags_unshaded = true
 vertex_color_use_as_albedo = true
 params_blend_mode = 1
@@ -320,7 +321,7 @@ emission_shape = 5
 emission_ring_radius = 2.0
 emission_ring_inner_radius = 0.0
 emission_ring_height = 1.0
-emission_ring_axis = Vector3( 0, 0, 1 )
+emission_ring_axis = Vector3( 0, 1, 0 )
 spread = 0.0
 gravity = Vector3( 0, 0, 0 )
 angular_velocity = 30.0
@@ -427,7 +428,7 @@ draw_pass_1 = SubResource( 24 )
 [node name="Pary" type="Particles" parent="."]
 material_override = SubResource( 25 )
 emitting = false
-amount = 100
+amount = 50
 lifetime = 0.6
 one_shot = true
 speed_scale = 2.0

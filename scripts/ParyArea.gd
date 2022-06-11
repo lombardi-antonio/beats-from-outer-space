@@ -1,13 +1,13 @@
 extends Area
 
-export var speed = 1
-
 onready var space = $"/root/space"
+onready var timer = $Timer
 
 
 func _ready():
 	connect("body_entered", self, "_on_body_entered")
 	connect("area_entered", self, "_on_area_entered")
+	timer.connect("timeout", self, "_on_timeout")
 
 
 func _process(_delta):
@@ -17,14 +17,19 @@ func _process(_delta):
 func _on_body_entered(body):
 	if body.is_in_group("enemies"):
 		body.got_parried()
-		queue_free()
+		_remove_self()
+
 
 func _on_area_entered(area):
 	if area.is_in_group("enemies"):
 		area.got_parried()
-		queue_free()
+		_remove_self()
 
 
-func remove_self():
+func _on_timeout():
+	_remove_self()
+
+
+func _remove_self():
 	hide()
 	queue_free()

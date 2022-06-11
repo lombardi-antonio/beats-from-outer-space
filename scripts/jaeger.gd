@@ -64,6 +64,8 @@ func _shoot():
 
 
 func deal_damage(damage):
+	if is_loading_shot: return
+
 	animation.play("blowback")
 	health -= damage
 	if health <= 0:
@@ -75,8 +77,7 @@ func deal_damage(damage):
 
 
 func shrapnel_damage():
-	# add pary explotion
-	pass
+	animation.play("explosion")
 
 
 func _on_timer_timeout():
@@ -117,45 +118,34 @@ func remove_self():
 
 
 func _on_body_entered(body):
-	if body.name == "vapor_falcon":
-		if is_loading_shot:
-			return
-		body.deal_damage(health)
-		deal_damage(health)
+	if is_loading_shot || body.name != 'vapor_falcon': return
+
+	body.deal_damage(health)
+	deal_damage(health)
 
 
 func got_parried():
 	if not is_loading_shot: return
+
 	animation.play("explosion")
+
+
+func _spawn_sharpnel_pieces(direction: Vector3):
+	var new_shrapnel = shrapnel.instance()
+	get_tree().get_root().add_child(new_shrapnel)
+	new_shrapnel.translation = global_transform.origin
+	new_shrapnel.direction = direction
+	new_shrapnel.speed = rand_range(0.4, 1.0)
 
 
 func spawn_shrapnel():
 	# spawn 6-8 shrapnel
 	for i in range(3):
-		var new_shrapnel = shrapnel.instance()
-		get_tree().get_root().add_child(new_shrapnel)
-		new_shrapnel.translation = global_transform.origin
-		new_shrapnel.direction = Vector3(1, 0, i + -1.3)
-		new_shrapnel.speed = rand_range(0.4, 1.0)
+		_spawn_sharpnel_pieces(Vector3(1, 0, i + -1.3))
+		_spawn_sharpnel_pieces(Vector3(-1, 0, i + -1.3))
 
-	for i in range(3):
-		var new_shrapnel = shrapnel.instance()
-		get_tree().get_root().add_child(new_shrapnel)
-		new_shrapnel.translation = global_transform.origin
-		new_shrapnel.direction = Vector3(-1, 0, i + -1.3)
-		new_shrapnel.speed = rand_range(0.4, 1.0)
+	_spawn_sharpnel_pieces(Vector3(0, 0, -1))
+	_spawn_sharpnel_pieces(Vector3(0, 0, 1))
 
-	var new_shrapnel_front = shrapnel.instance()
-	get_tree().get_root().add_child(new_shrapnel_front)
-	new_shrapnel_front.translation = global_transform.origin
-	new_shrapnel_front.direction = Vector3(0, 0, -1)
-	new_shrapnel_front.speed = rand_range(0.4, 1.0)
-
-
-	var new_shrapnel_back = shrapnel.instance()
-	get_tree().get_root().add_child(new_shrapnel_back)
-	new_shrapnel_back.translation = global_transform.origin
-	new_shrapnel_back.direction = Vector3(0, 0, 1)
-	new_shrapnel_back.speed = rand_range(0.4, 1.0)
-
+	is_loading_shot = false
 	deal_damage(health)
