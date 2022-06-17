@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://scripts/bomber_projectile.gd" type="Script" id=1]
+[ext_resource path="res://scripts/BomberProjectile.gd" type="Script" id=1]
 
 [sub_resource type="SphereMesh" id=1]
 radial_segments = 8
@@ -30,7 +30,7 @@ emission_on_uv2 = false
 [sub_resource type="SphereShape" id=5]
 radius = 0.0189391
 
-[node name="enemy_projectile" type="Area" groups=[
+[node name="EnemyProjectile" type="Area" groups=[
 "projectile",
 ]]
 collision_layer = 2

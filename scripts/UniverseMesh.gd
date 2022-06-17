@@ -8,7 +8,7 @@ func _physics_process(_delta):
 		if(self.mesh.material.uv1_offset.y > 0):
 			self.mesh.material.uv1_offset.y -= .02
 		return
-	self.mesh.material.uv1_offset.y += .02 * space.time_scale
+	self.mesh.material.uv1_offset.y += .02 * Space.time_scale
 
 
 func _on_vapor_falcon_was_defeated():

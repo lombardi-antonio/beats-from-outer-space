@@ -1,8 +1,8 @@
 extends Spatial
 
-onready var spotlight = $spotlight
-onready var position = $position
-onready var space = $"/root/space"
+onready var spotlight = $Spotlight
+onready var position = $Position
+onready var space = $"/root/Space"
 
 export var speed = 1
 var start_pos
@@ -18,7 +18,7 @@ func _ready():
 
 
 func _process(delta):
-	spotlight.translation.z += speed * space.time_scale * delta
+	spotlight.translation.z += speed * Space.time_scale * delta
 
 	if spotlight.translation.z > end_pos:
 		randomize_star_pos()

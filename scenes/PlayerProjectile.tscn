@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://scripts/player_projectile.gd" type="Script" id=1]
+[ext_resource path="res://scripts/PlayeerProjectile.gd" type="Script" id=1]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.0128693
@@ -36,7 +36,7 @@ emission_energy = 0.64
 emission_operator = 0
 emission_on_uv2 = false
 
-[node name="player_projectile" type="Area" groups=["projectile"]]
+[node name="PlayerProjectile" type="Area" groups=["projectile"]]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )

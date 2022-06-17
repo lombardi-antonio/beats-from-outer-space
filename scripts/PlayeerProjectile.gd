@@ -3,7 +3,7 @@ extends Area
 export var speed = 1
 export var damage = 10
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 
 
 func _ready():
@@ -12,7 +12,7 @@ func _ready():
 
 
 func _process(delta):
-	translation.z -= speed * space.time_scale * delta
+	translation.z -= speed * Space.time_scale * delta
 
 	if translation.z < -50:
 		queue_free()

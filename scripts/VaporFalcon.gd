@@ -8,15 +8,15 @@ export var shooting_delay = 0.2 # seconds
 export var projectile : PackedScene
 export var pary_area : PackedScene
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 onready var background = $"../UniverseMesh"
-onready var timer : Timer = $timer
+onready var timer : Timer = $Timer
 onready var death_time_out : Timer = $DeathTimeOut
-onready var simple_weapon : Spatial = $simple_weapon
-onready var double_weapon : Spatial = $double_weapon
-onready var tripple_weapon : Spatial = $tripple_weapon
-onready var max_weapon : Spatial = $max_weapon
-onready var weapon_mesh : Spatial = $weapon_mesh
+onready var simple_weapon : Spatial = $SimpleWeapon
+onready var double_weapon : Spatial = $DoubleWeapon
+onready var tripple_weapon : Spatial = $TrippleWeapon
+onready var max_weapon : Spatial = $MaxWeapon
+onready var weapon_mesh : Spatial = $WeaponMesh
 onready var Animation : AnimationPlayer = $AnimationPlayer
 onready var explosion : Particles = $Explosion
 onready var pary : Particles = $Pary
@@ -50,7 +50,7 @@ func add_to_path(position):
 
 func _ready():
 	viewport_rect = get_viewport().get_visible_rect().size
-	timer.set_wait_time(shooting_delay)
+	timer.wait_time = shooting_delay
 	timer.connect("timeout", self, "on_shoot_delay_timeout")
 	state = STATE.MOOVING
 
@@ -107,9 +107,9 @@ func move_to_position(delta):
 
 	var direction = transform.origin.direction_to(Vector3(next_pos.x, transform.origin.y, next_pos.z - offset))
 	var distance = transform.origin.distance_to(Vector3(next_pos.x, transform.origin.y, next_pos.z - offset))
-	var reach = speed * space.time_scale * delta
+	var reach = speed * Space.time_scale * delta
 
-	background.mesh.material.uv1_offset += Vector3(direction.x, -direction.z * .5, direction.y) * distance * space.time_scale * .1
+	background.mesh.material.uv1_offset += Vector3(direction.x, -direction.z * .5, direction.y) * distance * Space.time_scale * .1
 
 	if distance > reach:
 		transform.origin += direction * reach
@@ -194,8 +194,8 @@ func deal_damage(damage):
 
 
 func level_cleared():
-	if space.time_scale >= .35:
-		space.time_scale = .35
+	if Space.time_scale >= .35:
+		Space.time_scale = .35
 	add_to_path(Vector3(0.0, 0.25, -1.5))
 
 
@@ -204,5 +204,5 @@ func _on_ParyTimer_timeout():
 
 
 func _on_DeathTimeOut_timeout():
-	space.time_scale = 0.05
+	Space.time_scale = 0.05
 	get_tree().reload_current_scene()

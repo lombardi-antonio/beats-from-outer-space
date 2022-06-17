@@ -3,8 +3,8 @@
 [ext_resource path="res://models/metal.material" type="Material" id=1]
 [ext_resource path="res://models/_defaultMat.material" type="Material" id=2]
 [ext_resource path="res://models/glass.material" type="Material" id=3]
-[ext_resource path="res://scripts/jaeger.gd" type="Script" id=4]
-[ext_resource path="res://scenes/enemy_projectile.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scripts/EnemyJaeger.gd" type="Script" id=4]
+[ext_resource path="res://scenes/EnemyProjectile.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/LoadingParticle.png" type="Texture" id=6]
 [ext_resource path="res://scenes/Shrapnel.tscn" type="PackedScene" id=7]
 
@@ -242,7 +242,7 @@ angle_random = 1.0
 [sub_resource type="QuadMesh" id=10]
 size = Vector2( 0.5, 0.5 )
 
-[node name="jaeger" type="Area" groups=["enemies"]]
+[node name="EnemyJaeger" type="Area" groups=["enemies"]]
 transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0, 0, 0 )
 collision_layer = 2
 collision_mask = 2

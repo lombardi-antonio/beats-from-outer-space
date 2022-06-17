@@ -3,8 +3,8 @@ extends Spatial
 const MOVE_MARGIN = 15
 const ray_length = 1000
 
-onready var camera = $camera
-onready var space = $"/root/space"
+onready var camera = $PlayerCamera
+onready var space = $"/root/Space"
 
 var screen_touch = false
 var player_dead = false
@@ -16,15 +16,15 @@ var norm_position
 func _process(_delta):
 	if spawner_defeated:
 		return
-	if !screen_touch && space.time_scale > .05:
-		space.time_scale -= .05
-	elif !screen_touch && space.time_scale <= .05:
-		space.time_scale = .005
-	elif player_dead && space.time_scale <= 2:
-		space.time_scale += .05
+	if !screen_touch && Space.time_scale > .05:
+		Space.time_scale -= .05
+	elif !screen_touch && Space.time_scale <= .05:
+		Space.time_scale = .005
+	elif player_dead && Space.time_scale <= 2:
+		Space.time_scale += .05
 	else:
-		if space.time_scale < 1:
-			space.time_scale += .1
+		if Space.time_scale < 1:
+			Space.time_scale += .1
 
 
 

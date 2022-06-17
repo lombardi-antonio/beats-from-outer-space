@@ -1,15 +1,15 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://scenes/vapor_falcon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scripts/camera_base.gd" type="Script" id=3]
-[ext_resource path="res://scenes/starlight.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scripts/space.gd" type="Script" id=5]
+[ext_resource path="res://scenes/VaporFalcon.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/CameraBase.gd" type="Script" id=3]
+[ext_resource path="res://scenes/Starlight.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/Space.gd" type="Script" id=5]
 [ext_resource path="res://audio/ElectricPuppet.wav" type="AudioStream" id=6]
 [ext_resource path="res://scripts/BackgroundMusicStreamer.gd" type="Script" id=7]
 [ext_resource path="res://scripts/UniverseMesh.gd" type="Script" id=8]
 [ext_resource path="res://default_theme.tres" type="Theme" id=9]
 [ext_resource path="res://scripts/UserInterface.gd" type="Script" id=10]
-[ext_resource path="res://scenes/spawner/spawner1-1.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/spawner/Spawner1-1.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ProceduralSky" id=9]
 sky_top_color = Color( 0, 0, 0, 1 )
@@ -56,7 +56,7 @@ extents = Vector3( 1, 0.02, 1 )
 script = ExtResource( 5 )
 spawner_list_level1 = [ ExtResource( 11 ) ]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource( 8 )
 
 [node name="BackgroundMusicStreamer" type="AudioStreamPlayer3D" parent="."]
@@ -161,18 +161,18 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7 )
 speed = 6
 
-[node name="spotlight" parent="Starlight" index="0"]
-light_color = Color( 0.329412, 0.113725, 0.678431, 1 )
-light_energy = 0.5
+[node name="Spotlight" parent="Starlight" index="0"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0 )
+spot_angle_attenuation = 0.116629
 
-[node name="camera_base" type="Spatial" parent="."]
+[node name="CameraBase" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0.2, -2 )
 script = ExtResource( 3 )
 
-[node name="camera" type="Camera" parent="camera_base"]
+[node name="PlayerCamera" type="Camera" parent="CameraBase"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
 
-[node name="vapor_falcon" parent="." instance=ExtResource( 2 )]
+[node name="VaporFalcon" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -1.15 )
 
 [node name="UniverseMesh" type="MeshInstance" parent="."]
@@ -189,12 +189,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 3, 0, 0, -2.5 )
 shape = SubResource( 11 )
 
 [connection signal="spawner_defeated" from="." to="UserInterface" method="_on_space_spawner_defeated"]
-[connection signal="spawner_defeated" from="." to="camera_base" method="_on_space_spawner_defeated"]
+[connection signal="spawner_defeated" from="." to="CameraBase" method="_on_space_spawner_defeated"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="." method="_on_ContinueButton_pressed"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="UserInterface" method="_on_ContinueButton_pressed"]
-[connection signal="pressed" from="UserInterface/ContinueButton" to="camera_base" method="_on_ContinueButton_pressed"]
-[connection signal="was_defeated" from="vapor_falcon" to="." method="_on_vapor_falcon_was_defeated"]
-[connection signal="was_defeated" from="vapor_falcon" to="camera_base" method="_on_vapor_falcon_was_defeated"]
-[connection signal="was_defeated" from="vapor_falcon" to="UniverseMesh" method="_on_vapor_falcon_was_defeated"]
+[connection signal="pressed" from="UserInterface/ContinueButton" to="CameraBase" method="_on_ContinueButton_pressed"]
+[connection signal="was_defeated" from="VaporFalcon" to="." method="_on_vapor_falcon_was_defeated"]
+[connection signal="was_defeated" from="VaporFalcon" to="CameraBase" method="_on_vapor_falcon_was_defeated"]
+[connection signal="was_defeated" from="VaporFalcon" to="UniverseMesh" method="_on_vapor_falcon_was_defeated"]
 
 [editable path="Starlight"]

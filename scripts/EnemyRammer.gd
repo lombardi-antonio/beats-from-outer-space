@@ -1,6 +1,6 @@
 extends Area
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 onready var mesh = $ShipMesh
 onready var collision = $ShipCollision
 onready var cooldown = $Cooldown
@@ -48,16 +48,16 @@ func _process(delta):
 		spinup.paused = false
 
 	if mesh.global_transform.origin.z < -3.3:
-		mesh.translation.z += speed * space.time_scale * delta
-		collision.translation.z += speed * space.time_scale * delta
+		mesh.translation.z += speed * Space.time_scale * delta
+		collision.translation.z += speed * Space.time_scale * delta
 	else:
 		if not spiup_started:
 			spinup.start()
 			spiup_started = true
 
 	if spinup_ended:
-		mesh.translation.z += speed * space.time_scale * delta
-		collision.translation.z += speed * space.time_scale * delta
+		mesh.translation.z += speed * Space.time_scale * delta
+		collision.translation.z += speed * Space.time_scale * delta
 
 
 func _on_Spinup_timeout():
@@ -88,6 +88,6 @@ func shrapnel_damage():
 
 
 func _on_body_entered(body):
-	if body.name == "vapor_falcon":
+	if body.name == "VaporFalcon":
 		body.deal_damage(hit_damage)
 		deal_damage(health)

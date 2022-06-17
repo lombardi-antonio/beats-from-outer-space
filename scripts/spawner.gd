@@ -17,7 +17,7 @@ func _ready():
 
 func _process(delta):
 	if withdraw:
-		translation.z -= space.time_scale * delta
+		translation.z -= Space.time_scale * delta
 
 
 func _spawn(formation):

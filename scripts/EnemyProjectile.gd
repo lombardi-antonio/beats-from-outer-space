@@ -4,7 +4,7 @@ export var speed = 1
 export var damage = 10
 export var steer_force = 0.2
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 onready var timer = $Timer
 
 var acceleration = Vector3.ZERO
@@ -32,7 +32,7 @@ func seek():
 
 
 func _process(_delta):
-	if space.time_scale < 1:
+	if Space.time_scale < 1:
 		if timer: timer.paused = true
 	else:
 		if timer: timer.paused = false
@@ -45,11 +45,11 @@ func _physics_process(delta):
 	acceleration += seek()
 	velocity += acceleration * delta
 	velocity = velocity.normalized() * speed
-	translation += velocity * delta * space.time_scale
+	translation += velocity * delta * Space.time_scale
 
 
 func _on_body_entered(body):
-	if body.name == "vapor_falcon":
+	if body.name == "VaporFalcon":
 		body.deal_damage(damage)
 		queue_free()
 

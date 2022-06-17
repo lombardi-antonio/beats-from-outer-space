@@ -1,6 +1,6 @@
 extends Area
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 onready var timer = $Timer
 
 

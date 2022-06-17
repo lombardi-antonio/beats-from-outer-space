@@ -1,6 +1,6 @@
 extends Area
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 onready var animation = $animation_player
 onready var timer = $timer
 onready var collision = $Collision
@@ -33,10 +33,10 @@ func _ready():
 
 
 func _process(_delta):
-	if space.time_scale < 1:
+	if Space.time_scale < 1:
 		timer.paused = true
 		loaded_shot_timer.paused = true
-		loading_particles.speed_scale = space.time_scale
+		loading_particles.speed_scale = Space.time_scale
 	else:
 		timer.paused = false
 		loaded_shot_timer.paused = false
@@ -49,7 +49,7 @@ func _process(_delta):
 		if can_shoot:
 			_shoot()
 
-	animation.playback_speed = space.time_scale
+	animation.playback_speed = Space.time_scale
 
 
 func _shoot():
@@ -118,7 +118,7 @@ func remove_self():
 
 
 func _on_body_entered(body):
-	if is_loading_shot || body.name != 'vapor_falcon': return
+	if is_loading_shot || body.name != 'VaporFalcon': return
 
 	body.deal_damage(health)
 	deal_damage(health)

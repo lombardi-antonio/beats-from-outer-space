@@ -15,11 +15,11 @@ _global_script_class_icons={
 [application]
 
 config/name="beats-from-outer-space"
-run/main_scene="res://scenes/space.tscn"
+run/main_scene="res://scenes/Space.tscn"
 
 [autoload]
 
-space="*res://scripts/space.gd"
+Space="*res://scripts/Space.gd"
 UserData="*res://addons/github-integration/scripts/user_data.gd"
 IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
 RestHandler="*res://addons/github-integration/scripts/RestHandler.gd"

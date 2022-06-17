@@ -1,6 +1,6 @@
 extends Area
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 onready var mesh = $ShipMesh
 onready var collision = $ShipCollision
 onready var cooldown = $Cooldown
@@ -28,7 +28,7 @@ func _ready():
 
 func _process(_delta):
 	# pause cooldown when in slow-mo
-	if space.time_scale < 1:
+	if Space.time_scale < 1:
 		cooldown.paused = true
 		shot_cooldown.paused = true
 	else:
@@ -70,7 +70,7 @@ func shrapnel_damage():
 
 
 func _on_body_entered(body):
-	if body.name == "vapor_falcon":
+	if body.name == "VaporFalcon":
 		body.deal_damage(hit_damage)
 		queue_free()
 

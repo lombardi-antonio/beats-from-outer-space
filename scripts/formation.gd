@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 
 export var speed = 0.5
 export var target_positon_min = -1.0
@@ -26,7 +26,7 @@ func _ready():
 
 func _process(delta):
 	movement(delta)
-	translation.x += speed * space.time_scale * direction * delta
+	translation.x += speed * Space.time_scale * direction * delta
 	if translation.x > right_bound:
 		direction = -1
 	elif translation.x < left_bound:
@@ -37,7 +37,7 @@ func movement(delta):
 	if is_in_position:
 		return
 
-	translation.z += speed * space.time_scale * delta
+	translation.z += speed * Space.time_scale * delta
 	if translation.z >= target_position:
 		translation.z = target_position
 		is_in_position = true

@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 
 export var speed = 0.5
 export var target_positon_min = -1.0

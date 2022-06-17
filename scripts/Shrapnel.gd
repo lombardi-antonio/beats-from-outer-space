@@ -4,7 +4,7 @@ export var speed = 1
 export var damage = 10
 export var direction = Vector3(1, 0, 0.3)
 
-onready var space = $"/root/space"
+onready var space = $"/root/Space"
 
 
 func _ready():
@@ -18,7 +18,7 @@ func _ready():
 
 func _process(delta):
 	translation -= direction * speed * space.time_scale * delta
-	rotation_degrees += direction * rand_range(500, 1500) * space.time_scale * delta
+	rotation_degrees += direction * rand_range(500, 1500) * Space.time_scale * delta
 
 	if translation.z < -50:
 		queue_free()
