@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scripts/starlight.gd" type="Script" id=1]
+[ext_resource path="res://scenes/environment/starlight/Starlight.gd" type="Script" id=1]
 
 [sub_resource type="SphereMesh" id=1]
 radial_segments = 6

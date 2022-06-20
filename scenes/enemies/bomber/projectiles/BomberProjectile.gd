@@ -1,4 +1,4 @@
-extends "EnemyProjectile.gd"
+extends "res://scenes/enemies/BaseProjectile.gd"
 
 var target_ship = null
 

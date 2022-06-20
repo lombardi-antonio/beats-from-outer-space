@@ -19,7 +19,7 @@ run/main_scene="res://scenes/Space.tscn"
 
 [autoload]
 
-Space="*res://scripts/Space.gd"
+Space="*res://scenes/Space.gd"
 UserData="*res://addons/github-integration/scripts/user_data.gd"
 IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
 RestHandler="*res://addons/github-integration/scripts/RestHandler.gd"

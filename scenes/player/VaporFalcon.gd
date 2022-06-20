@@ -6,7 +6,7 @@ export var offset = 0.2 # pixel
 export(int, "simple", "double", "tripple", "max") var weapon
 export var shooting_delay = 0.2 # seconds
 export var projectile : PackedScene
-export var pary_area : PackedScene
+export var parry_area : PackedScene
 
 onready var space = $"/root/Space"
 onready var background = $"../UniverseMesh"
@@ -19,8 +19,8 @@ onready var max_weapon : Spatial = $MaxWeapon
 onready var weapon_mesh : Spatial = $WeaponMesh
 onready var Animation : AnimationPlayer = $AnimationPlayer
 onready var explosion : Particles = $Explosion
-onready var pary : Particles = $Pary
-onready var pary_timer : Timer = $ParyTimer
+onready var parry : Particles = $Parry
+onready var parry_timer : Timer = $ParryTimer
 
 signal was_defeated()
 
@@ -28,8 +28,8 @@ var state: int
 var screen_touch: bool = false
 var dead: bool = false
 var can_shoot: bool = true
-var pary_prerec: bool = false
-var is_parying: bool = false
+var parry_prerec: bool = false
+var is_parrying: bool = false
 var viewport_rect: Vector2 = Vector2.ZERO
 var global_position: Vector2 = Vector2.ZERO
 var path: Array = []
@@ -38,7 +38,7 @@ var path: Array = []
 enum STATE {
 	IDLE,
 	MOOVING,
-	PARY,
+	parry,
 	DEATH
 }
 
@@ -72,12 +72,12 @@ func _physics_process(delta):
 			if !screen_touch:
 				timer.paused = true
 			pass
-		STATE.PARY:
-			is_parying = true
-			Animation.play("pary")
-			var new_pary = pary_area.instance()
-			get_parent().add_child(new_pary)
-			new_pary.translation = global_transform.origin
+		STATE.parry:
+			is_parrying = true
+			Animation.play("parry")
+			var new_parry = parry_area.instance()
+			get_parent().add_child(new_parry)
+			new_parry.translation = global_transform.origin
 			pass
 		STATE.DEATH:
 			pass
@@ -96,7 +96,7 @@ func _input(event):
 
 func set_state_to_move():
 	state = STATE.MOOVING
-	is_parying = false
+	is_parrying = false
 
 
 func move_to_position(delta):
@@ -113,14 +113,14 @@ func move_to_position(delta):
 
 	if distance > reach:
 		transform.origin += direction * reach
-		if pary_prerec && direction.z > 0.5:
-			state = STATE.PARY
-			pary.emitting = true
-			pary_prerec = false
+		if parry_prerec && direction.z > 0.5:
+			state = STATE.parry
+			parry.emitting = true
+			parry_prerec = false
 
 		elif direction.z < 0:
-			pary_prerec = true
-			pary_timer.start()
+			parry_prerec = true
+			parry_timer.start()
 
 
 	elif distance < reach:
@@ -199,8 +199,8 @@ func level_cleared():
 	add_to_path(Vector3(0.0, 0.25, -1.5))
 
 
-func _on_ParyTimer_timeout():
-	pary_prerec = false
+func _on_parryTimer_timeout():
+	parry_prerec = false
 
 
 func _on_DeathTimeOut_timeout():
