@@ -2,11 +2,12 @@ extends Spatial
 
 export(Array, PackedScene) var spawner_list_level1
 
-var time_scale
-var points
-var wave = 0
-var movement_disabled
-var ready_for_next_spawn = false
+var time_scale: float
+var points: int
+
+var _wave: int = 0
+var _movement_disabled: bool
+var _ready_for_next_spawn: bool = false
 
 signal level_cleared()
 signal spawner_defeated()
@@ -15,24 +16,15 @@ signal spawner_defeated()
 func _ready():
 	time_scale = 1
 	points = 0
-	movement_disabled = false
+	_movement_disabled = false
 
 	_init_next_spawner()
 
 
 func _init_next_spawner():
-	if wave > spawner_list_level1.size() - 1:
+	if _wave > spawner_list_level1.size() - 1:
 		return get_tree().reload_current_scene()
-	_spawn(spawner_list_level1[wave])
-
-
-func _on_spawner_defeated():
-	emit_signal("spawner_defeated")
-	get_tree().call_group("projectile", "remove_self")
-	if wave >= spawner_list_level1.size() - 1:
-		emit_signal("level_cleared")
-	wave += 1
-	ready_for_next_spawn = true
+	_spawn(spawner_list_level1[_wave])
 
 
 func _spawn(spawner: PackedScene):
@@ -42,16 +34,27 @@ func _spawn(spawner: PackedScene):
 	new_spawn.connect("defeated", self, "_on_spawner_defeated")
 
 
-func _on_ContinueButton_pressed():
+func _on_continue_button_pressed():
 	time_scale = .005
 
-	if not ready_for_next_spawn:
+	if not _ready_for_next_spawn:
 		return
 
 	else:
 		get_tree().call_group("projectile", "remove_self")
 		_init_next_spawner()
-		ready_for_next_spawn = false
+		_ready_for_next_spawn = false
+
+
+func _on_spawner_defeated():
+	emit_signal("spawner_defeated")
+	get_tree().call_group("projectile", "remove_self")
+
+	if _wave >= spawner_list_level1.size() - 1:
+		emit_signal("level_cleared")
+
+	_wave += 1
+	_ready_for_next_spawn = true
 
 
 func _on_vapor_falcon_was_defeated():

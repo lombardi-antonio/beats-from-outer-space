@@ -1,5 +1,6 @@
 extends Control
 
+
 func _on_space_spawner_defeated():
 	visible = true
 

@@ -1,38 +1,39 @@
 extends Spatial
 
+onready var camera: Camera = $PlayerCamera
+onready var space: Spatial = $"/root/Space"
+
 const MOVE_MARGIN = 15
-const ray_length = 1000
+const RAY_LENGTH = 1000
 
-onready var camera = $PlayerCamera
-onready var space = $"/root/Space"
-
-var screen_touch = false
-var player_dead = false
-var spawner_defeated = false
-var v_size
-var norm_position
+var _player_dead: bool = false
+var _screen_touch: bool = false
+var _spawner_defeated: bool = false
 
 
 func _process(_delta):
-	if spawner_defeated:
+	if _spawner_defeated:
 		return
-	if !screen_touch && Space.time_scale > .05:
+
+	if !_screen_touch && Space.time_scale > .05:
 		Space.time_scale -= .05
-	elif !screen_touch && Space.time_scale <= .05:
+
+	elif !_screen_touch && Space.time_scale <= .05:
 		Space.time_scale = .005
-	elif player_dead && Space.time_scale <= 2:
+
+	elif _player_dead && Space.time_scale <= 2:
 		Space.time_scale += .05
+
 	else:
 		if Space.time_scale < 1:
 			Space.time_scale += .1
 
 
-
 func _input(event):
-	if player_dead:
+	if _player_dead:
 		return
 
-	if spawner_defeated:
+	if _spawner_defeated:
 		get_tree().call_group("player", "level_cleared")
 		return
 
@@ -41,34 +42,37 @@ func _input(event):
 	m_pos.y = clamp(m_pos.y, MOVE_MARGIN * 3, get_viewport().size.y + MOVE_MARGIN)
 
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		screen_touch = event.pressed
-		if screen_touch:
-			move_spaceship(m_pos)
-	elif event is InputEventMouseMotion and screen_touch:
-		move_spaceship(m_pos)
+		_screen_touch = event.pressed
+
+		if _screen_touch:
+			_move_spaceship(m_pos)
+
+	elif event is InputEventMouseMotion and _screen_touch:
+		_move_spaceship(m_pos)
 
 
-func move_spaceship(m_pos):
-	var result = raycast_from_mouse(m_pos, 1)
+func _move_spaceship(m_pos):
+	var result = _raycast_from_mouse(m_pos, 1)
+
 	if result:
 		get_tree().call_group("player", "add_to_path", result.position)
 
 
-func raycast_from_mouse(m_pos, collision_mask):
+func _raycast_from_mouse(m_pos, collision_mask):
 	var ray_start = camera.project_ray_origin(m_pos)
-	var ray_end = ray_start + camera.project_ray_normal(m_pos) * ray_length
+	var ray_end = ray_start + camera.project_ray_normal(m_pos) * RAY_LENGTH
 	var space_state = get_world().direct_space_state
 	return space_state.intersect_ray(ray_start, ray_end, [], collision_mask)
 
 
 func _on_vapor_falcon_was_defeated():
-	player_dead = true
+	_player_dead = true
 
 
 func _on_space_spawner_defeated():
-	spawner_defeated = true
+	_spawner_defeated = true
 
 
 func _on_ContinueButton_pressed():
-	spawner_defeated = false
-	screen_touch = false
+	_spawner_defeated = false
+	_screen_touch = false

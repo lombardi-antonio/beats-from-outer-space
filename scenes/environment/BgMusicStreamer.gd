@@ -1,6 +1,5 @@
 extends AudioStreamPlayer3D
 
-var playing_scale = 1.0
 
 func _ready():
 	pass

@@ -1,10 +1,10 @@
 extends MeshInstance
 
-var game_over = false
+var _game_over = false
 
 
 func _physics_process(_delta):
-	if(game_over):
+	if(_game_over):
 		if(self.mesh.material.uv1_offset.y > 0):
 			self.mesh.material.uv1_offset.y -= .02
 		return
@@ -12,4 +12,4 @@ func _physics_process(_delta):
 
 
 func _on_vapor_falcon_was_defeated():
-	game_over = true
+	_game_over = true

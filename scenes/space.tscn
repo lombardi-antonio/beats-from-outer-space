@@ -159,7 +159,7 @@ __meta__ = {
 
 [node name="Starlight" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7 )
-speed = 6
+speed = 10.0
 
 [node name="Spotlight" parent="Starlight" index="0"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0 )
@@ -190,7 +190,7 @@ shape = SubResource( 11 )
 
 [connection signal="spawner_defeated" from="." to="UserInterface" method="_on_space_spawner_defeated"]
 [connection signal="spawner_defeated" from="." to="CameraBase" method="_on_space_spawner_defeated"]
-[connection signal="pressed" from="UserInterface/ContinueButton" to="." method="_on_ContinueButton_pressed"]
+[connection signal="pressed" from="UserInterface/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="UserInterface" method="_on_ContinueButton_pressed"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="CameraBase" method="_on_ContinueButton_pressed"]
 [connection signal="was_defeated" from="VaporFalcon" to="." method="_on_vapor_falcon_was_defeated"]
