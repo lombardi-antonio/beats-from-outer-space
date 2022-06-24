@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.0283135
+height = 0.124508
+
+[node name="BaseShip" type="Area" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 2
+
+[node name="ShipMesh" type="MeshInstance" parent="."]
+
+[node name="ShipCollision" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Cooldown" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

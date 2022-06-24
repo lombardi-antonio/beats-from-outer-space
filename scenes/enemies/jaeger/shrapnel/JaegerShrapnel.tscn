@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scenes/enemies/jaeger/shrapnel/JaegerShrapnel.gd" type="Script" id=1]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.015, 0.015, 0.015 )
+
+[sub_resource type="SpatialMaterial" id=3]
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 3 )
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.74902, 0.560784, 1, 1 )
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 3 )
+size = Vector3( 1, 0.5, 1 )
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 1, 0.262745, 0.470588, 1 )
+emission_enabled = true
+emission = Color( 0.94902, 0, 0, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CubeMesh" id=7]
+material = SubResource( 3 )
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.219608, 0.219608, 0.219608, 1 )
+
+[node name="Shrapnel" type="Area" groups=["projectile"]]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, 0.00259636, -0.0108538, 0.00395142 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( 0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, -0.00947391, 0.00926433, -0.00849377 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
