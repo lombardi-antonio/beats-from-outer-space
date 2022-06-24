@@ -1,24 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/enemies/rammer/Rammer.gd" type="Script" id=1]
-[ext_resource path="res://models/rammer.tres" type="ArrayMesh" id=2]
+[ext_resource path="res://models/Rammer.tres" type="ArrayMesh" id=2]
 [ext_resource path="res://scenes/enemies/BaseEnemy.tscn" type="PackedScene" id=3]
-
-[sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.94902, 0.74902, 0.4, 1 )
-emission_enabled = true
-emission = Color( 0.909804, 0.298039, 0, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
-
-[sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.921569, 1, 0.360784, 1 )
-emission_enabled = true
-emission = Color( 0.94902, 0.890196, 0.00784314, 1 )
-emission_energy = 1.0
-emission_operator = 0
-emission_on_uv2 = false
 
 [sub_resource type="Animation" id=3]
 resource_name = "blowback"
@@ -70,10 +54,10 @@ health = 50
 collision_damage = 50
 
 [node name="ShipMesh" parent="." index="0"]
-transform = Transform( -0.0159076, -0.00107318, -1.58876e-06, -1.85417e-06, 2.55401e-05, -0.00999997, 0.00171709, -0.00994221, -2.55169e-05, 0, 0, -0.02 )
+transform = Transform( -0.0159076, -0.00107319, -1.58897e-06, -1.85448e-06, 2.55436e-05, -0.00999997, 0.00171711, -0.00994221, -2.55205e-05, 0, 0, -0.02 )
 mesh = ExtResource( 2 )
-material/0 = SubResource( 1 )
-material/1 = SubResource( 2 )
+material/0 = null
+material/1 = null
 material/2 = null
 
 [node name="ShipCollision" parent="." index="1"]

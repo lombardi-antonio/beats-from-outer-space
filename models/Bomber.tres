@@ -1,11 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_resource type="ArrayMesh" load_steps=5 format=2]
 
-[ext_resource path="res://models/metal.material" type="Material" id=1]
-[ext_resource path="res://models/pipe.material" type="Material" id=2]
-[ext_resource path="res://models/glass.material" type="Material" id=3]
-[ext_resource path="res://models/_defaultMat.material" type="Material" id=4]
+[ext_resource path="res://material/enemy_palette/GlowingPurple.tres" type="Material" id=1]
+[ext_resource path="res://material/enemy_palette/MetallicBlack.tres" type="Material" id=2]
+[ext_resource path="res://material/enemy_palette/GlowingCyan.tres" type="Material" id=3]
+[ext_resource path="res://material/SpaceReflection.tres" type="Material" id=4]
 
-[sub_resource type="ArrayMesh" id=1]
+[resource]
 resource_name = "spaceCraft5"
 surfaces/0 = {
 "aabb": AABB( -4.75, -10.9971, -3.075, 11.934, 15.8, 2.675 ),
@@ -38,7 +38,7 @@ surfaces/2 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 24,
-"material": ExtResource( 3 ),
+"material": ExtResource( 4 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 20
@@ -50,16 +50,8 @@ surfaces/3 = {
 "blend_shape_data": [  ],
 "format": 97559,
 "index_count": 282,
-"material": ExtResource( 4 ),
+"material": ExtResource( 3 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 247
 }
-
-[node name="spaceCraft5" type="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, -1.19209e-07, -1, 0, 1, -1.19209e-07, -0.0284815, -1.90735e-06, 0.010107 )
-mesh = SubResource( 1 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
