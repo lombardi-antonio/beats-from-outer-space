@@ -95,6 +95,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ), Vector3( -6.10421e-07, 0, 4.04264 ), Vector3( -1.2246e-07, 0, 0.811018 ), Vector3( 0, 0, 0 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("ShipCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "explosion"
@@ -155,6 +167,18 @@ tracks/4/keys = {
 "method": "spawn_shrapnel"
 } ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("ShipCollision:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="SpatialMaterial" id=9]
 flags_transparent = true
@@ -204,6 +228,7 @@ material/2 = null
 
 [node name="ShipCollision" type="CollisionShape" parent="."]
 shape = SubResource( 4 )
+disabled = true
 
 [node name="Cooldown" type="Timer" parent="."]
 wait_time = 0.8
