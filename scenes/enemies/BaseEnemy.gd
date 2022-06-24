@@ -14,6 +14,7 @@ onready var cooldown: Timer = $Cooldown
 
 var dead: bool = false
 var can_shoot: bool = true
+var _is_invincible = false
 
 signal was_defeated()
 
@@ -76,6 +77,8 @@ func _shoot():
 
 
 func deal_damage(damage):
+	if _is_invincible: return
+
 	animation.play("blowback")
 	health -= damage
 	if health <= 0:
@@ -87,6 +90,7 @@ func deal_damage(damage):
 
 
 func deal_shrapnel_damage():
+	_is_invincible = true
 	animation.play("explosion")
 
 
@@ -112,6 +116,8 @@ func got_parried():
 
 func spawn_shrapnel():
 	if !is_instance_valid(shrapnel): return
+
+	_is_invincible = false
 	# spawn 6-8 shrapnel
 	for i in range(3):
 		_spawn_sharpnel_pieces(Vector3(1, 0, i + -1.3))

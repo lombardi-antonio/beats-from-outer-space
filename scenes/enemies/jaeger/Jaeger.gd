@@ -48,6 +48,7 @@ func _on_cooldown_timeout():
 		loaded_shot_timer.start()
 		loading_particles.emitting = true
 		can_shoot = false
+		_is_invincible = true
 	else:
 		can_shoot = true
 
@@ -56,6 +57,7 @@ func _on_loaded_cooldown_timeout():
 	can_shoot = false
 	_start_loaded_shot()
 	is_load_shooting = false
+	_is_invincible = false
 
 
 func _start_loaded_shot():
