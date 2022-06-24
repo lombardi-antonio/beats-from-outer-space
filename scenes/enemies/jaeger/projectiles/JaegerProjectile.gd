@@ -59,5 +59,5 @@ func remove_self():
 	queue_free()
 
 
-func _on_Timer_timeout():
+func _on_timer_timeout():
 	remove_self()

@@ -1,98 +1,61 @@
-extends Area
+extends "res://scenes/enemies/BaseEnemy.gd"
 
-onready var space = $"/root/Space"
-onready var animation = $animation_player
-onready var timer = $timer
-onready var collision = $Collision
-onready var loaded_shot_timer: Timer = $LoadedShotTimer
+export(bool) var can_load_attack: bool = false
+export(float) var cooldown_time: float = 0.8
+
+onready var loaded_shot_timer: Timer = $LoadedCooldown
 onready var loading_particles: Particles = $LoadingParticles
 
-export var speed = 1
-export var health = 30
-export var points = 10
-export var can_load_attack: bool = false
-export(PackedScene) var projectile
-export(PackedScene) var shrapnel
-
-var dead = false
-var can_shoot = true
-var is_loading_shot: bool = false
-
-signal was_defeated()
+var is_load_shooting: bool = false
 
 
 func _ready():
-	if not dead:
-		collision.disabled = true
+	# IMPORTANT: Does not overwrite parent _ready function!
+	# Both will be called. Same for _process and _physical_process.
+	# Only non Godot reserved functions will be overwritten (actual inheritance)
 
-	if can_load_attack:
-		timer.wait_time = 3.0
-
-	connect("body_entered", self, "_on_body_entered")
-	connect("area_entered", self, "_on_area_entered")
+	# Parent will be called first!
+	_init_timers()
 
 
-func _process(_delta):
+func _process_time_scale():
 	if Space.time_scale < 1:
-		timer.paused = true
+		cooldown.paused = true
 		loaded_shot_timer.paused = true
-		loading_particles.speed_scale = Space.time_scale
+
 	else:
-		timer.paused = false
+		cooldown.paused = false
 		loaded_shot_timer.paused = false
-		loading_particles.speed_scale = 1.0
-
-	if not dead:
-		if collision && collision.disabled && collision.global_transform.origin.z >= -3.15:
-			collision.disabled = false
-
-		if can_shoot:
-			_shoot()
 
 	animation.playback_speed = Space.time_scale
+	loading_particles.speed_scale = Space.time_scale
 
 
-func _shoot():
-	if dead:
-		return
-
-	var new_projectile = projectile.instance()
-	get_tree().get_root().add_child(new_projectile)
-	new_projectile.translation = global_transform.origin
-	can_shoot = false
-	timer.start()
+func _process_enemy_logic(_delta):
+	if not dead:
+		_invincibility_at_entry(-3.4)
+		_handle_shooting()
 
 
-func deal_damage(damage):
-	if is_loading_shot: return
-
-	animation.play("blowback")
-	health -= damage
-	if health <= 0:
-		dead = true
-		if collision: collision.queue_free()
-		hide()
-		space.points += points
-		emit_signal("was_defeated")
+func _init_timers():
+	if can_load_attack && cooldown_time > 0:
+		cooldown.wait_time = cooldown_time
 
 
-func shrapnel_damage():
-	animation.play("explosion")
-
-
-func _on_timer_timeout():
-	if can_load_attack && randi() % 3 == 0:
-		is_loading_shot = true
+func _on_cooldown_timeout():
+	if can_load_attack && randi() % 10 == 0:
+		is_load_shooting = true
 		loaded_shot_timer.start()
 		loading_particles.emitting = true
+		can_shoot = false
 	else:
 		can_shoot = true
 
 
-func _on_LoadedShotTimer_timeout():
+func _on_loaded_cooldown_timeout():
 	can_shoot = false
 	_start_loaded_shot()
-	is_loading_shot = false
+	is_load_shooting = false
 
 
 func _start_loaded_shot():
@@ -110,42 +73,18 @@ func _shoot_loaded_shot():
 	new_projectile.translation = global_transform.origin
 	new_projectile.scale *= 2
 	new_projectile.damage *= 2
-	timer.start()
-
-func remove_self():
-	hide()
-	queue_free()
+	cooldown.start()
 
 
 func _on_body_entered(body):
-	if is_loading_shot || body.name != 'VaporFalcon': return
+	if is_load_shooting || body.name != 'VaporFalcon': return
 
-	body.deal_damage(health)
+	body.deal_damage(collision_damage)
 	deal_damage(health)
 
 
 func got_parried():
-	if not is_loading_shot: return
+	if not is_load_shooting: return
 
+	is_load_shooting = false
 	animation.play("explosion")
-
-
-func _spawn_sharpnel_pieces(direction: Vector3):
-	var new_shrapnel = shrapnel.instance()
-	get_tree().get_root().add_child(new_shrapnel)
-	new_shrapnel.translation = global_transform.origin
-	new_shrapnel.direction = direction
-	new_shrapnel.speed = rand_range(0.4, 1.0)
-
-
-func spawn_shrapnel():
-	# spawn 6-8 shrapnel
-	for i in range(3):
-		_spawn_sharpnel_pieces(Vector3(1, 0, i + -1.3))
-		_spawn_sharpnel_pieces(Vector3(-1, 0, i + -1.3))
-
-	_spawn_sharpnel_pieces(Vector3(0, 0, -1))
-	_spawn_sharpnel_pieces(Vector3(0, 0, 1))
-
-	is_loading_shot = false
-	deal_damage(health)

@@ -489,5 +489,5 @@ draw_pass_1 = SubResource( 29 )
 wait_time = 0.2
 one_shot = true
 
-[connection signal="timeout" from="DeathTimeOut" to="." method="_on_DeathTimeOut_timeout"]
-[connection signal="timeout" from="ParryTimer" to="." method="_on_ParryTimer_timeout"]
+[connection signal="timeout" from="DeathTimeOut" to="." method="_on_death_timeout_timeout"]
+[connection signal="timeout" from="ParryTimer" to="." method="_on_parry_timer_timeout"]

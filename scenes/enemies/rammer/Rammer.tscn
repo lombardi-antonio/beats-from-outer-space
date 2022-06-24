@@ -67,6 +67,7 @@ tracks/3/keys = {
 [node name="EnemyRammer" instance=ExtResource( 3 )]
 script = ExtResource( 1 )
 health = 50
+collision_damage = 50
 
 [node name="ShipMesh" parent="." index="0"]
 transform = Transform( -0.0159076, -0.00107318, -1.58876e-06, -1.85417e-06, 2.55401e-05, -0.00999997, 0.00171709, -0.00994221, -2.55169e-05, 0, 0, -0.02 )
@@ -89,4 +90,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 
 [node name="Spinup" type="Timer" parent="." index="6"]
 
-[connection signal="timeout" from="Spinup" to="." method="_on_Spinup_timeout"]
+[connection signal="timeout" from="Spinup" to="." method="_on_spinup_timeout"]

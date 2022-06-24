@@ -207,10 +207,10 @@ func level_cleared():
 	add_to_path(Vector3(0.0, 0.25, -1.5))
 
 
-func _on_parryTimer_timeout():
+func _on_parry_timer_timeout():
 	_parry_prerec = false
 
 
-func _on_DeathTimeOut_timeout():
+func _on_death_timeout_timeout():
 	Space.time_scale = 0.05
 	get_tree().reload_current_scene()

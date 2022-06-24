@@ -26,12 +26,12 @@ func _process(delta):
 
 func _on_body_entered(body):
 	if body.is_in_group("enemies"):
-		body.shrapnel_damage()
+		body.deal_shrapnel_damage()
 		queue_free()
 
 func _on_area_entered(area):
 	if area.is_in_group("enemies"):
-		area.shrapnel_damage()
+		area.deal_shrapnel_damage()
 		queue_free()
 
 

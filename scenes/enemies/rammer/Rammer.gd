@@ -1,93 +1,61 @@
-extends Area
+extends "res://scenes/enemies/BaseEnemy.gd"
 
-onready var space = $"/root/Space"
-onready var mesh = $ShipMesh
-onready var collision = $ShipCollision
-onready var cooldown = $Cooldown
-onready var animation = $AnimationPlayer
+onready var mesh: MeshInstance = $ShipMesh
+onready var target: Position3D = $TargetPosition
+onready var spinup_position: Position3D = $SpinupPosition
+onready var spinup: Timer = $Spinup
 
-export var speed = 1.0
-export var health = 10
-export var damage = 10
-export var hit_damage = 20
-export var points = 5
-
-var dead = false
-var can_shoot = true
-
-signal was_defeated()
-
-onready var target = $TargetPosition
-onready var spinup = $Spinup
-onready var spinup_position = $SpinupPosition
-
-var spinup_ended = false
-var spiup_started = false
+var _spinup_ended: bool = false
+var _spiup_started: bool = false
 
 
-func _ready():
-	if collision:
-		collision.disabled = true
-
-	return connect("body_entered", self, "_on_body_entered")
+func _process(_delta):
+	_remove_at_target_pos()
 
 
-func _process(delta):
+func _remove_at_target_pos():
 	if dead:
 		return
-	if !collision:
-		return
-	if collision.translation.z >= target.translation.z:
+	if mesh.translation.z >= target.translation.z:
 		emit_signal("was_defeated")
 		queue_free()
 		return
 
+
+func _process_time_scale():
 	if space.time_scale < 1:
 		spinup.paused = true
 	else:
 		spinup.paused = false
 
+	animation.playback_speed = Space.time_scale
+
+
+func _process_enemy_logic(_delta):
 	if mesh.global_transform.origin.z < -3.3:
-		mesh.translation.z += speed * Space.time_scale * delta
-		collision.translation.z += speed * Space.time_scale * delta
+		mesh.translation.z += speed * Space.time_scale * _delta
+		collision.translation.z += speed * Space.time_scale * _delta
 	else:
-		if not spiup_started:
+		if not _spiup_started:
 			spinup.start()
-			spiup_started = true
+			_spiup_started = true
 
-	if spinup_ended:
-		mesh.translation.z += speed * Space.time_scale * delta
-		collision.translation.z += speed * Space.time_scale * delta
+	if _spinup_ended:
+		mesh.translation.z += speed * Space.time_scale * _delta
+		collision.translation.z += speed * Space.time_scale * _delta
 
 
-func _on_Spinup_timeout():
+func _on_spinup_timeout():
 	if dead:
 		return
-	spinup_ended = true
+	_spinup_ended = true
 	if collision:
 		collision.disabled = false
-
-
-func deal_damage(_damage):
-	animation.play("blowback")
-	health -= _damage
-	if health <= 0:
-		dead = true
-		if collision: collision.queue_free()
-		hide()
-		space.points += points
-		emit_signal("was_defeated")
 
 
 func got_parried():
 	pass
 
 
-func shrapnel_damage():
+func deal_shrapnel_damage():
 	deal_damage(health)
-
-
-func _on_body_entered(body):
-	if body.name == "VaporFalcon":
-		body.deal_damage(hit_damage)
-		deal_damage(health)

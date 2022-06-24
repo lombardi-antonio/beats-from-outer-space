@@ -1,48 +1,71 @@
 extends Area
 
-onready var space = $"/root/Space"
-onready var mesh = $ShipMesh
-onready var collision = $ShipCollision
-onready var cooldown = $Cooldown
-onready var animation = $AnimationPlayer
-
-export var speed = 1.0
-export var health = 10
-export var damage = 10
-export var hit_damage = 20
-export var points = 5
+export(float) var speed: float = 1
+export(int) var health: int = 30
+export(int) var collision_damage: int = 30
+export(int) var points: int = 10
 export(PackedScene) var projectile
+export(PackedScene) var shrapnel
 
-var dead = false
-var can_shoot = true
+onready var space: Spatial = $"/root/Space"
+onready var animation: AnimationPlayer = $AnimationPlayer
+onready var collision: CollisionShape = $ShipCollision
+onready var cooldown: Timer = $Cooldown
+
+var dead: bool = false
+var can_shoot: bool = true
 
 signal was_defeated()
 
 
 func _ready():
-	if projectile == null:
-		can_shoot = false
-	else:
-		cooldown.connect("timeout", self, "_on_cooldown_timeout")
-
-	return connect("body_entered", self, "_on_body_entered")
+	_init_collision()
+	_connect_signals()
 
 
 func _process(_delta):
-	# pause cooldown when in slow-mo
+	_process_time_scale()
+
+	if !dead:
+		_process_enemy_logic(_delta)
+
+
+func _init_collision():
+	if not dead && collision:
+		collision.disabled = true
+
+
+func _connect_signals():
+	return connect("body_entered", self, "_on_body_entered")
+
+
+func _process_time_scale():
 	if Space.time_scale < 1:
 		cooldown.paused = true
+
 	else:
 		cooldown.paused = false
 
 	animation.playback_speed = Space.time_scale
 
-	# if can_shoot:
-	# 	_shoot()
+
+# Overwrite this function for enemy behavior
+func _process_enemy_logic(_delta):
+	_invincibility_at_entry()
+	_handle_shooting()
+
+
+func _invincibility_at_entry(_till_z_value: float = -3.5):
+	if collision && collision.disabled && collision.global_transform.origin.z >= _till_z_value:
+		collision.disabled = false
+
+
+func _handle_shooting():
+	if can_shoot: _shoot()
 
 
 func _shoot():
-	if dead:
+	if !is_instance_valid(projectile):
 		return
 
 	var new_projectile = projectile.instance()
@@ -52,9 +75,9 @@ func _shoot():
 	cooldown.start()
 
 
-func deal_damage(_damage):
+func deal_damage(damage):
 	animation.play("blowback")
-	health -= _damage
+	health -= damage
 	if health <= 0:
 		dead = true
 		if collision: collision.queue_free()
@@ -63,11 +86,46 @@ func deal_damage(_damage):
 		emit_signal("was_defeated")
 
 
+func deal_shrapnel_damage():
+	animation.play("explosion")
+
+
 func _on_cooldown_timeout():
 	can_shoot = true
 
 
+func remove_self():
+	hide()
+	queue_free()
+
+
 func _on_body_entered(body):
-	if body.name == "VaperFalcon":
-		body.deal_damage(hit_damage)
-		queue_free()
+	if body.name != 'VaporFalcon': return
+
+	body.deal_damage(collision_damage)
+	deal_damage(health)
+
+
+func got_parried():
+	animation.play("explosion")
+
+
+func spawn_shrapnel():
+	if !is_instance_valid(shrapnel): return
+	# spawn 6-8 shrapnel
+	for i in range(3):
+		_spawn_sharpnel_pieces(Vector3(1, 0, i + -1.3))
+		_spawn_sharpnel_pieces(Vector3(-1, 0, i + -1.3))
+
+	_spawn_sharpnel_pieces(Vector3(0, 0, -1))
+	_spawn_sharpnel_pieces(Vector3(0, 0, 1))
+
+	deal_damage(health)
+
+
+func _spawn_sharpnel_pieces(direction: Vector3):
+	var new_shrapnel = shrapnel.instance()
+	get_tree().get_root().add_child(new_shrapnel)
+	new_shrapnel.translation = global_transform.origin
+	new_shrapnel.direction = direction
+	new_shrapnel.speed = rand_range(0.4, 1.0)
