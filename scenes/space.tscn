@@ -1,11 +1,11 @@
 [gd_scene load_steps=18 format=2]
 
+[ext_resource path="res://scenes/environment/Conductor.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player/VaporFalcon.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/environment/CameraBase.gd" type="Script" id=3]
 [ext_resource path="res://scenes/environment/starlight/Starlight.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Space.gd" type="Script" id=5]
 [ext_resource path="res://audio/ElectricPuppet.wav" type="AudioStream" id=6]
-[ext_resource path="res://scenes/environment/BgMusicStreamer.gd" type="Script" id=7]
 [ext_resource path="res://scenes/environment/UniverseMesh.gd" type="Script" id=8]
 [ext_resource path="res://default_theme.tres" type="Theme" id=9]
 [ext_resource path="res://scenes/environment/UserInterface.gd" type="Script" id=10]
@@ -59,12 +59,15 @@ spawner_list_level1 = [ ExtResource( 11 ) ]
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource( 8 )
 
-[node name="BackgroundMusicStreamer" type="AudioStreamPlayer3D" parent="."]
+[node name="Conductor" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.91262, -1.14649 )
 stream = ExtResource( 6 )
-unit_db = -30.0
+unit_db = -15.0
 pitch_scale = 0.02
-script = ExtResource( 7 )
+autoplay = true
+script = ExtResource( 1 )
+
+[node name="StartTimer" type="Timer" parent="Conductor"]
 
 [node name="UserInterface" type="Control" parent="."]
 visible = false
@@ -191,6 +194,9 @@ shape = SubResource( 11 )
 
 [connection signal="spawner_defeated" from="." to="UserInterface" method="_on_space_spawner_defeated"]
 [connection signal="spawner_defeated" from="." to="CameraBase" method="_on_space_spawner_defeated"]
+[connection signal="beat" from="Conductor" to="VaporFalcon" method="_on_Conductor_beat"]
+[connection signal="measure" from="Conductor" to="VaporFalcon" method="_on_Conductor_measure"]
+[connection signal="timeout" from="Conductor/StartTimer" to="Conductor" method="_on_StartTimer_timeout"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="UserInterface" method="_on_ContinueButton_pressed"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="CameraBase" method="_on_ContinueButton_pressed"]
