@@ -2,7 +2,6 @@ extends Spatial
 
 export var speed: float = 3
 export var offset: float = 0.2
-export var shooting_delay: float = 0.2
 export var health: int = 50
 export var projectile: PackedScene
 export var parry_area: PackedScene
@@ -16,7 +15,6 @@ onready var double_weapon: Spatial = $DoubleWeapon
 onready var tripple_weapon: Spatial = $TrippleWeapon
 onready var max_weapon: Spatial = $MaxWeapon
 onready var weapon_mesh: Spatial = $WeaponMesh
-onready var timer: Timer = $Timer
 onready var parry_timer: Timer = $ParryTimer
 onready var death_time_out: Timer = $DeathTimeOut
 onready var parry: Particles = $Parry
@@ -49,8 +47,6 @@ func add_to_path(position):
 
 func _ready():
 	_viewport_rect = get_viewport().get_visible_rect().size
-	timer.wait_time = shooting_delay
-	timer.connect("timeout", self, "on_shoot_delay_timeout")
 	_state = STATE.MOOVING
 
 
@@ -63,18 +59,6 @@ func _physics_process(delta):
 
 		STATE.MOOVING:
 			move_to_position(delta)
-
-			if _screen_touch and timer.paused:
-				timer.paused = false
-
-			if _screen_touch and _can_shoot:
-				shoot()
-				_can_shoot = false
-				timer.start()
-
-			if !_screen_touch:
-				timer.paused = true
-
 			pass
 
 		STATE.PARRY:
@@ -149,15 +133,6 @@ func rotate_with(direction, distance):
 	rotation_degrees.z = clamp(rotation_degrees.z, -70, 70)
 
 
-func on_shoot_delay_timeout():
-	if _screen_touch:
-		shoot()
-		timer.start()
-
-	if !_screen_touch:
-		_can_shoot = true
-
-
 func shoot():
 	match weapon:
 		0:
@@ -214,3 +189,13 @@ func _on_parry_timer_timeout():
 func _on_death_timeout_timeout():
 	Space.time_scale = 0.05
 	get_tree().reload_current_scene()
+
+
+func _on_Conductor_beat(_position):
+	pass # called for every beat in song
+
+
+func _on_Conductor_measure(_position):
+	# called for every measure in song (with 4 measure it will repeat after every 4 beats)
+	if _screen_touch:
+		shoot()
