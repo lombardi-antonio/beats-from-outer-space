@@ -11,3 +11,4 @@ addons/
 data_*/
 
 .github/
+.DS_Store/
