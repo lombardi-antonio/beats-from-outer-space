@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Stage_1_Note_4.mp3-0bce6e957b9ffb8dbedbc35ed28489bd.mp3str"
+
+[deps]
+
+source_file="res://scenes/player/audio/weaponLevel01/Stage_1_Note_4.mp3"
+dest_files=[ "res://.import/Stage_1_Note_4.mp3-0bce6e957b9ffb8dbedbc35ed28489bd.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

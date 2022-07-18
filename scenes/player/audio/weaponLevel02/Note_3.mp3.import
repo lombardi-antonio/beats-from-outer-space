@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Note_3.mp3-62bd68c44d69790fc180361ccf1adc0b.mp3str"
+
+[deps]
+
+source_file="res://scenes/player/audio/weaponLevel02/Note_3.mp3"
+dest_files=[ "res://.import/Note_3.mp3-62bd68c44d69790fc180361ccf1adc0b.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

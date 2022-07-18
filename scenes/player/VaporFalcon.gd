@@ -6,6 +6,7 @@ export var health: int = 50
 export var projectile: PackedScene
 export var parry_area: PackedScene
 export(int, "simple", "double", "tripple", "max") var weapon: int = 0
+export(Array, AudioStreamMP3) var notes_in_measure
 
 onready var animation: AnimationPlayer = $AnimationPlayer
 onready var background: MeshInstance = $"../UniverseMesh"
@@ -19,6 +20,7 @@ onready var parry_timer: Timer = $ParryTimer
 onready var death_time_out: Timer = $DeathTimeOut
 onready var parry: Particles = $Parry
 onready var explosion: Particles = $Explosion
+onready var audio_stream_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 var _path: Array = []
 var _dead: bool = false
@@ -29,6 +31,7 @@ var _screen_touch: bool = false
 var _state: int
 var _viewport_rect: Vector2 = Vector2.ZERO
 var _global_position: Vector2 = Vector2.ZERO
+var _current_note_index: int = 0
 
 enum STATE {
 	IDLE,
@@ -46,6 +49,8 @@ func add_to_path(position):
 
 
 func _ready():
+	audio_stream_player.set_stream(notes_in_measure[_current_note_index])
+
 	_viewport_rect = get_viewport().get_visible_rect().size
 	_state = STATE.MOOVING
 
@@ -136,6 +141,7 @@ func rotate_with(direction, distance):
 func shoot():
 	match weapon:
 		0:
+			audio_stream_player.play()
 			var new_projectile = projectile.instance()
 			get_parent().add_child(new_projectile)
 			new_projectile.translation = simple_weapon.global_transform.origin
@@ -198,4 +204,6 @@ func _on_Conductor_beat(_position):
 func _on_Conductor_measure(_position):
 	# called for every measure in song (with 4 measure it will repeat after every 4 beats)
 	if _screen_touch:
-		shoot()
+		audio_stream_player.set_stream(notes_in_measure[_position - 1])
+		if audio_stream_player.stream:
+			shoot()
