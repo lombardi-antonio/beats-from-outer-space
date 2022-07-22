@@ -80,3 +80,8 @@ func _on_StartTimer_timeout():
 		$StartTimer.stop()
 
 	_report_beat()
+
+
+func _on_VaporFalcon_was_defeated():
+	stop()
+	$StartTimer.stop()

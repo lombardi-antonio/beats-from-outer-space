@@ -212,6 +212,7 @@ shape = SubResource( 11 )
 [connection signal="pressed" from="UserInterface/ContinueButton" to="UserInterface" method="_on_ContinueButton_pressed"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="CameraBase" method="_on_ContinueButton_pressed"]
 [connection signal="was_defeated" from="VaporFalcon" to="." method="_on_vapor_falcon_was_defeated"]
+[connection signal="was_defeated" from="VaporFalcon" to="Conductor" method="_on_VaporFalcon_was_defeated"]
 [connection signal="was_defeated" from="VaporFalcon" to="CameraBase" method="_on_vapor_falcon_was_defeated"]
 [connection signal="was_defeated" from="VaporFalcon" to="UniverseMesh" method="_on_vapor_falcon_was_defeated"]
 
