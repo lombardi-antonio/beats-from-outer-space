@@ -7,6 +7,8 @@ export var projectile: PackedScene
 export var parry_area: PackedScene
 export(int, "simple", "double", "tripple", "max") var weapon: int = 0
 export(Array, AudioStreamMP3) var notes_in_measure
+export(Array, AudioStreamMP3) var player_hit_sounds
+export(AudioStreamMP3) var explosion_sound
 
 onready var animation: AnimationPlayer = $AnimationPlayer
 onready var background: MeshInstance = $"../UniverseMesh"
@@ -49,6 +51,7 @@ func add_to_path(position):
 
 
 func _ready():
+	randomize()
 	audio_stream_player.set_stream(notes_in_measure[_current_note_index])
 
 	_viewport_rect = get_viewport().get_visible_rect().size
@@ -169,7 +172,10 @@ func deal_damage(damage):
 	if _dead:
 		return
 
+	var sound_index = randi() % (player_hit_sounds.size() - 1)
 	animation.play("blowback")
+	audio_stream_player.set_stream(player_hit_sounds[sound_index])
+	audio_stream_player.play()
 	health -= damage
 
 	if health <= 0:
@@ -179,6 +185,9 @@ func deal_damage(damage):
 		death_time_out.start()
 		emit_signal("was_defeated")
 		animation.play("death")
+		audio_stream_player.set_stream(explosion_sound)
+		audio_stream_player.unit_db = 2
+		audio_stream_player.play()
 		explosion.emitting = true
 
 
@@ -194,7 +203,7 @@ func _on_parry_timer_timeout():
 
 func _on_death_timeout_timeout():
 	Space.time_scale = 0.05
-	get_tree().reload_current_scene()
+	var _reload = get_tree().reload_current_scene()
 
 
 func _on_Conductor_beat(_position):

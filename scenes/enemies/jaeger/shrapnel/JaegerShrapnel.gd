@@ -2,7 +2,7 @@ extends Area
 
 export var speed = 1
 export var damage = 10
-export var direction = Vector3(1, 0, 0.3)
+export var direction = Vector3(1, 0, 0)
 
 onready var space = $"/root/Space"
 
