@@ -2,7 +2,23 @@
 
 ![Beats from Outer Space](assets/PlaceholderBFOS.png)
 
-Beats from Outer Space is a 2.5D, low poly, Top Down Space Shooter with a Mobile first approach in mind.
+Hello there, Terrarians!
+I'm your mysterious radio host, Midnight, and I have a story to share with you.
+It's the tale of a brave space hero, who pilots the magnificent Vapor Falcon in a battle against the body snatching aliens from outer space.
+
+As you may know, the aliens have set their sights on Terra, our beloved home planet.
+They want to take over our bodies and use us as their own personal puppets.
+But our hero, with the help of the Vapor Falcon, is determined to stop them at all costs.
+
+Our hero will face many challenges and obstacles.
+They must navigate through treacherous asteroid fields, dodge laser blasts from enemy ships, and outsmart the cunning alien invaders.
+But with their quick reflexes and sharp shooting skills, our hero is more than capable of taking on whatever comes their way.
+
+In the end, it all comes down to a final showdown between the Vapor Falcon and the Mother Ship of the alien invaders.
+Will our hero be able to save Terra and protect the human race from being enslaved?
+Tune in to find out!
+Until then, stay safe out there and keep your eyes peeled for any signs of the menacing aliens.
+This is Midnight signing off.
 
 ## Controls
 

@@ -187,7 +187,6 @@ explosion_sound = ExtResource( 7 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -2 )
 cast_shadow = 0
 mesh = SubResource( 6 )
-material/0 = null
 script = ExtResource( 8 )
 
 [node name="FlyingLayer" type="StaticBody" parent="."]
