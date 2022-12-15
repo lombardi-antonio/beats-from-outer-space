@@ -102,7 +102,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.25 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
@@ -167,18 +167,6 @@ tracks/4/keys = {
 "method": "spawn_shrapnel"
 } ]
 }
-tracks/5/type = "value"
-tracks/5/path = NodePath("ShipCollision:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
 
 [sub_resource type="SpatialMaterial" id=9]
 flags_transparent = true
@@ -222,9 +210,6 @@ shrapnel = ExtResource( 7 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 generate_lightmap = false
 mesh = ExtResource( 1 )
-material/0 = null
-material/1 = null
-material/2 = null
 
 [node name="ShipCollision" type="CollisionShape" parent="."]
 shape = SubResource( 4 )

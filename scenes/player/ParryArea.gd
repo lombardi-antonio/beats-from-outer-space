@@ -5,8 +5,8 @@ onready var timer = $Timer
 
 
 func _ready():
-	connect("body_entered", self, "_on_body_entered")
-	connect("area_entered", self, "_on_area_entered")
+	var _connect_body = connect("body_entered", self, "_on_body_entered")
+	var _connect_area = connect("area_entered", self, "_on_area_entered")
 	timer.connect("timeout", self, "_on_timeout")
 
 

@@ -23,7 +23,7 @@ signal was_defeated()
 
 
 func _ready():
-	connect("body_entered", self, "_on_body_entered")
+	var _connect_body = connect("body_entered", self, "_on_body_entered")
 
 
 func _process(_delta):
@@ -51,7 +51,7 @@ func _shoot():
 	cooldown.start()
 
 
-func deal_damage(damage):
+func deal_damage(_damage):
 	animation.play("blowback")
 	health -= damage
 	if health <= 0:
