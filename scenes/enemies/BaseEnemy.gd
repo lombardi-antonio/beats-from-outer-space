@@ -80,9 +80,10 @@ func _shoot():
 func deal_damage(damage):
 	if _is_invincible: return
 
-	animation.play("blowback")
 	health -= damage
-	if health <= 0:
+	if health > 0:
+		animation.play("blowback")
+	else:
 		dead = true
 		if collision: collision.queue_free()
 		hide()

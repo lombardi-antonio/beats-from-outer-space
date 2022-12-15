@@ -7,8 +7,8 @@ onready var space = $"/root/Space"
 
 
 func _ready():
-	connect("body_entered", self, "_on_body_entered")
-	connect("area_entered", self, "_on_area_entered")
+	var _conect_body = connect("body_entered", self, "_on_body_entered")
+	var _conect_area = connect("area_entered", self, "_on_area_entered")
 
 
 func _process(delta):

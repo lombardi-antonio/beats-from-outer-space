@@ -10,8 +10,8 @@ onready var space = $"/root/Space"
 func _ready():
 	randomize()
 
-	connect("body_entered", self, "_on_body_entered")
-	connect("area_entered", self, "_on_area_entered")
+	var _connect_body = connect("body_entered", self, "_on_body_entered")
+	var _connect_area = connect("area_entered", self, "_on_area_entered")
 
 	rotation_degrees = Vector3(rand_range(0, 360), rand_range(0, 360), rand_range(0, 360))
 
