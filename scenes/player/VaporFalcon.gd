@@ -186,6 +186,7 @@ func deal_damage(damage):
 		emit_signal("was_defeated")
 		animation.play("death")
 		audio_stream_player.set_stream(explosion_sound)
+		audio_stream_player.unit_db = 2
 		audio_stream_player.play()
 		explosion.emitting = true
 
@@ -202,7 +203,7 @@ func _on_parry_timer_timeout():
 
 func _on_death_timeout_timeout():
 	Space.time_scale = 0.05
-	get_tree().reload_current_scene()
+	var _reload = get_tree().reload_current_scene()
 
 
 func _on_Conductor_beat(_position):

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/HYPER_POTIONS_fx_one_shot_8bit_explosion.mp3-2ae81508e6234c9bd023d5a75b780c61.mp3str"
+
+[deps]
+
+source_file="res://scenes/player/audio/hitSound/HYPER_POTIONS_fx_one_shot_8bit_explosion.mp3"
+dest_files=[ "res://.import/HYPER_POTIONS_fx_one_shot_8bit_explosion.mp3-2ae81508e6234c9bd023d5a75b780c61.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

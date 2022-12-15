@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Spaceflight_8Bit_BMaj_140Bpm.mp3-a994b787fc96869d860deb35143cf4d0.mp3str"
+
+[deps]
+
+source_file="res://audio/Spaceflight_8Bit_BMaj_140Bpm.mp3"
+dest_files=[ "res://.import/Spaceflight_8Bit_BMaj_140Bpm.mp3-a994b787fc96869d860deb35143cf4d0.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

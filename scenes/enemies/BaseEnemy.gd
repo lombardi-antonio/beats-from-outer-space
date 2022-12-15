@@ -1,6 +1,7 @@
 extends Area
 
 export(float) var speed: float = 1
+export(float) var shrapnel_angle: float = 0.0
 export(int) var health: int = 30
 export(int) var collision_damage: int = 30
 export(int) var points: int = 10
@@ -120,8 +121,8 @@ func spawn_shrapnel():
 	_is_invincible = false
 	# spawn 6-8 shrapnel
 	for i in range(3):
-		_spawn_sharpnel_pieces(Vector3(1, 0, i + -1.3))
-		_spawn_sharpnel_pieces(Vector3(-1, 0, i + -1.3))
+		_spawn_sharpnel_pieces(Vector3(1, 0, i + (-1 + shrapnel_angle)))
+		_spawn_sharpnel_pieces(Vector3(-1, 0, i + (-1 + shrapnel_angle)))
 
 	_spawn_sharpnel_pieces(Vector3(0, 0, -1))
 	_spawn_sharpnel_pieces(Vector3(0, 0, 1))

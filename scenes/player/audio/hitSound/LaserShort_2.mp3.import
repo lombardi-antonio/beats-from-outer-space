@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/LaserShort_2.mp3-cd86b0265a895b68a15cb5b185488c0d.mp3str"
+
+[deps]
+
+source_file="res://scenes/player/audio/hitSound/LaserShort_2.mp3"
+dest_files=[ "res://.import/LaserShort_2.mp3-cd86b0265a895b68a15cb5b185488c0d.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
