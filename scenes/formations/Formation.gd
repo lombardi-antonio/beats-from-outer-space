@@ -2,9 +2,10 @@ extends Spatial
 
 onready var space = $"/root/Space"
 
-export var speed = 0.5
-export var target_positon_min = -1.0
-export var target_positon_max = 1.0
+export(float) var speed = 0.5
+export(float) var target_positon_min = -1.0
+export(float) var target_positon_max = 1.0
+export(Array) var upgrade_matrix = [[0, 0], [0, 0], [0, 0]]
 
 var target_position
 var left_bound
@@ -22,6 +23,9 @@ func _ready():
 	right_bound = translation.x +0.2
 	direction = 1 if rand_range(0, 100) > 50 else -1
 	enemy_count = get_children().size()
+
+	if enemy_count >= upgrade_matrix.size():
+		_add_upgrade()
 
 
 func _process(delta):
@@ -46,6 +50,16 @@ func movement(delta):
 func _defeated():
 	emit_signal("formation_defeated")
 	queue_free()
+
+
+func _add_upgrade():
+	for index in get_children().size():
+		var enemy = get_children()[index]
+		var upgrade_array = upgrade_matrix[index]
+
+		if upgrade_array[0]:
+			enemy.holds_upgrade = 1
+			enemy.upgrade_level = upgrade_array[1]
 
 
 func _on_any_enemy_defeated():

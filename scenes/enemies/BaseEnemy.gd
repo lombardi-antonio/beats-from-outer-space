@@ -92,7 +92,7 @@ func release_upgrade():
 		new_upgrade.level = upgrade_level
 
 	get_tree().get_root().add_child(new_upgrade)
-	new_upgrade.translation = global_transform.origin
+	new_upgrade.translation = get_children()[0].global_transform.origin
 
 	holds_upgrade = false
 

@@ -20,7 +20,7 @@ func _ready():
 	enemy_count = get_children().size()
 
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 
