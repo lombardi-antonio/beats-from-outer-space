@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/formations/Formation1Bomber.gd" type="Script" id=1]
+[ext_resource path="res://scenes/enemies/bomber/Bomber.tscn" type="PackedScene" id=2]
+
+[node name="BaseFormation" type="Spatial"]
+script = ExtResource( 1 )
+target_positon_min = -1.2
+target_positon_max = -0.6
+
+[node name="EnemyBomber" parent="." instance=ExtResource( 2 )]
+
+[connection signal="was_defeated" from="EnemyBomber" to="." method="_on_EnemyBomber_was_defeated"]

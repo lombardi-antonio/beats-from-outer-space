@@ -1,29 +1,16 @@
-extends Area
+extends "res://scenes/enemies/BaseEnemy.gd"
 
-onready var space = $"/root/Space"
-onready var mesh = $ShipMesh
-onready var collision = $ShipCollision
-onready var cooldown = $Cooldown
 onready var shot_cooldown = $TripleShotCooldown
-onready var animation = $AnimationPlayer
 onready var barrel = $Berrel
 
-export var speed = 1
-export var health = 10
 export var damage = 10
 export var hit_damage = 20
-export var points = 5
-export(PackedScene) var projectile
 
-var dead = false
-var can_shoot = true
 var shot_count = 0
-
-signal was_defeated()
 
 
 func _ready():
-	var _connect_body = connect("body_entered", self, "_on_body_entered")
+	pass
 
 
 func _process(_delta):
@@ -51,28 +38,12 @@ func _shoot():
 	cooldown.start()
 
 
-func deal_damage(_damage):
-	animation.play("blowback")
-	health -= damage
-	if health <= 0:
-		dead = true
-		if collision: collision.queue_free()
-		hide()
-		space.points += points
-		emit_signal("was_defeated")
-
-
 func got_parried():
 	pass
 
+
 func shrapnel_damage():
 	pass
-
-
-func _on_body_entered(body):
-	if body.name == "VaporFalcon":
-		body.deal_damage(hit_damage)
-		queue_free()
 
 
 func _on_TripleShotCooldown_timeout():
