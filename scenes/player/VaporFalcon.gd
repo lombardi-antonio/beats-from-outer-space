@@ -191,6 +191,14 @@ func deal_damage(damage):
 		explosion.emitting = true
 
 
+func update_weapon(level):
+	if _dead:
+		return
+
+	if level > weapon:
+		weapon = level
+
+
 func level_cleared():
 	if Space.time_scale >= .35:
 		Space.time_scale = .35

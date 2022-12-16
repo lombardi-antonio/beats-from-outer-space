@@ -1,12 +1,15 @@
 extends Area
 
+export(bool) var holds_upgrade: bool = false
 export(float) var speed: float = 1
 export(float) var shrapnel_angle: float = 0.0
 export(int) var health: int = 30
 export(int) var collision_damage: int = 30
 export(int) var points: int = 10
+export(int) var upgrade_level: int = 1
 export(PackedScene) var projectile
 export(PackedScene) var shrapnel
+export(PackedScene) var upgrade
 
 onready var space: Spatial = $"/root/Space"
 onready var animation: AnimationPlayer = $AnimationPlayer
@@ -77,7 +80,27 @@ func _shoot():
 	cooldown.start()
 
 
+func release_upgrade():
+	if !holds_upgrade:
+		return
+
+	if !is_instance_valid(upgrade):
+		return
+
+	var new_upgrade = upgrade.instance()
+	if upgrade_level > 1:
+		new_upgrade.level = upgrade_level
+
+	get_tree().get_root().add_child(new_upgrade)
+	new_upgrade.translation = global_transform.origin
+
+	holds_upgrade = false
+
+
 func deal_damage(damage):
+	if dead:
+		return
+
 	if _is_invincible: return
 
 	health -= damage
@@ -85,7 +108,9 @@ func deal_damage(damage):
 		animation.play("blowback")
 	else:
 		dead = true
-		if collision: collision.queue_free()
+		release_upgrade()
+		if collision:
+			collision.queue_free()
 		hide()
 		space.points += points
 		emit_signal("was_defeated")
