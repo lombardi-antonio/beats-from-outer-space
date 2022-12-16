@@ -23,7 +23,7 @@ metallic_specular = 1.0
 roughness = 0.0
 emission_enabled = true
 emission = Color( 0.00392157, 0.741176, 0, 1 )
-emission_energy = 0.5
+emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
@@ -34,10 +34,6 @@ radius = 0.0189391
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
-
-[node name="OmniLight" type="OmniLight" parent="."]
-light_color = Color( 0.858824, 0.380392, 0.992157, 1 )
-light_energy = 1.5
 
 [node name="projectile" type="MeshInstance" parent="."]
 transform = Transform( 0.025, 0, 0, 0, 0.025, 0, 0, 0, 0.025, 0, 0, 0 )

@@ -5,6 +5,8 @@
 
 [node name="formation" type="Spatial"]
 script = ExtResource( 2 )
+target_positon_min = -1.2
+target_positon_max = -0.2
 upgrade_matrix = [ [ 1, 1 ], [ 0, 0 ], [ 0, 0 ] ]
 
 [node name="EnemyJaeger" parent="." instance=ExtResource( 1 )]
@@ -12,7 +14,6 @@ transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01
 health = 80
 
 [node name="EnemyJaeger2" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0, 0, 0 )
 shrapnel_angle = 0.3
 health = 80
 can_load_attack = true

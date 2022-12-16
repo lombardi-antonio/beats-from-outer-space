@@ -5,9 +5,10 @@
 
 [node name="BaseFormation" type="Spatial"]
 script = ExtResource( 1 )
+target_positon_min = -1.2
+target_positon_max = -0.2
 
 [node name="EnemyJaeger" parent="." instance=ExtResource( 2 )]
-transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0, 0, 0 )
 health = 20
 
 [connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_EnemyJaeger_was_defeated"]
