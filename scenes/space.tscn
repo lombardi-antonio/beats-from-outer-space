@@ -10,7 +10,7 @@
 [ext_resource path="res://scenes/environment/UniverseMesh.gd" type="Script" id=8]
 [ext_resource path="res://default_theme.tres" type="Theme" id=9]
 [ext_resource path="res://scenes/environment/UserInterface.gd" type="Script" id=10]
-[ext_resource path="res://scenes/spawner/Spawner1-1.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/spawner/spawner1-1.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/player/audio/hitSound/LaserShort_2.mp3" type="AudioStream" id=12]
 
 [sub_resource type="ProceduralSky" id=9]
