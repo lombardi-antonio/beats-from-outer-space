@@ -4,15 +4,17 @@ importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/purple.png-844a0d700820f7245b6d600a65da611a.s3tc.stex"
 path.etc2="res://.import/purple.png-844a0d700820f7245b6d600a65da611a.etc2.stex"
+path.etc="res://.import/purple.png-844a0d700820f7245b6d600a65da611a.etc.stex"
+path.pvrtc="res://.import/purple.png-844a0d700820f7245b6d600a65da611a.pvrtc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
+"imported_formats": [ "s3tc", "etc2", "etc", "pvrtc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://sprites/purple.png"
-dest_files=[ "res://.import/purple.png-844a0d700820f7245b6d600a65da611a.s3tc.stex", "res://.import/purple.png-844a0d700820f7245b6d600a65da611a.etc2.stex" ]
+dest_files=[ "res://.import/purple.png-844a0d700820f7245b6d600a65da611a.s3tc.stex", "res://.import/purple.png-844a0d700820f7245b6d600a65da611a.etc2.stex", "res://.import/purple.png-844a0d700820f7245b6d600a65da611a.etc.stex", "res://.import/purple.png-844a0d700820f7245b6d600a65da611a.pvrtc.stex" ]
 
 [params]
 
@@ -30,6 +32,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=false

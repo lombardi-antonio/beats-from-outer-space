@@ -31,7 +31,8 @@ window/size/height=320
 window/size/test_width=760
 window/size/test_height=1280
 window/handheld/orientation="portrait"
-window/stretch/mode="2d"
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [editor_plugins]
 
@@ -52,4 +53,6 @@ layer_1=false
 
 [rendering]
 
+vram_compression/import_etc=true
+vram_compression/import_pvrtc=true
 environment/default_environment="res://default_env.tres"

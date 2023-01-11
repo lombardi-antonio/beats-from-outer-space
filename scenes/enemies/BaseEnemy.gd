@@ -104,7 +104,6 @@ func deal_damage(damage):
 	if _is_invincible: return
 
 	health -= damage
-	print(health)
 	if health > 0:
 		animation.play("blowback")
 	else:
