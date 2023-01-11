@@ -90,3 +90,8 @@ func got_parried():
 
 	is_load_shooting = false
 	animation.play("explosion")
+
+
+func deal_shrapnel_damage():
+	_is_invincible = true
+	animation.play("explosion")

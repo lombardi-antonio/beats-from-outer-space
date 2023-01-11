@@ -9,5 +9,8 @@ target_positon_min = -1.2
 target_positon_max = -0.6
 
 [node name="EnemyBomber" parent="." instance=ExtResource( 2 )]
+health = 120
+collision_damage = 120
+points = 1000
 
 [connection signal="was_defeated" from="EnemyBomber" to="." method="_on_EnemyBomber_was_defeated"]

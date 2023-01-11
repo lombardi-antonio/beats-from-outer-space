@@ -117,8 +117,7 @@ func deal_damage(damage):
 
 
 func deal_shrapnel_damage():
-	_is_invincible = true
-	animation.play("explosion")
+	pass
 
 
 func _on_cooldown_timeout():

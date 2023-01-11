@@ -18,7 +18,6 @@ var step = .01
 
 
 func _ready():
-	print(level)
 	textMesh.text = String(level) + "UP"
 	start(Vector3(0, 0, 1), null)
 	var _connect_body = connect("body_entered", self, "_on_body_entered")

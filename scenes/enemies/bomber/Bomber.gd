@@ -42,8 +42,8 @@ func got_parried():
 	pass
 
 
-func shrapnel_damage():
-	pass
+func deal_shrapnel_damage():
+	deal_damage(20)
 
 
 func _on_TripleShotCooldown_timeout():
