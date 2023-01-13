@@ -20,9 +20,6 @@ run/main_scene="res://scenes/space.tscn"
 [autoload]
 
 Space="*res://scenes/Space.gd"
-UserData="*res://addons/github-integration/scripts/user_data.gd"
-IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
-RestHandler="*res://addons/github-integration/scripts/RestHandler.gd"
 
 [display]
 
@@ -41,6 +38,10 @@ enabled=PoolStringArray( "github-integration" )
 [environment]
 
 layer_1=false
+
+[global]
+
+export=false
 
 [layer_names]
 
