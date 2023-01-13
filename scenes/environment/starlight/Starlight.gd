@@ -1,9 +1,10 @@
 extends Spatial
 
 
-onready var spotlight: Spatial = $Spotlight
-onready var position: Position3D = $Position
 onready var space: Spatial = $"/root/Space"
+onready var spotlight: Spatial = $Spotlight
+onready var mesh: MeshInstance = $Spotlight/MeshInstance
+onready var position: Position3D = $Position
 
 export var speed: float = 1.0
 
@@ -21,6 +22,10 @@ func _ready():
 
 func _process(delta):
 	spotlight.translation.z += speed * Space.time_scale * delta
+
+	mesh.rotate_x(10.0 * Space.time_scale * delta)
+	mesh.rotate_y(20.0 * Space.time_scale * delta)
+	mesh.rotate_z(5.0 * Space.time_scale * delta)
 
 	if spotlight.translation.z > _end_pos:
 		_randomize_star_pos()
