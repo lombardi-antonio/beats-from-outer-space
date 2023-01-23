@@ -7,6 +7,9 @@ onready var loaded_shot_timer: Timer = $LoadedCooldown
 onready var loading_particles: Particles = $LoadingParticles
 
 var is_load_shooting: bool = false
+var left_bound: float
+var right_bound: float
+var direction: int
 
 
 func _ready():
@@ -16,6 +19,9 @@ func _ready():
 
 	# Parent will be called first!
 	_init_timers()
+	left_bound = target_translation.x -0.02
+	right_bound = target_translation.x +0.02
+	direction = 1 if rand_range(0, 100) > 50 else -1
 
 
 func _process_time_scale():
@@ -83,6 +89,19 @@ func _on_body_entered(body):
 
 	body.deal_damage(collision_damage)
 	deal_damage(health)
+
+
+func _hold_position_logic(_delta):
+	if transform.origin != target_translation:
+		transform.origin = transform.origin.move_toward(target_translation, speed * Space.time_scale * _delta)
+
+	if transform.origin.x > right_bound:
+		direction = -1
+
+	if transform.origin.x < left_bound:
+		direction = 1
+
+	target_translation = target_translation + Vector3(0.05 * direction * Space.time_scale , 0.0, 0.0)
 
 
 func got_parried():

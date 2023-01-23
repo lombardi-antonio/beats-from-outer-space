@@ -1,5 +1,6 @@
 extends Area
 
+export(int, "hold_position", "follow", "target_hit") var behaviour: int = 0
 export(bool) var holds_upgrade: bool = false
 export(float) var speed: float = 1
 export(float) var shrapnel_angle: float = 0.0
@@ -15,10 +16,18 @@ onready var space: Spatial = $"/root/Space"
 onready var animation: AnimationPlayer = $AnimationPlayer
 onready var collision: CollisionShape = $ShipCollision
 onready var cooldown: Timer = $Cooldown
+onready var target_position: Position3D = $TargetPosition
 
 var dead: bool = false
 var can_shoot: bool = true
+var target_translation: Vector3 = Vector3.ZERO
 var _is_invincible = false
+
+enum STATE {
+	HOLD_POSITION,
+	FOLLOW,
+	TARGET_HIT
+}
 
 signal was_defeated()
 
@@ -26,6 +35,8 @@ signal was_defeated()
 func _ready():
 	_init_collision()
 	_connect_signals()
+	target_translation = target_position.transform.origin
+
 
 
 func _process(_delta):
@@ -33,6 +44,17 @@ func _process(_delta):
 
 	if !dead:
 		_process_enemy_logic(_delta)
+
+	match behaviour:
+		STATE.HOLD_POSITION:
+			_hold_position_logic(_delta)
+
+		STATE.FOLLOW:
+			_hold_position_logic(_delta)
+			_follow_player_logic(_delta)
+
+		STATE.TARGET_HIT:
+			_target_and_hit_player(_delta)
 
 
 func _init_collision():
@@ -78,6 +100,18 @@ func _shoot():
 	new_projectile.translation = global_transform.origin
 	can_shoot = false
 	cooldown.start()
+
+
+func _hold_position_logic(_delta):
+	pass
+
+
+func _follow_player_logic(_delta):
+	pass
+
+
+func _target_and_hit_player(_delta):
+	pass
 
 
 func release_upgrade():

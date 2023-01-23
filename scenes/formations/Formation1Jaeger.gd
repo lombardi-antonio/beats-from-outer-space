@@ -25,12 +25,13 @@ func _ready():
 
 
 func _process(delta):
-	movement(delta)
-	translation.x += speed * Space.time_scale * direction * delta
-	if translation.x > right_bound:
-		direction = -1
-	elif translation.x < left_bound:
-		direction = 1
+	# movement(delta)
+	# translation.x += speed * Space.time_scale * direction * delta
+	# if translation.x > right_bound:
+	# 	direction = -1
+	# elif translation.x < left_bound:
+	# 	direction = 1
+	pass
 
 
 func movement(delta):

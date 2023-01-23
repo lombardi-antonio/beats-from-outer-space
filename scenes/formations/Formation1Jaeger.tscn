@@ -11,4 +11,9 @@ target_positon_max = -0.2
 [node name="EnemyJaeger" parent="." instance=ExtResource( 2 )]
 health = 20
 
+[node name="TargetPosition" parent="EnemyJaeger" index="6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6 )
+
 [connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_EnemyJaeger_was_defeated"]
+
+[editable path="EnemyJaeger"]
