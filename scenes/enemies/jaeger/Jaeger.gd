@@ -5,11 +5,14 @@ export(float) var cooldown_time: float = 0.8
 
 onready var loaded_shot_timer: Timer = $LoadedCooldown
 onready var loading_particles: Particles = $LoadingParticles
+onready var detection_collision: CollisionShape = $DetectionArea/CollisionShape
 
 var is_load_shooting: bool = false
 var left_bound: float
 var right_bound: float
 var direction: int
+
+var target_player_node: KinematicBody = null
 
 
 func _ready():
@@ -18,9 +21,13 @@ func _ready():
 	# Only non Godot reserved functions will be overwritten (actual inheritance)
 
 	# Parent will be called first!
+
+	if behaviour == STATE.FOLLOW:
+		detection_collision.disabled = false
+
 	_init_timers()
-	left_bound = target_translation.x -0.02
-	right_bound = target_translation.x +0.02
+	left_bound = target_translation.x -0.25
+	right_bound = target_translation.x +0.25
 	direction = 1 if rand_range(0, 100) > 50 else -1
 
 
@@ -84,6 +91,14 @@ func _shoot_loaded_shot():
 	cooldown.start()
 
 
+func _handle_shooting():
+	if behaviour != STATE.FOLLOW || !target_player_node:
+		if can_shoot: _shoot()
+
+	elif global_transform.origin.x >= target_player_node.global_transform.origin.x -0.01 && global_transform.origin.x <= target_player_node.global_transform.origin.x +0.01:
+		if can_shoot: _shoot()
+
+
 func _on_body_entered(body):
 	if is_load_shooting || body.name != 'VaporFalcon': return
 
@@ -92,16 +107,44 @@ func _on_body_entered(body):
 
 
 func _hold_position_logic(_delta):
-	if transform.origin != target_translation:
-		transform.origin = transform.origin.move_toward(target_translation, speed * Space.time_scale * _delta)
+	if global_transform.origin != target_translation:
+		global_transform.origin = global_transform.origin.move_toward(target_translation, speed * Space.time_scale * _delta)
+	else:
+		if global_transform.origin.x > right_bound:
+			direction = -1
 
-	if transform.origin.x > right_bound:
-		direction = -1
+		if global_transform.origin.x < left_bound:
+			direction = 1
 
-	if transform.origin.x < left_bound:
-		direction = 1
+		target_translation = target_translation + Vector3(0.05 * direction * Space.time_scale , 0.0, 0.0)
 
-	target_translation = target_translation + Vector3(0.05 * direction * Space.time_scale , 0.0, 0.0)
+		var direction_to_player = global_transform.origin.direction_to(Vector3(target_translation.x, global_transform.origin.y, target_translation.y + 0.5))
+		var distance_to_player = global_transform.origin.distance_to(Vector3(target_translation.x, global_transform.origin.y, target_translation.y + 0.5))
+
+		rotate_with(direction_to_player, distance_to_player)
+
+
+func _follow_player_logic(_delta):
+	if target_player_node:
+		target_translation.x = target_player_node.global_transform.origin.x
+		target_translation.z = target_player_node.global_transform.origin.z - 0.5
+
+		if global_transform.origin != target_translation:
+			left_bound = target_translation.x -0.5
+			right_bound = target_translation.x +0.5
+
+			if global_transform.origin.x > right_bound:
+				direction = -1
+
+			if global_transform.origin.x < left_bound:
+				direction = 1
+
+			target_translation = target_translation + Vector3(direction * Space.time_scale , 0.0, 0.0)
+
+			var direction_to_player = global_transform.origin.direction_to(Vector3(target_player_node.global_transform.origin.x, global_transform.origin.y, target_player_node.global_transform.origin.y))
+			var distance_to_player = global_transform.origin.distance_to(Vector3(target_player_node.global_transform.origin.x, global_transform.origin.y, target_player_node.global_transform.origin.y))
+
+			rotate_with(direction_to_player, distance_to_player)
 
 
 func got_parried():
@@ -114,3 +157,14 @@ func got_parried():
 func deal_shrapnel_damage():
 	_is_invincible = true
 	animation.play("explosion")
+
+
+func rotate_with(ship_direction, ship_distance):
+	rotation.z = ship_direction.x * ship_distance * 5
+	rotation_degrees.z = clamp(rotation_degrees.z, -50, 50)
+
+
+func _on_DetectionArea_body_entered(body):
+	if body.name == 'VaporFalcon':
+		target_player_node = body
+		speed = 1.0

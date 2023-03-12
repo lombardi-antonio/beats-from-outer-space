@@ -24,7 +24,7 @@ func _ready():
 	enemy_count = get_children().size()
 
 
-func _process(delta):
+func _process(_delta):
 	# movement(delta)
 	# translation.x += speed * Space.time_scale * direction * delta
 	# if translation.x > right_bound:
@@ -34,14 +34,8 @@ func _process(delta):
 	pass
 
 
-func movement(delta):
-	if is_in_position:
-		return
-
-	translation.z += speed * Space.time_scale * delta
-	if translation.z >= target_position:
-		translation.z = target_position
-		is_in_position = true
+func movement(_delta):
+	pass
 
 
 func _defeated():

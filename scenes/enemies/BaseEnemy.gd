@@ -35,7 +35,7 @@ signal was_defeated()
 func _ready():
 	_init_collision()
 	_connect_signals()
-	target_translation = target_position.transform.origin
+	if target_position: target_translation = target_position.global_transform.origin
 
 
 
@@ -50,8 +50,8 @@ func _process(_delta):
 			_hold_position_logic(_delta)
 
 		STATE.FOLLOW:
-			_hold_position_logic(_delta)
 			_follow_player_logic(_delta)
+			_hold_position_logic(_delta)
 
 		STATE.TARGET_HIT:
 			_target_and_hit_player(_delta)
