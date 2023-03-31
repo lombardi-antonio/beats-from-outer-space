@@ -51,7 +51,7 @@ tracks/3/keys = {
 
 [node name="EnemyRammer" instance=ExtResource( 3 )]
 script = ExtResource( 1 )
-health = 50
+health = 10
 collision_damage = 50
 upgrade = ExtResource( 4 )
 
@@ -65,7 +65,7 @@ transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0.01, -0.02 )
 [node name="AnimationPlayer" parent="." index="3"]
 anims/blowback = SubResource( 3 )
 
-[node name="TargetPosition" type="Position3D" parent="." index="4"]
+[node name="TargetPosition" parent="." index="4"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5 )
 
 [node name="SpinupPosition" type="Position3D" parent="." index="5"]

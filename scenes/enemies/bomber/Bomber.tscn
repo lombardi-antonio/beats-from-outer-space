@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/enemies/bomber/Bomber.gd" type="Script" id=1]
 [ext_resource path="res://models/Bomber.tres" type="ArrayMesh" id=2]
@@ -88,13 +88,17 @@ tracks/3/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="CylinderShape" id=7]
+height = 20.0
+radius = 100.0
+
 [node name="EnemyBomber" type="Area" groups=["enemies"]]
 transform = Transform( -0.01, 0, -8.74228e-10, 0, 0.01, 0, 8.74228e-10, 0, -0.01, 0, 0, 0 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
-speed = 2.0
-health = 100
+speed = 0.5
+health = 160
 collision_damage = 100
 points = 100
 projectile = ExtResource( 3 )
@@ -121,6 +125,15 @@ anims/blowback = SubResource( 5 )
 
 [node name="Berrel" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0, 0.07 )
+
+[node name="TargetPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100 )
+
+[node name="DetectionArea" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="DetectionArea"]
+shape = SubResource( 7 )
+disabled = true
 
 [connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
 [connection signal="timeout" from="TripleShotCooldown" to="." method="_on_TripleShotCooldown_timeout"]

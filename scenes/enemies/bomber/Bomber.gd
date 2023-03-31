@@ -6,7 +6,7 @@ onready var barrel = $Berrel
 export var damage = 10
 export var hit_damage = 20
 
-var shot_count = 0
+var shot_count: int = 0
 
 
 func _ready():
