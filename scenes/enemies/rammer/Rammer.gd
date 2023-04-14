@@ -80,4 +80,3 @@ func _on_DetectionArea_body_entered(body):
 		pass
 	if body.name == 'VaporFalcon':
 		target_player_node = body
-		#speed = 1.0

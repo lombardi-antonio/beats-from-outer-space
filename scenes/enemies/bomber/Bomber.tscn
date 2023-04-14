@@ -130,6 +130,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0, 0.07 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100 )
 
 [node name="DetectionArea" type="Area" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="DetectionArea"]
 shape = SubResource( 7 )
@@ -137,3 +139,4 @@ disabled = true
 
 [connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
 [connection signal="timeout" from="TripleShotCooldown" to="." method="_on_TripleShotCooldown_timeout"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
