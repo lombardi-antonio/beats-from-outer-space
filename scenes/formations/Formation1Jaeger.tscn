@@ -3,12 +3,13 @@
 [ext_resource path="res://scenes/formations/Formation1Jaeger.gd" type="Script" id=1]
 [ext_resource path="res://scenes/enemies/jaeger/Jaeger.tscn" type="PackedScene" id=2]
 
-[node name="BaseFormation" type="Spatial"]
+[node name="BaseFormation2" type="Spatial"]
 script = ExtResource( 1 )
 target_positon_min = -1.2
 target_positon_max = -0.2
 
 [node name="EnemyJaeger" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0, 0, 0 )
 
 [node name="DetectionArea" parent="EnemyJaeger" index="7"]
 collision_layer = 2
