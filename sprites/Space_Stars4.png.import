@@ -1,34 +1,13 @@
 [remap]
 
-importer="texture"
-type="StreamTexture"
-path="res://.import/Space_Stars4.png-5f15f45b6b86b3f8565c0351d0eb2524.stex"
-metadata={
-"vram_texture": false
-}
+importer="image"
+type="Image"
+path="res://.import/Space_Stars4.png-5f15f45b6b86b3f8565c0351d0eb2524.image"
 
 [deps]
 
 source_file="res://sprites/Space_Stars4.png"
-dest_files=[ "res://.import/Space_Stars4.png-5f15f45b6b86b3f8565c0351d0eb2524.stex" ]
+dest_files=[ "res://.import/Space_Stars4.png-5f15f45b6b86b3f8565c0351d0eb2524.image" ]
 
 [params]
 
-compress/mode=0
-compress/lossy_quality=0.7
-compress/hdr_mode=0
-compress/bptc_ldr=0
-compress/normal_map=0
-flags/repeat=0
-flags/filter=false
-flags/mipmaps=false
-flags/anisotropic=false
-flags/srgb=2
-process/fix_alpha_border=true
-process/premult_alpha=false
-process/HDR_as_SRGB=false
-process/invert_color=false
-stream=false
-size_limit=0
-detect_3d=false
-svg/scale=1.0
