@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://models/Jaeger.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://scenes/powerup/Powerup.tscn" type="PackedScene" id=2]
@@ -199,11 +199,17 @@ angle_random = 1.0
 [sub_resource type="QuadMesh" id=10]
 size = Vector2( 0.5, 0.5 )
 
+[sub_resource type="CylinderShape" id=11]
+height = 20.0
+radius = 100.0
+
 [node name="EnemyJaeger" type="Area" groups=["enemies"]]
 transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0, 0, 0 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 5 )
+speed = 0.5
+health = 100
 projectile = ExtResource( 6 )
 shrapnel = ExtResource( 7 )
 upgrade = ExtResource( 2 )
@@ -240,5 +246,15 @@ one_shot = true
 process_material = SubResource( 8 )
 draw_pass_1 = SubResource( 10 )
 
+[node name="TargetPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100 )
+
+[node name="DetectionArea" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="DetectionArea"]
+shape = SubResource( 11 )
+disabled = true
+
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
 [connection signal="timeout" from="LoadedCooldown" to="." method="_on_loaded_cooldown_timeout"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]

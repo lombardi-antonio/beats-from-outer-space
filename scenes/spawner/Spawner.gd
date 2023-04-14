@@ -2,9 +2,6 @@ extends Spatial
 
 export(Array, PackedScene) var formation_list
 
-onready var formation_target_min = $formation_target_min
-onready var formation_target_max = $formation_target_max
-
 var offset = 0.8
 var wave = 0
 var withdraw = false
@@ -23,8 +20,6 @@ func _process(delta):
 func _spawn(formation):
 	var new_formation = formation.instance()
 	new_formation.translation = Vector3(translation.x, 0, translation.z)
-	new_formation.target_positon_min = formation_target_min.translation.z
-	new_formation.target_positon_max = formation_target_max.translation.z
 	add_child(new_formation)
 	new_formation.connect("formation_defeated", self, "_on_formation_defeated")
 

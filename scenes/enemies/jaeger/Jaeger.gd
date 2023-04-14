@@ -78,6 +78,14 @@ func _shoot_loaded_shot():
 	cooldown.start()
 
 
+func _handle_shooting():
+	if behaviour != STATE.FOLLOW || !target_player_node:
+		if can_shoot: _shoot()
+
+	elif global_transform.origin.x >= target_player_node.global_transform.origin.x -0.01 && global_transform.origin.x <= target_player_node.global_transform.origin.x +0.01:
+		if can_shoot: _shoot()
+
+
 func _on_body_entered(body):
 	if is_load_shooting || body.name != 'VaporFalcon': return
 
@@ -95,3 +103,9 @@ func got_parried():
 func deal_shrapnel_damage():
 	_is_invincible = true
 	animation.play("explosion")
+
+
+func _on_DetectionArea_body_entered(body):
+	if body.name == 'VaporFalcon':
+		target_player_node = body
+		speed = 1.0

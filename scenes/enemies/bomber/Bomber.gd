@@ -6,7 +6,7 @@ onready var barrel = $Berrel
 export var damage = 10
 export var hit_damage = 20
 
-var shot_count = 0
+var shot_count: int = 0
 
 
 func _ready():
@@ -57,3 +57,11 @@ func _on_TripleShotCooldown_timeout():
 func _on_Cooldown_timeout():
 	shot_count = 0
 	can_shoot = true
+
+
+func _on_DetectionArea_body_entered(body:Node):
+	if target_player_node:
+		pass
+	if body.name == 'VaporFalcon':
+		target_player_node = body
+		speed = 1.0

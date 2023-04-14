@@ -7,17 +7,16 @@
 script = ExtResource( 2 )
 
 [node name="EnemyJaeger" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, -0.499653, 0, -0.200162 )
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, -0.65, 0, -0.2 )
 health = 80
 
 [node name="EnemyJaeger2" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0, 0, 0 )
 shrapnel_angle = 0.3
 health = 80
 can_load_attack = true
 
 [node name="EnemyJaeger3" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0.499712, 0, -0.200162 )
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0.65, 0, -0.2 )
 health = 80
 
 [connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_jaeger2_was_defeated"]

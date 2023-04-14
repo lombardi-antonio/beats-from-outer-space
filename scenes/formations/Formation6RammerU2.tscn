@@ -8,22 +8,28 @@ script = ExtResource( 1 )
 upgrade_matrix = [ [ 0, 0 ], [ 0, 0 ], [ 1, 2 ], [ 0, 0 ], [ 0, 0 ], [ 0, 0 ] ]
 
 [node name="EnemyRammer" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 0, -0.5 )
 
 [node name="EnemyRammer2" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, 0, -0.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, 0, -1 )
 
 [node name="EnemyRammer3" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13, 0, -1 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13, 0, -1.5 )
 
 [node name="EnemyRammer4" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13, 0, -1.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13, 0, -2 )
 
 [node name="EnemyRammer5" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, 0, -2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, 0, -2.5 )
 
 [node name="EnemyRammer6" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.647, 0.001, -2.5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.647, 0.001, -3 )
+
+[node name="Spinup" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1 )
+
+[node name="Target" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
 
 [connection signal="was_defeated" from="EnemyRammer" to="." method="_on_EnemyRammer_was_defeated"]
 [connection signal="was_defeated" from="EnemyRammer2" to="." method="_on_EnemyRammer2_was_defeated"]

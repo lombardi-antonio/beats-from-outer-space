@@ -8,11 +8,6 @@
 [ext_resource path="res://scenes/formations/Formation1Bomber.tscn" type="PackedScene" id=6]
 
 [node name="spawner" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.52591 )
 script = ExtResource( 1 )
 formation_list = [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ), ExtResource( 6 ) ]
-
-[node name="formation_target_min" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
-
-[node name="formation_target_max" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )

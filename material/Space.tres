@@ -17,6 +17,11 @@ image = SubResource( 5 )
 size = Vector2( 65, 64 )
 
 [resource]
+params_diffuse_mode = 4
+params_specular_mode = 3
 albedo_texture = SubResource( 4 )
+metallic = 0.5
+metallic_specular = 0.0
+roughness = 0.0
 uv1_scale = Vector3( 2.5, 5, 1 )
 uv1_offset = Vector3( 0, 2.768, 0 )
