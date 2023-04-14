@@ -12,8 +12,6 @@ var _spiup_started: bool = false
 
 
 func _ready():
-	_is_invincible = true
-
 	if homeing:
 		detection_collision.disabled = false
 
@@ -64,7 +62,6 @@ func _target_player(_delta):
 func _on_spinup_timeout():
 	if dead:
 		return
-	_is_invincible = false
 	_spinup_ended = true
 	if collision:
 		collision.disabled = false
