@@ -1,6 +1,6 @@
 extends Area
 
-export(int, "hold_position", "follow", "target_hit") var behaviour: int = 0
+export(int, "hold_position", "follow", "keep_distance", "target_hit") var behaviour: int = 0
 export(bool) var holds_upgrade: bool = false
 export(float) var speed: float = 1
 export(float) var shrapnel_angle: float = 0.0
@@ -59,19 +59,19 @@ func _process(_delta):
 	if !dead:
 		_process_enemy_logic(_delta)
 
-	match behaviour:
-		STATE.HOLD_POSITION:
-			_hold_position_logic(_delta)
+		match behaviour:
+			STATE.HOLD_POSITION:
+				_hold_position_logic(_delta)
 
-		STATE.FOLLOW:
-			_follow_player_logic(_delta)
-			_hold_position_logic(_delta)
+			STATE.FOLLOW:
+				_follow_player_logic(_delta)
+				_hold_position_logic(_delta)
 
-		STATE.KEEP_DISTANCE:
-			_keep_distance_logic(_delta)
+			STATE.KEEP_DISTANCE:
+				_keep_distance_logic(_delta)
 
-		STATE.TARGET_HIT:
-			_target_and_hit_player(_delta)
+			STATE.TARGET_HIT:
+				_target_player(_delta)
 
 
 func _init_collision():
@@ -164,7 +164,7 @@ func _keep_distance_logic(_delta):
 	pass
 
 
-func _target_and_hit_player(_delta):
+func _target_player(_delta):
 	pass
 
 

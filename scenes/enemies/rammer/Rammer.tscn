@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/enemies/rammer/Rammer.gd" type="Script" id=1]
 [ext_resource path="res://models/rammer.tres" type="ArrayMesh" id=2]
-[ext_resource path="res://scenes/enemies/BaseEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/powerup/Powerup.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.0283135
+height = 0.124508
 
 [sub_resource type="Animation" id=3]
 resource_name = "blowback"
@@ -49,28 +52,40 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.1, 0.4 )
 }
 
-[node name="EnemyRammer" instance=ExtResource( 3 )]
+[sub_resource type="CylinderShape" id=4]
+height = 1.0
+
+[node name="EnemyRammer" type="Area" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource( 1 )
+behaviour = 3
 health = 10
 collision_damage = 50
 upgrade = ExtResource( 4 )
 
-[node name="ShipMesh" parent="." index="0"]
+[node name="ShipMesh" type="MeshInstance" parent="."]
 transform = Transform( -0.0159076, -0.00107319, -1.58897e-06, -1.85448e-06, 2.55436e-05, -0.00999997, 0.00171711, -0.00994221, -2.55205e-05, 0, 0, -0.02 )
 mesh = ExtResource( 2 )
 
-[node name="ShipCollision" parent="." index="1"]
+[node name="ShipCollision" type="CollisionShape" parent="."]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0.01, -0.02 )
+shape = SubResource( 1 )
 
-[node name="AnimationPlayer" parent="." index="3"]
+[node name="Cooldown" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/blowback = SubResource( 3 )
 
-[node name="TargetPosition" parent="." index="4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5 )
+[node name="Spinup" type="Timer" parent="."]
 
-[node name="SpinupPosition" type="Position3D" parent="." index="5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+[node name="DetectionArea" type="Area" parent="."]
+collision_layer = 2
+collision_mask = 2
 
-[node name="Spinup" type="Timer" parent="." index="6"]
+[node name="CollisionShape" type="CollisionShape" parent="DetectionArea"]
+shape = SubResource( 4 )
+disabled = true
 
 [connection signal="timeout" from="Spinup" to="." method="_on_spinup_timeout"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]

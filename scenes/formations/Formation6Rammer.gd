@@ -1,24 +1,30 @@
 extends Spatial
 
 onready var space = $"/root/Space"
+onready var spinup = $Spinup
+onready var target = $Target
 
-export(float) var speed = 0.5
+export(float) var speed = 1.0
 export(float) var target_positon_min = -1.0
 export(float) var target_positon_max = 1.0
 export(Array) var upgrade_matrix = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
 
-var target_position
-var left_bound
-var right_bound
 var is_in_position = false
 var direction = 1
+var enemies: Array
 var enemy_count
 
 signal formation_defeated()
 
 
 func _ready():
-	enemy_count = get_children().size()
+	for child in get_children():
+		if child is Area:
+			enemies.append(child)
+			child.spinup_position.z = spinup.global_transform.origin.z
+			child.target.z = target.global_transform.origin.z
+
+	enemy_count = enemies.size()
 
 	if enemy_count >= upgrade_matrix.size():
 		_add_upgrade()
@@ -29,8 +35,8 @@ func _process(_delta):
 
 
 func _add_upgrade():
-	for index in get_children().size():
-		var enemy = get_children()[index]
+	for index in enemies.size():
+		var enemy = enemies[index]
 		var upgrade_array = upgrade_matrix[index]
 
 		if upgrade_array[0]:

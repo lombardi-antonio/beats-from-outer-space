@@ -42,6 +42,7 @@ layer_1=false
 [global]
 
 export=false
+colli=false
 
 [layer_names]
 
