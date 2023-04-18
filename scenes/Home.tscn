@@ -1,11 +1,109 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/Home.gd" type="Script" id=1]
 [ext_resource path="res://material/HomeSpace.tres" type="Material" id=2]
 [ext_resource path="res://default_theme.tres" type="Theme" id=3]
 [ext_resource path="res://scenes/environment/HomeUniversMesh.gd" type="Script" id=4]
-[ext_resource path="res://scenes/environment/HomeCameraBase.gd" type="Script" id=5]
 [ext_resource path="res://models/VaporFalcon.tres" type="ArrayMesh" id=6]
+[ext_resource path="res://audio/NewBeginning_Space_Melo_105Bpm_Em.mp3" type="AudioStream" id=7]
+
+[sub_resource type="Animation" id=2]
+resource_name = "HomeAnimation"
+length = 16.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:translation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0.707, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 0.707, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -0.707, -0.25, 0, 0.25, 0, -1, -0.25, 0, 0.25, 0, -0.707, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 2, 4, 6, 8, 10, 12, 14, 16 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:translation:z")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -2, -0.25, 0, 0.25, 0, -1.707, -0.25, 0, 0.25, 0, -1, -0.25, 0, 0.25, 0, -0.293, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -0.293, -0.25, 0, 0.25, 0, -1, -0.25, 0, 0.25, 0, -1.707, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 2, 4, 6, 8, 10, 12, 14, 16 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:rotation_degrees:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 180, -0.25, 0, 0.25, 0, 90, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -180, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 4, 8, 12, 16 )
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:translation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:translation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:translation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( -2, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:rotation_degrees:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath(".:rotation_degrees:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 180, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath(".:rotation_degrees:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
 
 [sub_resource type="CapsuleMesh" id=1]
 material = ExtResource( 2 )
@@ -45,10 +143,14 @@ __meta__ = {
 }
 
 [node name="CameraBase" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2, -2 )
-script = ExtResource( 5 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2 )
 
 [node name="PlayerCamera" type="Camera" parent="CameraBase"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CameraBase"]
+autoplay = "HomeAnimation"
+anims/HomeAnimation = SubResource( 2 )
+anims/RESET = SubResource( 3 )
 
 [node name="UniverseMesh" type="MeshInstance" parent="."]
 transform = Transform( 1.5, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
@@ -59,5 +161,10 @@ script = ExtResource( 4 )
 [node name="VaporFalcon" type="MeshInstance" parent="."]
 transform = Transform( 0.382045, 0.00209445, 0.118479, 0.0601535, 0.341147, -0.2, -0.102094, 0.20884, 0.325519, 0, 0, -1 )
 mesh = ExtResource( 6 )
+
+[node name="Conductor" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.91262, -1.14649 )
+stream = ExtResource( 7 )
+autoplay = true
 
 [connection signal="button_up" from="UserInterface/StartButton" to="." method="_on_StartButton_button_up"]
