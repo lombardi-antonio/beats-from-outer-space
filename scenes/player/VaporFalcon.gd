@@ -142,9 +142,9 @@ func rotate_with(direction, distance):
 
 
 func shoot():
+	audio_stream_player.play()
 	match weapon:
 		0:
-			audio_stream_player.play()
 			var new_projectile = projectile.instance()
 			get_parent().add_child(new_projectile)
 			new_projectile.translation = simple_weapon.global_transform.origin
