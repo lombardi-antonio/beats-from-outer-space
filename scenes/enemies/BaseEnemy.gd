@@ -42,7 +42,7 @@ signal was_defeated()
 func _ready():
 	_init_collision()
 	_connect_signals()
-	if target_position: target_translation = target_position.global_transform.origin
+	if is_instance_valid(target_position): target_translation = target_position.global_transform.origin
 
 	if behaviour == STATE.FOLLOW:
 		detection_collision.disabled = false
@@ -248,9 +248,14 @@ func spawn_shrapnel():
 	deal_damage(health)
 
 
-func _spawn_sharpnel_pieces(direction: Vector3):
+func _spawn_sharpnel_pieces(spawn_direction: Vector3):
 	var new_shrapnel = shrapnel.instance()
 	get_tree().get_root().add_child(new_shrapnel)
 	new_shrapnel.translation = global_transform.origin
-	new_shrapnel.direction = direction
+	new_shrapnel.direction = spawn_direction
 	new_shrapnel.speed = rand_range(0.4, 1.0)
+
+
+func _try_setting_colision_disabled(state: bool):
+	if is_instance_valid(collision):
+		collision.disabled = state
