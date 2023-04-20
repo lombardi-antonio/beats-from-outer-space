@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/Transition.png-9e4976da1e0dbc39e215231a0f6c5786.image"
+
+[deps]
+
+source_file="res://sprites/Transition.png"
+dest_files=[ "res://.import/Transition.png-9e4976da1e0dbc39e215231a0f6c5786.image" ]
+
+[params]
+
