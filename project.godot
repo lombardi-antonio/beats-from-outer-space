@@ -30,6 +30,7 @@ window/size/test_height=1280
 window/handheld/orientation="portrait"
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+window/stretch/shrink=0.8
 
 [editor_plugins]
 
