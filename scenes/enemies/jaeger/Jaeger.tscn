@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://models/Jaeger.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://scenes/powerup/Powerup.tscn" type="PackedScene" id=2]
@@ -188,19 +188,6 @@ emission_energy = 1.0
 emission_operator = 0
 emission_on_uv2 = false
 
-[sub_resource type="ParticlesMaterial" id=8]
-lifetime_randomness = 0.5
-emission_shape = 5
-emission_ring_radius = 3.0
-emission_ring_inner_radius = 2.0
-emission_ring_height = 1.0
-emission_ring_axis = Vector3( 0, 0, 1 )
-direction = Vector3( 0, 0, 0 )
-gravity = Vector3( 0, 0, 0 )
-radial_accel = -30.92
-radial_accel_random = 0.46
-angle_random = 1.0
-
 [sub_resource type="QuadMesh" id=10]
 size = Vector2( 0.5, 0.5 )
 
@@ -240,15 +227,25 @@ anims/explosion = SubResource( 7 )
 wait_time = 3.0
 one_shot = true
 
-[node name="LoadingParticles" type="Particles" parent="."]
+[node name="LoadingParticles" type="CPUParticles" parent="."]
 transform = Transform( 6, 0, -3.82137e-15, -2.29282e-14, 2.62268e-07, -1, 0, 6, 4.37114e-08, 0, 0, 0 )
 material_override = SubResource( 9 )
 emitting = false
 amount = 100
 lifetime = 2.0
 one_shot = true
-process_material = SubResource( 8 )
-draw_pass_1 = SubResource( 10 )
+lifetime_randomness = 0.5
+mesh = SubResource( 10 )
+emission_shape = 5
+emission_ring_radius = 3.0
+emission_ring_inner_radius = 2.0
+emission_ring_height = 1.0
+emission_ring_axis = Vector3( 0, 0, 1 )
+direction = Vector3( 0, 0, 0 )
+gravity = Vector3( 0, 0, 0 )
+radial_accel = -30.92
+radial_accel_random = 0.46
+angle_random = 1.0
 
 [node name="TargetPosition" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100 )

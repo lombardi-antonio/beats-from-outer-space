@@ -11,7 +11,12 @@ onready var label_space: Label = $UserInterface/SPACE
 
 
 func _ready():
-	_on_viewport_size_changed()
+	if OS.has_feature("web"):
+		transition.rect_scale = Vector2(4.0, 14.0)
+		var viewport_width = get_viewport().get_visible_rect().size.x
+		user_interface.rect_position.x = viewport_width/2 - 95.0
+		user_interface.rect_position.y = 0.0
+
 	return get_tree().root.connect("size_changed", self, "_on_viewport_size_changed")
 
 
