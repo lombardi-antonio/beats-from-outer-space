@@ -7,7 +7,7 @@ onready var target = $Target
 export(float) var speed = 1.0
 export(float) var target_positon_min = -1.0
 export(float) var target_positon_max = 1.0
-export(Array) var upgrade_matrix = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]
+export(int) var upgrade_level = 0 # if zero no upgrade will be placed
 
 var is_in_position = false
 var direction = 1
@@ -26,9 +26,6 @@ func _ready():
 
 	enemy_count = enemies.size()
 
-	if enemy_count >= upgrade_matrix.size():
-		_add_upgrade()
-
 
 func _process(_delta):
 	pass
@@ -37,11 +34,8 @@ func _process(_delta):
 func _add_upgrade():
 	for index in enemies.size():
 		var enemy = enemies[index]
-		var upgrade_array = upgrade_matrix[index]
-
-		if upgrade_array[0]:
-			enemy.holds_upgrade = 1
-			enemy.upgrade_level = upgrade_array[1]
+		enemy.holds_upgrade = 1
+		enemy.upgrade_level = upgrade_level
 
 
 func _defeated():
@@ -51,7 +45,14 @@ func _defeated():
 
 func _on_any_enemy_defeated():
 	enemy_count -= 1
-	if enemy_count <= 0:
+
+	if enemy_count == 1:
+		if upgrade_level > 0:
+			_add_upgrade()
+		else:
+			pass
+
+	elif enemy_count <= 0:
 		_defeated()
 
 
