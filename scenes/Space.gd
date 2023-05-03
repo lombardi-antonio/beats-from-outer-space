@@ -17,7 +17,6 @@ func _ready():
 	time_scale = 1
 	points = 0
 	_movement_disabled = false
-
 	_init_next_spawner()
 
 
@@ -34,18 +33,6 @@ func _spawn(spawner: PackedScene):
 	new_spawn.connect("defeated", self, "_on_spawner_defeated")
 
 
-func _on_continue_button_pressed():
-	time_scale = .005
-
-	if not _ready_for_next_spawn:
-		return
-
-	else:
-		get_tree().call_group("projectile", "remove_self")
-		_init_next_spawner()
-		_ready_for_next_spawn = false
-
-
 func _on_spawner_defeated():
 	emit_signal("spawner_defeated")
 	get_tree().call_group("projectile", "remove_self")
@@ -60,3 +47,15 @@ func _on_spawner_defeated():
 func _on_vapor_falcon_was_defeated():
 	get_tree().call_group("enemies", "remove_self")
 	get_tree().call_group("projectile", "remove_self")
+
+
+func _on_CameraBase_ready_for_next_spawn():
+	time_scale = .005
+
+	if not _ready_for_next_spawn:
+		return
+
+	else:
+		get_tree().call_group("projectile", "remove_self")
+		_init_next_spawner()
+		_ready_for_next_spawn = false

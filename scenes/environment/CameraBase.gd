@@ -1,10 +1,13 @@
 extends Spatial
 
 onready var camera: Camera = $PlayerCamera
+onready var camera_light: SpotLight = $SpotLight
 onready var space: Spatial = $"/root/Space"
 
 const MOVE_MARGIN = 15
 const RAY_LENGTH = 1000
+
+signal ready_for_next_spawn()
 
 var _player_dead: bool = false
 var _player_position: Vector3 = Vector3.ZERO
@@ -17,6 +20,7 @@ enum STATE {
 	PLAYING,
 	MOVING,
 	FOCUS,
+	RETURNING,
 	DEATH
 }
 
@@ -24,6 +28,9 @@ enum STATE {
 func _ready():
 	_state = STATE.PLAYING
 	_target_position = translation
+
+	if OS.get_name() == "Android":
+		camera_light.light_energy = 1.0
 
 
 func _process(_delta):
@@ -65,6 +72,14 @@ func _process(_delta):
 				translation.y = translation.y - 2 * _delta
 			else:
 				_rotate_around_player()
+
+		STATE.RETURNING:
+			if translation == Vector3(0.0, 2.0, -2.0) and rotation_degrees == Vector3(-90.0, 0.0, 0.0):
+				emit_signal("ready_for_next_spawn")
+				_state = STATE.PLAYING
+			else:
+				translation = translation.move_toward(Vector3(0.0, 2.0, -2.0), _delta)
+				rotation_degrees = rotation_degrees.move_toward(Vector3(-90.0, 0.0, 0.0), 50 * _delta)
 
 		STATE.DEATH:
 			if _player_dead && Space.time_scale <= 2:
@@ -127,3 +142,5 @@ func _on_space_spawner_defeated():
 func _on_ContinueButton_pressed():
 	_spawner_defeated = false
 	_screen_touch = false
+
+	_state = STATE.RETURNING

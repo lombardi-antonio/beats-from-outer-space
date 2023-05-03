@@ -20,8 +20,8 @@ onready var max_weapon: Spatial = $MaxWeapon
 onready var weapon_mesh: Spatial = $WeaponMesh
 onready var parry_timer: Timer = $ParryTimer
 onready var death_time_out: Timer = $DeathTimeOut
-onready var parry: Particles = $Parry
-onready var explosion: Particles = $Explosion
+onready var parry: CPUParticles = $Parry
+onready var explosion: CPUParticles = $Explosion
 onready var audio_stream_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 var _path: Array = []
@@ -142,9 +142,9 @@ func rotate_with(direction, distance):
 
 
 func shoot():
+	audio_stream_player.play()
 	match weapon:
 		0:
-			audio_stream_player.play()
 			var new_projectile = projectile.instance()
 			get_parent().add_child(new_projectile)
 			new_projectile.translation = simple_weapon.global_transform.origin

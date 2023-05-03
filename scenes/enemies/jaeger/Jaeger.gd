@@ -4,7 +4,7 @@ export(bool) var can_load_attack: bool = false
 export(float) var cooldown_time: float = 0.8
 
 onready var loaded_shot_timer: Timer = $LoadedCooldown
-onready var loading_particles: Particles = $LoadingParticles
+onready var loading_particles: CPUParticles = $LoadingParticles
 
 var is_load_shooting: bool = false
 
