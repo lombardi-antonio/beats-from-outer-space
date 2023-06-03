@@ -10,6 +10,8 @@ onready var spinup: Timer = $Spinup
 var _spinup_ended: bool = false
 var _spiup_started: bool = false
 
+signal passed()
+
 
 func _ready():
 	if homeing:
@@ -24,7 +26,7 @@ func _remove_at_target_pos():
 	if dead:
 		return
 	if mesh.global_transform.origin.z >= target.z:
-		emit_signal("was_defeated")
+		emit_signal("passed")
 		queue_free()
 		return
 
