@@ -13,6 +13,7 @@ var is_in_position = false
 var direction = 1
 var enemies: Array
 var enemy_count
+var enemy_missed: bool = false
 
 signal formation_defeated()
 
@@ -32,10 +33,15 @@ func _process(_delta):
 
 
 func _add_upgrade():
+	if enemy_missed:
+		return
+
 	for index in enemies.size():
 		var enemy = enemies[index]
-		enemy.holds_upgrade = 1
-		enemy.upgrade_level = upgrade_level
+
+		if is_instance_valid(enemy):
+			enemy.holds_upgrade = 1
+			enemy.upgrade_level = upgrade_level
 
 
 func _defeated():
@@ -78,3 +84,37 @@ func _on_EnemyRammer5_was_defeated():
 
 func _on_EnemyRammer6_was_defeated():
 	_on_any_enemy_defeated()
+
+
+func _on_EnemyRammer_passed():
+	enemy_missed = true
+	_on_any_enemy_defeated()
+
+
+func _on_EnemyRammer2_passed():
+	enemy_missed = true
+	_on_any_enemy_defeated()
+
+
+func _on_EnemyRammer3_passed():
+	enemy_missed = true
+	_on_any_enemy_defeated()
+
+
+func _on_EnemyRammer4_passed():
+	enemy_missed = true
+	_on_any_enemy_defeated()
+
+
+func _on_EnemyRammer5_passed():
+	enemy_missed = true
+	_on_any_enemy_defeated()
+
+
+func _on_EnemyRammer6_passed():
+	enemy_missed = true
+	_on_any_enemy_defeated()
+
+
+
+

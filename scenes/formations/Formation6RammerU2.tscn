@@ -31,9 +31,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1 )
 [node name="Target" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
 
+[connection signal="passed" from="EnemyRammer" to="." method="_on_EnemyRammer_passed"]
 [connection signal="was_defeated" from="EnemyRammer" to="." method="_on_EnemyRammer_was_defeated"]
+[connection signal="passed" from="EnemyRammer2" to="." method="_on_EnemyRammer2_passed"]
 [connection signal="was_defeated" from="EnemyRammer2" to="." method="_on_EnemyRammer2_was_defeated"]
+[connection signal="passed" from="EnemyRammer3" to="." method="_on_EnemyRammer3_passed"]
 [connection signal="was_defeated" from="EnemyRammer3" to="." method="_on_EnemyRammer3_was_defeated"]
+[connection signal="passed" from="EnemyRammer4" to="." method="_on_EnemyRammer4_passed"]
 [connection signal="was_defeated" from="EnemyRammer4" to="." method="_on_EnemyRammer4_was_defeated"]
+[connection signal="passed" from="EnemyRammer5" to="." method="_on_EnemyRammer5_passed"]
 [connection signal="was_defeated" from="EnemyRammer5" to="." method="_on_EnemyRammer5_was_defeated"]
+[connection signal="passed" from="EnemyRammer6" to="." method="_on_EnemyRammer6_passed"]
 [connection signal="was_defeated" from="EnemyRammer6" to="." method="_on_EnemyRammer6_was_defeated"]
