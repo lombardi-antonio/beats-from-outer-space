@@ -15,7 +15,8 @@ _global_script_class_icons={
 [application]
 
 config/name="beats-from-outer-space"
-run/main_scene="res://scenes/Home.tscn"
+run/main_scene="res://scenes/LoadingScreen.tscn"
+boot_splash/show_image=false
 
 [autoload]
 
