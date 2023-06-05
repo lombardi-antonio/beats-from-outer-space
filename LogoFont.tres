@@ -1,0 +1,12 @@
+[gd_resource type="DynamicFont" load_steps=2 format=2]
+
+[sub_resource type="DynamicFontData" id=12]
+font_path = "res://MonomaniacOne-Regular.ttf"
+
+[resource]
+size = 23
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_top = -4
+extra_spacing_bottom = -2
+extra_spacing_space = -2
+font_data = SubResource( 12 )
