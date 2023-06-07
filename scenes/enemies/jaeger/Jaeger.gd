@@ -2,6 +2,7 @@ extends "res://scenes/enemies/BaseEnemy.gd"
 
 export(bool) var can_load_attack: bool = false
 export(float) var cooldown_time: float = 0.8
+export(PackedScene) var loaded_projectile: PackedScene
 
 onready var loaded_shot_timer: Timer = $LoadedCooldown
 onready var loading_particles: CPUParticles = $LoadingParticles
@@ -47,6 +48,9 @@ func _on_cooldown_timeout():
 		is_load_shooting = true
 		loaded_shot_timer.start()
 		loading_particles.emitting = true
+		var new_projectile = loaded_projectile.instance()
+		add_child(new_projectile)
+		new_projectile.translation = Vector3(0, 0, -20)
 		can_shoot = false
 		_is_invincible = true
 	else:
@@ -70,11 +74,6 @@ func _shoot_loaded_shot():
 		return
 
 	loading_particles.emitting = false
-	var new_projectile = projectile.instance()
-	get_tree().get_root().add_child(new_projectile)
-	new_projectile.translation = global_transform.origin
-	new_projectile.scale *= 2
-	new_projectile.damage *= 2
 	cooldown.start()
 
 
