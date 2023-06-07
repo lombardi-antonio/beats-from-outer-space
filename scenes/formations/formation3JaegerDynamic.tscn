@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/enemies/jaeger/Jaeger.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/formations/Formation.gd" type="Script" id=2]
+
+[node name="formation" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="EnemyJaeger" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, -0.65, 0, -0.2 )
+behaviour = 1
+health = 80
+
+[node name="EnemyJaeger2" parent="." instance=ExtResource( 1 )]
+behaviour = 2
+shrapnel_angle = 0.3
+health = 80
+can_load_attack = true
+
+[node name="EnemyJaeger3" parent="." instance=ExtResource( 1 )]
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0.65, 0, -0.2 )
+health = 80
+
+[connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_jaeger2_was_defeated"]
+[connection signal="was_defeated" from="EnemyJaeger2" to="." method="_on_jaeger_was_defeated"]
+[connection signal="was_defeated" from="EnemyJaeger3" to="." method="_on_jaeger3_was_defeated"]
