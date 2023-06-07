@@ -32,3 +32,7 @@ func _on_area_entered(area):
 func remove_self():
 	hide()
 	queue_free()
+
+
+func _on_Timer_timeout():
+	remove_self()
