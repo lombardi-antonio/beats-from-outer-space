@@ -27,6 +27,8 @@ var left_bound: float
 var right_bound: float
 var direction: int
 var target_player_node: KinematicBody = null
+var keep_distance_offset: float = 0.0
+var position_hemisphere: int
 
 
 enum STATE {
@@ -44,8 +46,13 @@ func _ready():
 	_connect_signals()
 	if is_instance_valid(target_position): target_translation = target_position.global_transform.origin
 
-	if behaviour == STATE.FOLLOW:
+	if behaviour > 0:
 		detection_collision.disabled = false
+
+	if global_transform.origin.x > 0:
+		position_hemisphere = 1
+	else:
+		position_hemisphere = -1
 
 	left_bound = target_translation.x -0.25
 	right_bound = target_translation.x +0.25
@@ -69,6 +76,7 @@ func _process(_delta):
 
 			STATE.KEEP_DISTANCE:
 				_keep_distance_logic(_delta)
+				_hold_position_logic(_delta)
 
 			STATE.TARGET_HIT:
 				_target_player(_delta)
@@ -132,9 +140,8 @@ func _hold_position_logic(_delta):
 		target_translation = target_translation + Vector3(0.05 * direction * Space.time_scale , 0.0, 0.0)
 
 		var direction_to_player = global_transform.origin.direction_to(Vector3(target_translation.x, global_transform.origin.y, target_translation.y + 0.5))
-		var distance_to_player = global_transform.origin.distance_to(Vector3(target_translation.x, global_transform.origin.y, target_translation.y + 0.5))
 
-		rotate_with(direction_to_player, distance_to_player)
+		rotate_with(direction_to_player.x)
 
 
 func _follow_player_logic(_delta):
@@ -143,8 +150,8 @@ func _follow_player_logic(_delta):
 		target_translation.z = target_player_node.global_transform.origin.z - 0.5
 
 		if global_transform.origin != target_translation:
-			left_bound = target_translation.x -0.5
-			right_bound = target_translation.x +0.5
+			left_bound = target_translation.x -0.3
+			right_bound = target_translation.x +0.3
 
 			if global_transform.origin.x > right_bound:
 				direction = -1
@@ -155,21 +162,43 @@ func _follow_player_logic(_delta):
 			target_translation = target_translation + Vector3(direction * Space.time_scale , 0.0, 0.0)
 
 			var direction_to_player = global_transform.origin.direction_to(Vector3(target_player_node.global_transform.origin.x, global_transform.origin.y, target_player_node.global_transform.origin.y))
-			var distance_to_player = global_transform.origin.distance_to(Vector3(target_player_node.global_transform.origin.x, global_transform.origin.y, target_player_node.global_transform.origin.y))
 
-			rotate_with(direction_to_player, distance_to_player)
+			rotate_with(direction_to_player.x)
 
 
 func _keep_distance_logic(_delta):
-	pass
+	if target_player_node:
+		target_translation.x = target_player_node.global_transform.origin.x
+		target_translation.z = target_player_node.global_transform.origin.z - 1.2
+
+		if target_player_node.global_transform.origin.x > 0.0:
+			keep_distance_offset = lerp(keep_distance_offset, -0.5 * position_hemisphere, _delta/speed)
+		else:
+			keep_distance_offset = lerp(keep_distance_offset, +0.5 * position_hemisphere, _delta/speed)
+
+		target_translation.x = target_player_node.global_transform.origin.x + keep_distance_offset
+
+		if global_transform.origin != target_translation:
+			left_bound = target_translation.x -0.3
+			right_bound = target_translation.x +0.3
+
+			if global_transform.origin.x > right_bound:
+				direction = -1
+
+			if global_transform.origin.x < left_bound:
+				direction = 1
+
+			target_translation = target_translation + Vector3(direction * Space.time_scale , 0.0, 0.0)
+
+			rotate_with(direction)
 
 
 func _target_player(_delta):
 	pass
 
 
-func rotate_with(ship_direction, ship_distance):
-	rotation.z = ship_direction.x * ship_distance * 5
+func rotate_with(rotation_direction):
+	rotation.z = rotation_direction * speed * 5
 	rotation_degrees.z = clamp(rotation_degrees.z, -50, 50)
 
 

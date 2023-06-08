@@ -1,12 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/spawner/Spawner.gd" type="Script" id=1]
+[ext_resource path="res://scenes/formations/formation3Jaeger.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/formations/formation3JaegerDynamic.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/formations/Formation1Bomber.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/formations/Formation6RammerU1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/formations/Formation3Rammer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/formations/Formation6RammerHomeing.tscn" type="PackedScene" id=7]
 
 [node name="spawner" type="Spatial"]
 script = ExtResource( 1 )
-
-[node name="formation_target_min" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1 )
-
-[node name="formation_target_max" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+formation_list = [ ExtResource( 2 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 4 ) ]

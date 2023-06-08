@@ -9,10 +9,8 @@ target_positon_min = -1.2
 target_positon_max = -0.2
 
 [node name="EnemyJaeger" parent="." instance=ExtResource( 2 )]
-
-[node name="DetectionArea" parent="EnemyJaeger" index="7"]
-collision_layer = 2
-collision_mask = 2
+behaviour = 1
+shrapnel_angle = 0.3
 
 [connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_EnemyJaeger_was_defeated"]
 

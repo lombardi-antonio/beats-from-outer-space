@@ -5,21 +5,21 @@
 
 [node name="formation" type="Spatial"]
 script = ExtResource( 2 )
-target_positon_min = -1.2
-target_positon_max = -0.2
-upgrade_matrix = [ [ 1, 1 ], [ 0, 0 ], [ 0, 0 ] ]
 
 [node name="EnemyJaeger" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, -0.499653, 0, -0.200162 )
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, -0.65, 0, -0.2 )
+behaviour = 2
 health = 80
 
 [node name="EnemyJaeger2" parent="." instance=ExtResource( 1 )]
+behaviour = 1
 shrapnel_angle = 0.3
 health = 80
 can_load_attack = true
 
 [node name="EnemyJaeger3" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0.499712, 0, -0.200162 )
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0.65, 0, -0.2 )
+behaviour = 2
 health = 80
 
 [connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_EnemyJaeger_was_defeated"]
