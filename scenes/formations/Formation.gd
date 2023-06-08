@@ -57,13 +57,13 @@ func _on_any_enemy_defeated():
 		_defeated()
 
 
-func _on_jaeger_was_defeated():
+func _on_EnemyJaeger_was_defeated():
 	_on_any_enemy_defeated()
 
 
-func _on_jaeger2_was_defeated():
+func _on_EnemyJaeger2_was_defeated():
 	_on_any_enemy_defeated()
 
 
-func _on_jaeger3_was_defeated():
+func _on_EnemyJaeger3_was_defeated():
 	_on_any_enemy_defeated()
