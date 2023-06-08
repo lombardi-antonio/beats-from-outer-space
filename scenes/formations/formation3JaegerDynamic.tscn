@@ -21,6 +21,6 @@ can_load_attack = true
 transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0.65, 0, -0.2 )
 health = 80
 
-[connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_jaeger2_was_defeated"]
-[connection signal="was_defeated" from="EnemyJaeger2" to="." method="_on_jaeger_was_defeated"]
-[connection signal="was_defeated" from="EnemyJaeger3" to="." method="_on_jaeger3_was_defeated"]
+[connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_EnemyJaeger_was_defeated"]
+[connection signal="was_defeated" from="EnemyJaeger2" to="." method="_on_EnemyJaeger2_was_defeated"]
+[connection signal="was_defeated" from="EnemyJaeger3" to="." method="_on_EnemyJaeger3_was_defeated"]

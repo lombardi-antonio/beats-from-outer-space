@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/formations/Formation6Rammer.gd" type="Script" id=1]
+[ext_resource path="res://scenes/enemies/rammer/Rammer.tscn" type="PackedScene" id=2]
+
+[node name="BaseFormation2" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="EnemyRammer" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 0, -0.5 )
+homeing = true
+
+[node name="EnemyRammer2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, 0, -1 )
+homeing = true
+
+[node name="EnemyRammer3" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13, 0, -1.5 )
+homeing = true
+
+[node name="EnemyRammer4" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13, 0, -2 )
+homeing = true
+
+[node name="EnemyRammer5" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, 0, -2.5 )
+homeing = true
+
+[node name="EnemyRammer6" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.647, 0.001, -3 )
+homeing = true
+
+[node name="Spinup" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.1 )
+
+[node name="Target" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
+
+[connection signal="passed" from="EnemyRammer" to="." method="_on_EnemyRammer_passed"]
+[connection signal="was_defeated" from="EnemyRammer" to="." method="_on_EnemyRammer_was_defeated"]
+[connection signal="passed" from="EnemyRammer2" to="." method="_on_EnemyRammer2_passed"]
+[connection signal="was_defeated" from="EnemyRammer2" to="." method="_on_EnemyRammer2_was_defeated"]
+[connection signal="passed" from="EnemyRammer3" to="." method="_on_EnemyRammer3_passed"]
+[connection signal="was_defeated" from="EnemyRammer3" to="." method="_on_EnemyRammer3_was_defeated"]
+[connection signal="passed" from="EnemyRammer4" to="." method="_on_EnemyRammer4_passed"]
+[connection signal="was_defeated" from="EnemyRammer4" to="." method="_on_EnemyRammer4_was_defeated"]
+[connection signal="passed" from="EnemyRammer5" to="." method="_on_EnemyRammer5_passed"]
+[connection signal="was_defeated" from="EnemyRammer5" to="." method="_on_EnemyRammer5_was_defeated"]
+[connection signal="passed" from="EnemyRammer6" to="." method="_on_EnemyRammer6_passed"]
+[connection signal="was_defeated" from="EnemyRammer6" to="." method="_on_EnemyRammer6_was_defeated"]
