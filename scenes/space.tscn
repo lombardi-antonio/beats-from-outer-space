@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scenes/environment/Conductor.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player/VaporFalcon.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://scenes/player/audio/hitSound/LaserShort_2.mp3" type="AudioStream" id=12]
 [ext_resource path="res://material/Space.tres" type="Material" id=13]
 [ext_resource path="res://scenes/spawner/spawner1-2.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/spawner/spawner1-3.tscn" type="PackedScene" id=15]
 
 [sub_resource type="ProceduralSky" id=9]
 sky_top_color = Color( 0, 0, 0, 1 )
@@ -46,7 +47,7 @@ extents = Vector3( 1.4211, 0.02, 1.05 )
 
 [node name="Space" type="Spatial"]
 script = ExtResource( 5 )
-spawner_list_level1 = [ ExtResource( 11 ), ExtResource( 14 ) ]
+spawner_list_level1 = [ ExtResource( 11 ), ExtResource( 14 ), ExtResource( 15 ) ]
 
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource( 8 )
