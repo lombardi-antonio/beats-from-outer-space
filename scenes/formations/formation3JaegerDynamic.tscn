@@ -10,12 +10,12 @@ script = ExtResource( 2 )
 transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, -0.65, 0, -0.2 )
 behaviour = 1
 health = 80
+can_load_attack = true
 
 [node name="EnemyJaeger2" parent="." instance=ExtResource( 1 )]
 behaviour = 2
 shrapnel_angle = 0.3
 health = 80
-can_load_attack = true
 
 [node name="EnemyJaeger3" parent="." instance=ExtResource( 1 )]
 transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0.65, 0, -0.2 )
