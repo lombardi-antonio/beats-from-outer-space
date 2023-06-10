@@ -234,6 +234,7 @@ func deal_damage(damage):
 		if collision:
 			collision.queue_free()
 		hide()
+		space.kills += 1
 		space.points += points
 		emit_signal("was_defeated")
 
