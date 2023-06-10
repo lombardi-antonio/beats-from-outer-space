@@ -49,7 +49,7 @@ extents = Vector3( 1.4211, 0.02, 1.05 )
 
 [node name="Space" type="Spatial"]
 script = ExtResource( 5 )
-spawner_list_level1 = [ ExtResource( 17 ), ExtResource( 11 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ) ]
+spawner_list_level1 = [ ExtResource( 11 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ]
 
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = SubResource( 8 )

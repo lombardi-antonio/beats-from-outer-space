@@ -2,7 +2,7 @@ extends Spatial
 
 onready var animation: AnimationPlayer = $AnimationPlayer
 
-var taped: bool = false
+var tapped: bool = false
 var loader: ResourceInteractiveLoader = null
 var home_scene = null
 var wait_frames = 1
@@ -43,9 +43,9 @@ func _process(_delta):
 
 func _input(event):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		taped = event.pressed
+		tapped = event.pressed
 
-		if taped:
+		if tapped:
 			animation.play("Transition")
 
 
