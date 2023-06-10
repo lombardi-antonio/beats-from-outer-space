@@ -3,12 +3,12 @@
 [resource]
 params_diffuse_mode = 4
 params_specular_mode = 3
-albedo_color = Color( 1, 0.392157, 0.894118, 1 )
+albedo_color = Color( 0.384314, 0, 0.211765, 1 )
 metallic = 0.5
 metallic_specular = 0.0
 roughness = 0.0
 emission_enabled = true
 emission = Color( 0.921569, 0, 1, 1 )
-emission_energy = 1.0
+emission_energy = 0.6
 emission_operator = 0
 emission_on_uv2 = false
