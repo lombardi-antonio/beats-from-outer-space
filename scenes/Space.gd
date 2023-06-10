@@ -3,6 +3,7 @@ extends Spatial
 export(Array, PackedScene) var spawner_list_level1
 
 var time_scale: float
+var kills: int
 var points: int
 
 var _wave: int = 0
