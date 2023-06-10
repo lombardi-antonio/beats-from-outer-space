@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/enemies/jaeger/Jaeger.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/formations/Formation.gd" type="Script" id=2]
 
-[node name="formation" type="Spatial"]
+[node name="formation2" type="Spatial"]
 script = ExtResource( 2 )
 
 [node name="EnemyJaeger" parent="." instance=ExtResource( 1 )]

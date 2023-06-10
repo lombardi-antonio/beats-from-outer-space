@@ -8,6 +8,7 @@ var points: int
 var _wave: int = 0
 var _movement_disabled: bool
 var _ready_for_next_spawn: bool = false
+var _level_cleared: bool = false
 
 signal level_cleared()
 signal spawner_defeated()
@@ -39,6 +40,7 @@ func _on_spawner_defeated():
 
 	if _wave >= spawner_list_level1.size() - 1:
 		emit_signal("level_cleared")
+		_level_cleared = true
 
 	_wave += 1
 	_ready_for_next_spawn = true
@@ -55,7 +57,19 @@ func _on_CameraBase_ready_for_next_spawn():
 	if not _ready_for_next_spawn:
 		return
 
+	elif _level_cleared:
+		goto_credits()
+
 	else:
 		get_tree().call_group("projectile", "remove_self")
 		_init_next_spawner()
 		_ready_for_next_spawn = false
+
+
+func goto_next_level():
+	# TODO: Create Array of Levels
+	pass
+
+
+func goto_credits():
+	return get_tree().change_scene("res://scenes/Credits.tscn")
