@@ -16,6 +16,8 @@ signal passed()
 func _ready():
 	if homeing:
 		detection_collision.disabled = false
+	else:
+		detection_collision.disabled = true
 
 
 func _process(_delta):
