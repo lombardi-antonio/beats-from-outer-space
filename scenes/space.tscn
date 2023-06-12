@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scenes/environment/Conductor.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player/VaporFalcon.tscn" type="PackedScene" id=2]
@@ -17,6 +17,8 @@
 [ext_resource path="res://scenes/spawner/spawner1-3.tscn" type="PackedScene" id=15]
 [ext_resource path="res://scenes/spawner/spawner1-4.tscn" type="PackedScene" id=16]
 [ext_resource path="res://scenes/spawner/spawner1-5.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/environment/UserHint.gd" type="Script" id=18]
+[ext_resource path="res://sprites/touch-player-hint.png" type="Texture" id=19]
 
 [sub_resource type="ProceduralSky" id=9]
 sky_top_color = Color( 0, 0, 0, 1 )
@@ -29,6 +31,36 @@ background_mode = 2
 background_sky = SubResource( 9 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 ambient_light_energy = 6.0
+
+[sub_resource type="Animation" id=16]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerHint:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "ShowHint"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PlayerHint:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [sub_resource type="CapsuleMesh" id=15]
 material = ExtResource( 13 )
@@ -64,6 +96,66 @@ bpm = 140
 
 [node name="StartTimer" type="Timer" parent="Conductor"]
 
+[node name="PlayerHint" type="Control" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -95.0
+margin_top = -160.0
+margin_right = 95.0
+margin_bottom = 160.0
+script = ExtResource( 18 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerHint"]
+root_node = NodePath("../..")
+anims/RESET = SubResource( 16 )
+anims/ShowHint = SubResource( 17 )
+
+[node name="HintTimer" type="Timer" parent="PlayerHint"]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="ColorRect" type="ColorRect" parent="PlayerHint"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -405.0
+margin_top = -340.0
+margin_right = 405.0
+margin_bottom = 340.0
+color = Color( 0, 0, 0, 0.470588 )
+
+[node name="LevelCleared" type="Label" parent="PlayerHint"]
+anchor_left = 0.5
+anchor_top = 0.6
+anchor_right = 0.5
+anchor_bottom = 0.6
+margin_left = -50.5
+margin_top = -85.0
+margin_right = 51.5
+margin_bottom = -49.0
+theme = ExtResource( 9 )
+text = "Touch the Screen
+to Start "
+align = 1
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="PlayerHint"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -9.0
+margin_top = -7.0
+margin_right = 15.0
+margin_bottom = 32.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
+texture = ExtResource( 19 )
+stretch_mode = 1
+
 [node name="UserInterface" type="Control" parent="."]
 visible = false
 anchor_left = 0.5
@@ -89,9 +181,6 @@ theme = ExtResource( 9 )
 text = "Level 1 cleared!"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="GridContainer" type="GridContainer" parent="UserInterface"]
 anchor_left = 0.5
@@ -205,6 +294,7 @@ shape = SubResource( 11 )
 [connection signal="beat" from="Conductor" to="VaporFalcon" method="_on_Conductor_beat"]
 [connection signal="measure" from="Conductor" to="VaporFalcon" method="_on_Conductor_measure"]
 [connection signal="timeout" from="Conductor/StartTimer" to="Conductor" method="_on_StartTimer_timeout"]
+[connection signal="timeout" from="PlayerHint/HintTimer" to="PlayerHint" method="_on_HintTimer_timeout"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="UserInterface" method="_on_ContinueButton_pressed"]
 [connection signal="pressed" from="UserInterface/ContinueButton" to="CameraBase" method="_on_ContinueButton_pressed"]
 [connection signal="ready_for_next_spawn" from="CameraBase" to="." method="_on_CameraBase_ready_for_next_spawn"]
