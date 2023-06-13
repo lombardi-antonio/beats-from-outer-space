@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/SpeedOfLight_Uptempo_Happy_130Bpm_Am.mp3-ba8460eed08ecd9a7a8a69a2337938c8.mp3str"
+
+[deps]
+
+source_file="res://audio/SpeedOfLight_Uptempo_Happy_130Bpm_Am.mp3"
+dest_files=[ "res://.import/SpeedOfLight_Uptempo_Happy_130Bpm_Am.mp3-ba8460eed08ecd9a7a8a69a2337938c8.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
