@@ -58,6 +58,22 @@ func _ready():
 	_state = STATE.MOOVING
 
 
+func get_save_stats():
+	return {
+		'file_name': get_filename(),
+		'stats': {
+			'health': health,
+			'weapon': weapon
+		}
+	}
+
+
+func load_save_stats(saved_data):
+	health = saved_data.stats.health
+	weapon = saved_data.stats.weapon
+
+
+
 func _physics_process(delta):
 
 	# State Maschine

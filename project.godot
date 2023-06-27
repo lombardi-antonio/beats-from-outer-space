@@ -21,6 +21,7 @@ boot_splash/show_image=false
 [autoload]
 
 Space="*res://scenes/Space.gd"
+SaveState="*res://scenes/SaveState.gd"
 
 [display]
 

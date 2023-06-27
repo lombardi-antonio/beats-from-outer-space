@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://scenes/environment/Conductor.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player/VaporFalcon.tscn" type="PackedScene" id=2]
@@ -10,13 +10,18 @@
 [ext_resource path="res://scenes/environment/UniverseMesh.gd" type="Script" id=8]
 [ext_resource path="res://default_theme.tres" type="Theme" id=9]
 [ext_resource path="res://scenes/environment/UserInterface.gd" type="Script" id=10]
-[ext_resource path="res://scenes/spawner/spawner1-1.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/spawner/spawner2-1.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/player/audio/hitSound/LaserShort_2.mp3" type="AudioStream" id=12]
 [ext_resource path="res://material/Space.tres" type="Material" id=13]
 [ext_resource path="res://audio/WalkingBarefoot_Ostinato_90Bpm_BMaj.mp3" type="AudioStream" id=14]
 [ext_resource path="res://audio/SpeedOfLight_Uptempo_Happy_130Bpm_Am.mp3" type="AudioStream" id=15]
+[ext_resource path="res://scenes/spawner/spawner1-4.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scenes/spawner/spawner1-3.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/environment/UserHint.gd" type="Script" id=18]
 [ext_resource path="res://sprites/touch-player-hint.png" type="Texture" id=19]
+[ext_resource path="res://scenes/spawner/spawner1-5.tscn" type="PackedScene" id=20]
+[ext_resource path="res://scenes/spawner/spawner1-2.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/spawner/spawner1-1.tscn" type="PackedScene" id=22]
 
 [sub_resource type="ProceduralSky" id=9]
 sky_top_color = Color( 0, 0, 0, 1 )
@@ -122,9 +127,9 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="Space" type="Spatial"]
+[node name="Space" type="Spatial" groups=["Saved"]]
 script = ExtResource( 5 )
-levels = [ [ ExtResource( 11 ) ], [ ExtResource( 11 ) ] ]
+levels = [ [ ExtResource( 22 ), ExtResource( 21 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 20 ) ], [ ExtResource( 11 ) ] ]
 music_list = [ ExtResource( 6 ), ExtResource( 14 ), ExtResource( 15 ) ]
 music_list_bpm = [ 140, 90, 130 ]
 
@@ -338,6 +343,9 @@ shape = SubResource( 11 )
 anims/RESET = SubResource( 18 )
 anims/Transition = SubResource( 19 )
 
+[node name="DeathTimeOut" type="Timer" parent="."]
+wait_time = 3.0
+
 [connection signal="spawner_defeated" from="." to="UserInterface" method="_on_space_spawner_defeated"]
 [connection signal="spawner_defeated" from="." to="CameraBase" method="_on_space_spawner_defeated"]
 [connection signal="beat" from="Conductor" to="VaporFalcon" method="_on_Conductor_beat"]
@@ -351,5 +359,6 @@ anims/Transition = SubResource( 19 )
 [connection signal="was_defeated" from="VaporFalcon" to="Conductor" method="_on_VaporFalcon_was_defeated"]
 [connection signal="was_defeated" from="VaporFalcon" to="CameraBase" method="_on_vapor_falcon_was_defeated"]
 [connection signal="was_defeated" from="VaporFalcon" to="UniverseMesh" method="_on_vapor_falcon_was_defeated"]
+[connection signal="timeout" from="DeathTimeOut" to="." method="_on_DeathTimeOut_timeout"]
 
 [editable path="Starlight"]
