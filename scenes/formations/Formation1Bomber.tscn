@@ -13,4 +13,8 @@ health = 120
 collision_damage = 120
 points = 1000
 
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="was_defeated" from="EnemyBomber" to="." method="_on_EnemyBomber_was_defeated"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

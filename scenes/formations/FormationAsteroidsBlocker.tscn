@@ -1,0 +1,65 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/formations/FormationAsteroidsBlocker.gd" type="Script" id=1]
+[ext_resource path="res://scenes/enemies/jaeger/Jaeger.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/obstacles/asteroid/Asteroid.tscn" type="PackedScene" id=3]
+
+[node name="BaseFormation2" type="Spatial"]
+script = ExtResource( 1 )
+enemy_count = 4
+
+[node name="EnemyJaeger" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, 0, 0, 0 )
+health = 1000
+collision_damage = 1
+can_load_attack = true
+loaded_shot_possibility = 1
+
+[node name="Asteroid" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.749575, 0, -1.29917 )
+target_position = Vector3( 0, 0, 1.4 )
+
+[node name="Asteroid2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.249575, 0, -1.30717 )
+target_position = Vector3( 0, 0, 1.4 )
+
+[node name="Asteroid3" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.250425, 0, -1.30717 )
+target_position = Vector3( 0, 0, 1.4 )
+
+[node name="Asteroid4" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.750425, 0, -1.30717 )
+target_position = Vector3( 0, 0, 1.4 )
+
+[node name="Asteroid5" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00197, 0, -1.60765 )
+target_position = Vector3( 0, 0, 1.4 )
+
+[node name="Asteroid6" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.501974, 0, -1.61565 )
+target_position = Vector3( 0, 0, 1.4 )
+
+[node name="Asteroid7" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00197425, 0, -1.61565 )
+target_position = Vector3( 0, 0, 1.4 )
+
+[node name="Asteroid8" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.498026, 0, -1.61565 )
+target_position = Vector3( 0, 0, 1.4 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_EnemyJaeger_was_defeated"]
+[connection signal="was_defeated" from="Asteroid" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid2" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid3" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid4" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid5" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid6" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid7" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid8" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="EnemyJaeger"]

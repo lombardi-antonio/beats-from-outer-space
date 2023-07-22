@@ -52,6 +52,10 @@ func _report_beat():
 		measure += 1
 
 
+func recalculate_sec_per_beat():
+	sec_per_beat = 60.0 / bpm
+
+
 func play_with_beat_offset(beat_num):
 	beats_before_start = beat_num
 	$StartTimer.wait_time = sec_per_beat

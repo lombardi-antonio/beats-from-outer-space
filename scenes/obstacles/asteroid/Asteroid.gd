@@ -3,7 +3,8 @@ extends Area
 export(int, "block", "flythrough") var behaviour: int = 0
 export(PackedScene) var shrapnel
 export(float) var shrapnel_angle: float = 0.0
-
+export(float) var speed: float = 1
+export(Vector3) var target_position = Vector3.BACK * 3
 
 onready var animation: AnimationPlayer = $AnimationPlayer
 onready var collision: CollisionShape = $ObstacleCollision
@@ -16,6 +17,8 @@ enum STATE {
 	FLYTHROUGH
 }
 
+signal was_defeated()
+
 
 func get_children_of_type(child_type):
 	var list = []
@@ -27,6 +30,8 @@ func get_children_of_type(child_type):
 
 
 func _ready():
+	target_position = global_transform.origin + target_position
+
 	collision.disabled = false
 
 	randomize()
@@ -40,6 +45,9 @@ func _ready():
 
 
 func _process(delta):
+	if global_transform.origin.z < target_position.z:
+		global_transform.origin = global_transform.origin.move_toward(target_position, speed * Space.time_scale * delta)
+
 	rotation_degrees.x += rand_rotation.x * delta * Space.time_scale
 	rotation_degrees.y += rand_rotation.y * delta * Space.time_scale
 
@@ -63,6 +71,12 @@ func deal_shrapnel_damage():
 	animation.play("Explosion")
 
 
+func send_defeated():
+	emit_signal("was_defeated")
+
+	remove_self()
+
+
 func spawn_shrapnel():
 	if !is_instance_valid(shrapnel): return
 
@@ -73,8 +87,6 @@ func spawn_shrapnel():
 
 	_spawn_sharpnel_pieces(Vector3(0, 0, -1))
 	_spawn_sharpnel_pieces(Vector3(0, 0, 1))
-
-	remove_self()
 
 
 func _spawn_sharpnel_pieces(spawn_direction: Vector3):

@@ -1,6 +1,7 @@
 extends "res://scenes/enemies/BaseEnemy.gd"
 
 export(bool) var can_load_attack: bool = false
+export(int) var loaded_shot_possibility: int = 10
 export(float) var cooldown_time: float = 0.8
 export(PackedScene) var loaded_projectile: PackedScene
 
@@ -44,7 +45,7 @@ func _init_timers():
 
 
 func _on_cooldown_timeout():
-	if can_load_attack && randi() % 10 == 0:
+	if can_load_attack && randi() % loaded_shot_possibility == 0:
 		is_load_shooting = true
 		loaded_shot_timer.start()
 		loading_particles.emitting = true

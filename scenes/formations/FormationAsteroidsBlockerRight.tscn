@@ -1,0 +1,111 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/formations/FormationAsteroidsBlocker.gd" type="Script" id=1]
+[ext_resource path="res://scenes/enemies/jaeger/Jaeger.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/obstacles/asteroid/Asteroid.tscn" type="PackedScene" id=3]
+
+[node name="BaseFormation2" type="Spatial"]
+script = ExtResource( 1 )
+enemy_count = 12
+
+[node name="EnemyJaeger" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.01, 0, 8.74228e-10, 0, 0.01, 0, -8.74228e-10, 0, -0.01, -0.321048, 0, 0 )
+health = 1000
+collision_damage = 1
+can_load_attack = true
+loaded_shot_possibility = 1
+
+[node name="Asteroid" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.61085, 0, -0.788333 )
+target_position = Vector3( 0, 0, 1 )
+
+[node name="Asteroid2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11085, 0, -0.788333 )
+target_position = Vector3( 0, 0, 1 )
+
+[node name="Asteroid3" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38915, 0, -0.788333 )
+target_position = Vector3( 0, 0, 1 )
+
+[node name="Asteroid4" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.88915, 0, -0.788333 )
+target_position = Vector3( 0, 0, 1 )
+
+[node name="Asteroid11" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.848664, 0, -1.05786 )
+target_position = Vector3( 0, 0, 1 )
+
+[node name="Asteroid12" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.348664, 0, -1.05786 )
+target_position = Vector3( 0, 0, 1 )
+
+[node name="Asteroid13" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.151336, 0, -1.05786 )
+target_position = Vector3( 0, 0, 1 )
+
+[node name="Asteroid14" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.651336, 0, -1.05786 )
+target_position = Vector3( 0, 0, 1 )
+
+[node name="Asteroid5" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.619203, 0, -2.55 )
+
+[node name="Asteroid6" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.619203, 0, -2.05 )
+
+[node name="Asteroid7" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.619203, 0, -1.55 )
+
+[node name="Asteroid8" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.619203, 0, -1.05 )
+
+[node name="Asteroid9" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.619203, 0, -0.55 )
+
+[node name="Asteroid10" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.619203, 0, -0.05 )
+
+[node name="Asteroid15" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.880798, 0, -2.82745 )
+
+[node name="Asteroid16" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.880798, 0, -2.32745 )
+
+[node name="Asteroid17" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.880798, 0, -1.82745 )
+
+[node name="Asteroid18" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.880798, 0, -1.32745 )
+
+[node name="Asteroid19" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.880798, 0, -0.827449 )
+
+[node name="Asteroid20" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.880798, 0, -0.327449 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="was_defeated" from="EnemyJaeger" to="." method="_on_EnemyJaeger_was_defeated"]
+[connection signal="was_defeated" from="Asteroid" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid2" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid3" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid4" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid11" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid12" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid13" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid14" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid5" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid6" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid7" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid8" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid9" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid10" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid15" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid16" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid17" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid18" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid19" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="was_defeated" from="Asteroid20" to="." method="_on_Asteroid_was_defeated"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="EnemyJaeger"]

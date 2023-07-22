@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/WalkingBarefoot_Ostinato_90Bpm_BMaj.mp3-7d5e4fdf196496fcea51e50799bca05f.mp3str"
+
+[deps]
+
+source_file="res://audio/WalkingBarefoot_Ostinato_90Bpm_BMaj.mp3"
+dest_files=[ "res://.import/WalkingBarefoot_Ostinato_90Bpm_BMaj.mp3-7d5e4fdf196496fcea51e50799bca05f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=10.62

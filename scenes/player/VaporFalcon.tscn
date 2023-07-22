@@ -267,7 +267,7 @@ albedo_texture = ExtResource( 8 )
 offsets = PoolRealArray( 0, 0.911765, 1 )
 colors = PoolColorArray( 0.157782, 1, 0.782866, 1, 0.948068, 0.549107, 0.960938, 1, 0.40494, 0.359808, 0.9375, 1 )
 
-[node name="VaporFalcon" type="KinematicBody" groups=["player"]]
+[node name="VaporFalcon" type="KinematicBody" groups=["Saved", "player"]]
 transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0 )
 collision_layer = 2
 collision_mask = 2

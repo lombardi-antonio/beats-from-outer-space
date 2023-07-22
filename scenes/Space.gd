@@ -1,55 +1,122 @@
 extends Spatial
 
-export(Array, PackedScene) var spawner_list_level1
+export(Array, Array, PackedScene) var levels
+export(Array, AudioStreamMP3) var music_list
+export(Array, int) var music_list_bpm
 
 var time_scale: float
 var kills: int
 var points: int
 
-var _wave: int = 0
+var current_level: int = 0
+var current_wave: int = 0
 var _movement_disabled: bool
 var _ready_for_next_spawn: bool = false
 var _level_cleared: bool = false
+var _current_spawner: Node = null
+
+onready var conductor: AudioStreamPlayer3D = $Conductor
+onready var animation: AnimationPlayer = $AnimationPlayer
+onready var universe_mesh: MeshInstance = $UniverseMesh
+onready var death_timer: Timer = $DeathTimeOut
+onready var player: KinematicBody = $VaporFalcon
+onready var ui_wave_cleared: Label = $UserInterface/LevelCleared
 
 signal level_cleared()
 signal spawner_defeated()
 
 
 func _ready():
+	SaveState.load_game()
+
 	time_scale = 1
 	points = 0
 	_movement_disabled = false
 	_init_next_spawner()
 
+	if is_instance_valid(conductor):
+
+		_change_music_track(current_level)
+
+
+func get_save_stats():
+	return {
+		'file_name': get_filename(),
+		'stats': {
+			'current_level': current_level,
+			'current_wave': current_wave
+		}
+	}
+
+
+func load_save_stats(saved_data):
+	current_level = saved_data.stats.current_level
+	current_wave = saved_data.stats.current_wave
+
 
 func _init_next_spawner():
-	if _wave > spawner_list_level1.size() - 1:
-		return get_tree().reload_current_scene()
-	_spawn(spawner_list_level1[_wave])
+	if !levels:
+		return
+
+	if current_level > levels.size():
+		goto_credits()
+
+	_spawn(levels[current_level][current_wave])
 
 
 func _spawn(spawner: PackedScene):
-	var new_spawn = spawner.instance()
-	new_spawn.translation = Vector3(0, 0, -1.7)
-	add_child(new_spawn)
-	new_spawn.connect("defeated", self, "_on_spawner_defeated")
+	_current_spawner = spawner.instance()
+	_current_spawner.translation = Vector3(0, 0, -1.7)
+	add_child(_current_spawner)
+	return _current_spawner.connect("defeated", self, "_on_spawner_defeated")
 
 
 func _on_spawner_defeated():
+	if is_instance_valid(_current_spawner):
+		_current_spawner.queue_free()
+
 	emit_signal("spawner_defeated")
 	get_tree().call_group("projectile", "remove_self")
 
-	if _wave >= spawner_list_level1.size() - 1:
+	if current_wave >= levels[current_level].size() - 1:
 		emit_signal("level_cleared")
 		_level_cleared = true
+		current_level += 1
+		current_wave = 0
+		ui_wave_cleared.text = "Level " + String(current_level) + " defeated!"
+		_transition_to_next_level()
+		_change_music_track(current_level % music_list.size())
+	else:
+		current_wave += 1
+		ui_wave_cleared.text = "Wave " + String(current_wave) + " cleared..."
 
-	_wave += 1
+	if current_level >= levels.size():
+		goto_credits()
+
 	_ready_for_next_spawn = true
 
 
 func _on_vapor_falcon_was_defeated():
+	death_timer.start()
+
 	get_tree().call_group("enemies", "remove_self")
 	get_tree().call_group("projectile", "remove_self")
+
+	kills = 0
+	points = 0
+	current_wave = 0
+
+	SaveState.save_game()
+
+
+func _change_music_track(track_number: int):
+	if conductor.playing:
+		conductor.stop()
+
+	conductor.stream = music_list[track_number]
+	conductor.bpm = music_list_bpm[track_number]
+	conductor.recalculate_sec_per_beat()
+	conductor.play()
 
 
 func _on_CameraBase_ready_for_next_spawn():
@@ -58,13 +125,19 @@ func _on_CameraBase_ready_for_next_spawn():
 	if not _ready_for_next_spawn:
 		return
 
-	elif _level_cleared:
-		goto_credits()
-
 	else:
 		get_tree().call_group("projectile", "remove_self")
 		_init_next_spawner()
 		_ready_for_next_spawn = false
+
+
+func _load_universe_image():
+	if is_instance_valid(universe_mesh):
+		universe_mesh.mesh.material.albedo_texture.image = load("res://sprites/Space_Stars" + String(current_level + 1) +".png")
+
+
+func _transition_to_next_level():
+	animation.play("Transition")
 
 
 func goto_next_level():
@@ -74,3 +147,22 @@ func goto_next_level():
 
 func goto_credits():
 	return get_tree().change_scene("res://scenes/Credits.tscn")
+
+
+func _on_DeathTimeOut_timeout():
+	get_tree().call_group("projectile", "remove_self")
+	get_tree().call_group("enemies", "remove_self")
+	get_tree().call_group("obstacles", "remove_self")
+
+	player.respawn()
+
+	current_wave = 0
+	time_scale = .005
+
+	if not _ready_for_next_spawn:
+		return
+
+	else:
+		get_tree().call_group("projectile", "remove_self")
+		_init_next_spawner()
+		_ready_for_next_spawn = false

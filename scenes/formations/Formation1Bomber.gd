@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var space = $"/root/Space"
+onready var timer = $Timer
 
 export var speed = 0.5
 export var target_positon_min = -1.0
@@ -33,8 +33,7 @@ func movement(_delta):
 
 
 func _defeated():
-	emit_signal("formation_defeated")
-	queue_free()
+	timer.start()
 
 
 func _on_any_enemy_defeated():
@@ -45,3 +44,8 @@ func _on_any_enemy_defeated():
 
 func _on_EnemyBomber_was_defeated():
 	_on_any_enemy_defeated()
+
+
+func _on_Timer_timeout():
+	emit_signal("formation_defeated")
+	queue_free()
