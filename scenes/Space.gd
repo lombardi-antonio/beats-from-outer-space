@@ -8,8 +8,8 @@ var time_scale: float
 var kills: int
 var points: int
 
-var _current_level: int = 0
-var _current_wave: int = 0
+var current_level: int = 0
+var current_wave: int = 0
 var _movement_disabled: bool
 var _ready_for_next_spawn: bool = false
 var _level_cleared: bool = false
@@ -20,6 +20,7 @@ onready var animation: AnimationPlayer = $AnimationPlayer
 onready var universe_mesh: MeshInstance = $UniverseMesh
 onready var death_timer: Timer = $DeathTimeOut
 onready var player: KinematicBody = $VaporFalcon
+onready var ui_wave_cleared: Label = $UserInterface/LevelCleared
 
 signal level_cleared()
 signal spawner_defeated()
@@ -35,32 +36,32 @@ func _ready():
 
 	if is_instance_valid(conductor):
 
-		_change_music_track(_current_level)
+		_change_music_track(current_level)
 
 
 func get_save_stats():
 	return {
 		'file_name': get_filename(),
 		'stats': {
-			'current_level': _current_level,
-			'current_wave': _current_wave
+			'current_level': current_level,
+			'current_wave': current_wave
 		}
 	}
 
 
 func load_save_stats(saved_data):
-	_current_level = saved_data.stats.current_level
-	_current_wave = saved_data.stats.current_wave
+	current_level = saved_data.stats.current_level
+	current_wave = saved_data.stats.current_wave
 
 
 func _init_next_spawner():
 	if !levels:
 		return
 
-	if _current_level > levels.size():
+	if current_level > levels.size():
 		goto_credits()
 
-	_spawn(levels[_current_level][_current_wave])
+	_spawn(levels[current_level][current_wave])
 
 
 func _spawn(spawner: PackedScene):
@@ -77,17 +78,19 @@ func _on_spawner_defeated():
 	emit_signal("spawner_defeated")
 	get_tree().call_group("projectile", "remove_self")
 
-	if _current_wave >= levels[_current_level].size() - 1:
+	if current_wave >= levels[current_level].size() - 1:
 		emit_signal("level_cleared")
 		_level_cleared = true
-		_current_level += 1
-		_current_wave = 0
+		current_level += 1
+		current_wave = 0
+		ui_wave_cleared.text = "Level " + String(current_level) + " defeated!"
 		_transition_to_next_level()
-		_change_music_track(_current_level % music_list.size())
+		_change_music_track(current_level % music_list.size())
 	else:
-		_current_wave += 1
+		current_wave += 1
+		ui_wave_cleared.text = "Wave " + String(current_wave) + " cleared..."
 
-	if _current_level >= levels.size():
+	if current_level >= levels.size():
 		goto_credits()
 
 	_ready_for_next_spawn = true
@@ -101,7 +104,7 @@ func _on_vapor_falcon_was_defeated():
 
 	kills = 0
 	points = 0
-	_current_wave = 0
+	current_wave = 0
 
 	SaveState.save_game()
 
@@ -130,7 +133,7 @@ func _on_CameraBase_ready_for_next_spawn():
 
 func _load_universe_image():
 	if is_instance_valid(universe_mesh):
-		universe_mesh.mesh.material.albedo_texture.image = load("res://sprites/Space_Stars" + String(_current_level + 1) +".png")
+		universe_mesh.mesh.material.albedo_texture.image = load("res://sprites/Space_Stars" + String(current_level + 1) +".png")
 
 
 func _transition_to_next_level():
@@ -153,7 +156,7 @@ func _on_DeathTimeOut_timeout():
 
 	player.respawn()
 
-	_current_wave = 0
+	current_wave = 0
 	time_scale = .005
 
 	if not _ready_for_next_spawn:

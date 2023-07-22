@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/spawner/Spawner.gd" type="Script" id=1]
-[ext_resource path="res://scenes/formations/FormationAsteroidsBlocker.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/formations/FormationAsteroidsBlocker.tscn" type="PackedScene" id=6]
 
 [node name="spawner" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.52591 )
 script = ExtResource( 1 )
-formation_list = [ ExtResource( 2 ) ]
+formation_list = [ ExtResource( 6 ) ]

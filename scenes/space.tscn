@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://scenes/environment/Conductor.gd" type="Script" id=1]
 [ext_resource path="res://scenes/player/VaporFalcon.tscn" type="PackedScene" id=2]
@@ -22,6 +22,9 @@
 [ext_resource path="res://scenes/spawner/spawner1-5.tscn" type="PackedScene" id=20]
 [ext_resource path="res://scenes/spawner/spawner1-2.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/spawner/spawner1-1.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/spawner/spawner2-4.tscn" type="PackedScene" id=23]
+[ext_resource path="res://scenes/spawner/spawner2-2.tscn" type="PackedScene" id=24]
+[ext_resource path="res://scenes/spawner/spawner2-3.tscn" type="PackedScene" id=25]
 
 [sub_resource type="ProceduralSky" id=9]
 sky_top_color = Color( 0, 0, 0, 1 )
@@ -129,7 +132,7 @@ tracks/1/keys = {
 
 [node name="Space" type="Spatial" groups=["Saved"]]
 script = ExtResource( 5 )
-levels = [ [ ExtResource( 22 ), ExtResource( 21 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 20 ) ], [ ExtResource( 11 ) ] ]
+levels = [ [ ExtResource( 22 ), ExtResource( 21 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 20 ) ], [ ExtResource( 23 ), ExtResource( 11 ), ExtResource( 24 ), ExtResource( 25 ) ] ]
 music_list = [ ExtResource( 6 ), ExtResource( 14 ), ExtResource( 15 ) ]
 music_list_bpm = [ 140, 90, 130 ]
 
@@ -177,7 +180,7 @@ margin_right = 405.0
 margin_bottom = 340.0
 color = Color( 0, 0, 0, 0.470588 )
 
-[node name="LevelCleared" type="Label" parent="PlayerHint"]
+[node name="Screen touch hint" type="Label" parent="PlayerHint"]
 anchor_left = 0.5
 anchor_top = 0.6
 anchor_right = 0.5
@@ -228,7 +231,7 @@ margin_top = -85.0
 margin_right = 50.5
 margin_bottom = -62.0
 theme = ExtResource( 9 )
-text = "Level 1 cleared!"
+text = "Wave 1 cleared!"
 align = 1
 valign = 1
 
