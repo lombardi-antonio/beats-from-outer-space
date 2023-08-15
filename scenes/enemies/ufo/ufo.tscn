@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://models/UfoHeart.tres" type="ArrayMesh" id=1]
+[ext_resource path="res://models/UfoBody.tres" type="ArrayMesh" id=2]
+[ext_resource path="res://models/UfoTurret.tres" type="ArrayMesh" id=3]
+[ext_resource path="res://models/UfoHead.tres" type="ArrayMesh" id=4]
+
+[node name="ufo"]
+
+[node name="Body" parent="." index="0"]
+mesh = ExtResource( 2 )
+
+[node name="Head" parent="." index="1"]
+transform = Transform( 1.2, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0 )
+mesh = ExtResource( 4 )
+
+[node name="Turret001" parent="." index="2"]
+transform = Transform( 0.3, 0, 0, 0, 0.999971, -0.00229858, 0, 0.00766193, 0.299991, 0.34, -0.0802813, -0.81 )
+mesh = ExtResource( 3 )
+
+[node name="Turret002" parent="." index="3"]
+transform = Transform( 0.299999, 0.00273966, 0.000353614, -0.00081652, 0.999885, -0.00448452, -0.00036586, 0.0149451, 0.299966, 0.762, -0.0742945, -0.29 )
+
+[node name="Turret003" parent="." index="4"]
+transform = Transform( 0.299993, 0.00626039, 0.000866127, -0.00186285, 0.999831, -0.00519317, -0.000898491, 0.0172922, 0.299954, 0.762, -0.0733832, 0.29 )
+
+[node name="Turret004" parent="." index="5"]
+transform = Transform( 0.3, 0, 0, 0, 0.999918, -0.00384834, 0, 0.0128278, 0.299975, 0.34, -0.072359, 0.71 )
+
+[node name="Heart" parent="." index="6"]
+mesh = ExtResource( 1 )

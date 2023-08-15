@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://models/UfoHead.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://scenes/enemies/ufo/UfoHead.gd" type="Script" id=2]
@@ -6,6 +6,167 @@
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.404392, 1, 0.4 )
+
+[sub_resource type="AnimationNodeAnimation" id=42]
+animation = "Blowback"
+
+[sub_resource type="AnimationNodeTimeScale" id=43]
+
+[sub_resource type="AnimationNodeBlendTree" id=44]
+graph_offset = Vector2( -472.725, 0 )
+nodes/Animation/node = SubResource( 42 )
+nodes/Animation/position = Vector2( -280, 150 )
+nodes/TimeScale/node = SubResource( 43 )
+nodes/TimeScale/position = Vector2( 0, 150 )
+node_connections = [ "TimeScale", 0, "Animation", "output", 0, "TimeScale" ]
+
+[sub_resource type="AnimationNodeAnimation" id=47]
+animation = "Defeated"
+
+[sub_resource type="AnimationNodeTimeScale" id=48]
+
+[sub_resource type="AnimationNodeBlendTree" id=49]
+graph_offset = Vector2( -581, -174 )
+nodes/Animation/node = SubResource( 47 )
+nodes/Animation/position = Vector2( -272, 163 )
+nodes/TimeScale/node = SubResource( 48 )
+nodes/TimeScale/position = Vector2( -1.5, 192.5 )
+node_connections = [ "TimeScale", 0, "Animation", "output", 0, "TimeScale" ]
+
+[sub_resource type="AnimationNodeAnimation" id=30]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeTimeScale" id=31]
+
+[sub_resource type="AnimationNodeBlendTree" id=32]
+graph_offset = Vector2( -525.706, 0 )
+nodes/Animation/node = SubResource( 30 )
+nodes/Animation/position = Vector2( -259.206, 152 )
+nodes/TimeScale/node = SubResource( 31 )
+nodes/TimeScale/position = Vector2( -10, 150 )
+node_connections = [ "TimeScale", 0, "Animation", "output", 0, "TimeScale" ]
+
+[sub_resource type="AnimationNodeAnimation" id=34]
+animation = "Closed"
+
+[sub_resource type="AnimationNodeAnimation" id=35]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeBlend2" id=36]
+
+[sub_resource type="AnimationNodeTimeScale" id=37]
+
+[sub_resource type="AnimationNodeBlendTree" id=38]
+graph_offset = Vector2( -669.694, 0 )
+nodes/Animation/node = SubResource( 35 )
+nodes/Animation/position = Vector2( -250, 60 )
+"nodes/Animation 2/node" = SubResource( 34 )
+"nodes/Animation 2/position" = Vector2( -250, 250 )
+nodes/Blend2/node = SubResource( 36 )
+nodes/Blend2/position = Vector2( -50, 140 )
+nodes/TimeScale/node = SubResource( 37 )
+nodes/TimeScale/position = Vector2( 184.306, 190 )
+nodes/output/position = Vector2( 430, 160 )
+node_connections = [ "TimeScale", 0, "Blend2", "Blend2", 0, "Animation", "Blend2", 1, "Animation 2", "output", 0, "TimeScale" ]
+
+[sub_resource type="AnimationNodeAnimation" id=26]
+animation = "Open"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeBlend2" id=28]
+
+[sub_resource type="AnimationNodeTimeScale" id=33]
+
+[sub_resource type="AnimationNodeBlendTree" id=29]
+graph_offset = Vector2( -408, -66.78 )
+nodes/Animation/node = SubResource( 27 )
+nodes/Animation/position = Vector2( -270, 40 )
+"nodes/Animation 2/node" = SubResource( 26 )
+"nodes/Animation 2/position" = Vector2( -270, 220 )
+nodes/Blend2/node = SubResource( 28 )
+nodes/Blend2/position = Vector2( -30, 110 )
+nodes/TimeScale/node = SubResource( 33 )
+nodes/TimeScale/position = Vector2( 198.933, 239.22 )
+nodes/output/position = Vector2( 420, 210 )
+node_connections = [ "TimeScale", 0, "Blend2", "Blend2", 0, "Animation", "Blend2", 1, "Animation 2", "output", 0, "TimeScale" ]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+advance_condition = "is_opening"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+advance_condition = "is_closing"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=45]
+advance_condition = "is_hit"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=46]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=50]
+switch_mode = 2
+advance_condition = "is_defeated"
+
+[sub_resource type="AnimationNodeStateMachine" id=23]
+states/Blowback/node = SubResource( 44 )
+states/Blowback/position = Vector2( -891.362, 50.6396 )
+states/Defeated/node = SubResource( 49 )
+states/Defeated/position = Vector2( -684.346, -68.7926 )
+states/Idle/node = SubResource( 32 )
+states/Idle/position = Vector2( -667.456, 290.14 )
+states/Idle_Close/node = SubResource( 38 )
+states/Idle_Close/position = Vector2( -477.846, 168.39 )
+states/Idle_Open/node = SubResource( 29 )
+states/Idle_Open/position = Vector2( -891.378, 168.702 )
+transitions = [ "Idle", "Idle_Open", SubResource( 39 ), "Idle_Open", "Idle_Close", SubResource( 40 ), "Idle_Close", "Idle", SubResource( 41 ), "Idle_Open", "Blowback", SubResource( 45 ), "Blowback", "Idle_Open", SubResource( 46 ), "Blowback", "Defeated", SubResource( 50 ) ]
+start_node = "Idle"
+graph_offset = Vector2( -1334.35, -156.293 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=24]
+
+[sub_resource type="Animation" id=6]
+resource_name = "Blowback"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("HeartMesh:mesh:surface_1/material:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.380392, 0.380392, 0.380392, 1 ), Color( 1, 0, 0, 1 ), Color( 0.380392, 0.380392, 0.380392, 1 ), Color( 1, 0, 0, 1 ), Color( 0.380392, 0.380392, 0.380392, 1 ), Color( 1, 0, 0, 1 ), Color( 0.380392, 0.380392, 0.380392, 1 ) ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("HeadMesh:rotation_degrees:z")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 105, -0.25, 0, 0, -59.4299, -0.131157, -0.6, -0.292664, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.8 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("HeadMesh:mesh:surface_2/material:albedo_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0.380392, 0.776471, 1 ), Color( 1, 0, 0, 1 ), Color( 0.380392, 0.380392, 0.380392, 1 ), Color( 1, 0, 0, 1 ), Color( 0.380392, 0.380392, 0.380392, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0.380392, 0.776471, 1 ) ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "Closed"
@@ -36,7 +197,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 53, -0.25, 0, 0.2, 12.8967, 0, -0.1, -11.8437, 0, 4.03764, 0, 0, 4.57599, 0, -2.82635, 0, 0, 4.4414, 0, -5.78728 ),
+"points": PoolRealArray( 105, -0.25, 0, 0.2, 12.8967, 0, -0.1, -11.8437, 0, 4.03764, 0, 0, 4.57599, 0, -2.82635, 0, 0, 4.4414, 0, -5.78728 ),
 "times": PoolRealArray( 0, 0.6, 0.85, 1 )
 }
 tracks/3/type = "bezier"
@@ -94,9 +255,192 @@ tracks/7/keys = {
 "values": [ false, true ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "Defeated"
+length = 10.0
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("HeadMesh:translation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("HeadMesh:translation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, 0, -2.37842, 0.822812, 6.97629, 6, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5.5 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("HeadMesh:translation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, 0, 2.60364, 0.320563, -5.83967, -10, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5.5 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("HeadMesh:rotation_degrees:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.292285, -172.758, 0.507715, 338.076, 359, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5.5 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("HeadMesh:rotation_degrees:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( -90, -0.292285, -182.387, 0.407715, 351.565, 548, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5.5 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("HeadMesh:rotation_degrees:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( 0, -0.0922847, -401.987, 0.407715, 887.101, 1234, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 5.5 )
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("HeadMesh:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 5.27804, 25.992 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.2, 0.2, 0.2 ) ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "Idle"
+length = 7.2
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("HeartMesh:translation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("HeartMesh:translation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.1, 0.0289092, 0.0600599, -0.2, -0.000295062, 0.2, -0.000163194, -0.0599656, -0.2, 0.000395585, 0.2, 0, -0.000495964, -0.136466, -0.0404816, 0.0635338, 0.0212297, 0.0600599, -0.2, -0.000295062, 0.2, -0.000163194, -0.0599656, -0.2, 0.000395585, 0.2, 0, -0.000495964, -0.136466, -0.0404816, 0.0635338, 0.0212297, 0.0600599, -0.2, -0.000295062, 0.2, -0.000163194, -0.0599656, -0.2, 0.000395585, 0.2, 0, -0.000495964, -0.136466, -0.0404816, 0.0635338, 0.0212297, 0.0600599, -0.2, -0.000295062, 0.2, -0.000163194, -0.0599656, -0.2, 0.000395585, 0.2, 0, -0.000495964, -0.136466, -0.0404816, 0.0635338, 0.0212297, 0.0600599, -0.2, -0.000295062, 0.2, -0.000163194, -0.0599656, -0.2, 0.000395585, 0.2, 0, -0.000495964, -0.136466, -0.0404816, 0.0635338, 0.0212297, 0.0600599, -0.2, -0.000295062, 0.2, -0.000163194, -0.0599656, -0.2, 0.000395585, 0.2, 0, -0.000495964, -0.136466, -0.0404816, 0.0635338, 0.0212297, 0.0600599, -0.2, -0.000295062, 0.2, -0.000163194, -0.0599656, -0.2, 0.000395585, 0.2, 0, -0.000495964, -0.136466, -0.0404816, 0.0635338, 0.0212297, 0.0600599, -0.2, -0.000295062, 0.2, -0.000163194, -0.0599656, -0.2, 0.000395585, 0.2, 0, -0.000495964, -0.136466, -0.0404816, 0.0635338, 0.0212297 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.2 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("HeartMesh:translation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("HeartMesh:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 7.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 720, 0 ) ]
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("HeadMesh:rotation_degrees:x")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.2 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("HeadMesh:rotation_degrees:y")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0, -90, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.2 )
+}
+tracks/6/type = "bezier"
+tracks/6/path = NodePath("HeadMesh:rotation_degrees:z")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1.39853e-09, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1.39853e-09, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1.39853e-09, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1.39853e-09, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1.39853e-09, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1.39853e-09, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1.39853e-09, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0, -2, -0.25, 0, 0.25, 0, 1.39853e-09, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.2 )
+}
+tracks/7/type = "bezier"
+tracks/7/path = NodePath("HeadMesh:scale:x")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.2 )
+}
+tracks/8/type = "bezier"
+tracks/8/path = NodePath("HeadMesh:scale:y")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.2 )
+}
+tracks/9/type = "bezier"
+tracks/9/path = NodePath("HeadMesh:scale:z")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0, 1.04, -0.25, 0, 0.25, 0, 0.96, -0.25, 0, 0.25, 0, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9, 1.2, 1.5, 1.8, 2.1, 2.4, 2.7, 3, 3.3, 3.6, 3.9, 4.2, 4.5, 4.8, 5.1, 5.4, 5.7, 6, 6.3, 6.6, 6.9, 7.2 )
+}
+
 [sub_resource type="Animation" id=2]
 resource_name = "Open"
-length = 5.0
+length = 10.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("HeadMesh:rotation_degrees:x")
 tracks/0/interp = 1
@@ -124,7 +468,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 59.2203, -0.1, -5.60783, 0.03, -5.60783, 56.4164, -0.0613532, -6.7294, 0.0386468, 1.12157, 55.2948, -0.0613532, -6.7294, 0.0386468, 1.12157, 53.276, -0.0613532, -6.7294, 0.0386468, 1.12157, 53.186, -0.25, 0, 0.25, 0, 53, -0.289593, -2.24313, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 111.817, -0.1, -5.60783, 0.03, -5.60783, 109.013, -0.0613532, -6.7294, 0.0386468, 1.12157, 107.892, -0.0613532, -6.7294, 0.0386468, 1.12157, 105.873, -0.0613532, -6.7294, 0.0386468, 1.12157, 105.783, -0.25, 0, 0.25, 0, 105, -0.289593, -2.24313, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.2, 0.3, 0.5, 0.7, 1, 2 )
 }
 tracks/3/type = "bezier"
@@ -280,8 +624,178 @@ tracks/8/keys = {
 "update": 0,
 "values": [ false ]
 }
+tracks/9/type = "value"
+tracks/9/path = NodePath("HeartMesh:mesh:surface_1/material:emission_enabled")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("HeartMesh:mesh:surface_1/material:emission")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.1, 0.1, 0.1, 1 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("HeartMesh:mesh:surface_1/material:emission_energy")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.1 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("HeartMesh:rotation_degrees")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/13/type = "bezier"
+tracks/13/path = NodePath("HeadMesh:scale:x")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/14/type = "bezier"
+tracks/14/path = NodePath("HeadMesh:scale:y")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/15/type = "bezier"
+tracks/15/path = NodePath("HeadMesh:scale:z")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("HeadMesh:mesh:surface_2/material:albedo_color")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 0.380391, 0.776471, 1 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("HeadMesh:mesh:surface_2/material:emission_enabled")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("HeadMesh:mesh:surface_2/material:emission")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("HeadMesh:mesh:surface_2/material:emission_energy")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("HeadMesh:scale")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
+}
+tracks/21/type = "bezier"
+tracks/21/path = NodePath("HeadMesh:translation:x")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/22/type = "bezier"
+tracks/22/path = NodePath("HeadMesh:translation:y")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/23/type = "bezier"
+tracks/23/path = NodePath("HeadMesh:translation:z")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
 
-[node name="UfoHead" type="Area"]
+[node name="UfoHead" type="Area" groups=["enemies"]]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="HeadMesh" type="MeshInstance" parent="."]
@@ -293,7 +807,29 @@ mesh = ExtResource( 3 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
 
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 23 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 24 )
+parameters/conditions/is_closing = false
+parameters/conditions/is_defeated = false
+parameters/conditions/is_hit = false
+parameters/conditions/is_opening = false
+parameters/Blowback/TimeScale/scale = 1.0
+parameters/Defeated/TimeScale/scale = 1.0
+parameters/Idle/TimeScale/scale = 1.0
+parameters/Idle_Close/Blend2/blend_amount = 0.5
+parameters/Idle_Close/TimeScale/scale = 1.0
+parameters/Idle_Open/Blend2/blend_amount = 0.5
+parameters/Idle_Open/TimeScale/scale = 1.0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Blowback = SubResource( 6 )
 anims/Closed = SubResource( 4 )
+anims/Defeated = SubResource( 5 )
+anims/Idle = SubResource( 25 )
 anims/Open = SubResource( 2 )
 anims/RESET = SubResource( 3 )
+
+[connection signal="body_entered" from="." to="." method="_on_UfoHead_body_entered"]
