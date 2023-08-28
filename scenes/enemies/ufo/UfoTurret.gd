@@ -13,6 +13,7 @@ signal was_defeated()
 
 func _ready():
 	in_position = true
+	animation_tree.active = true
 
 
 func _process(_delta):

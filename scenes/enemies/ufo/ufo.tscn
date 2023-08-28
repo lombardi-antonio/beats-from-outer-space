@@ -1,31 +1,43 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://models/UfoHeart.tres" type="ArrayMesh" id=1]
-[ext_resource path="res://models/UfoBody.tres" type="ArrayMesh" id=2]
-[ext_resource path="res://models/UfoTurret.tres" type="ArrayMesh" id=3]
-[ext_resource path="res://models/UfoHead.tres" type="ArrayMesh" id=4]
+[ext_resource path="res://scenes/enemies/ufo/UfoHead.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/enemies/ufo/UfoBody.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/enemies/ufo/Ufo.gd" type="Script" id=3]
 
-[node name="ufo"]
+[sub_resource type="BoxShape" id=1]
 
-[node name="Body" parent="." index="0"]
-mesh = ExtResource( 2 )
+[sub_resource type="Animation" id=2]
+resource_name = "Idle"
+length = 8.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:translation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, 0, 0, 0, 0, 0.100732, -0.25, -0.01, 0.7, -0.111738, 0.2, -1, 0, 1, 0, 0.0763526, -0.25, -0.01, 0.5, 0.119864, -0.00491135, -0.25, -0.01, 1.1, 0.0873587, -0.2, -1, 0, 1, 0, 0, 0, 0, 0, 0 ),
+"times": PoolRealArray( 0, 0.7, 2.1, 3.7, 4.4, 6, 8 )
+}
 
-[node name="Head" parent="." index="1"]
-transform = Transform( 1.2, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0 )
-mesh = ExtResource( 4 )
+[node name="Ufo" type="Area"]
+transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, -0.25, 0 )
+script = ExtResource( 3 )
 
-[node name="Turret001" parent="." index="2"]
-transform = Transform( 0.3, 0, 0, 0, 0.999971, -0.00229858, 0, 0.00766193, 0.299991, 0.34, -0.0802813, -0.81 )
-mesh = ExtResource( 3 )
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
 
-[node name="Turret002" parent="." index="3"]
-transform = Transform( 0.299999, 0.00273966, 0.000353614, -0.00081652, 0.999885, -0.00448452, -0.00036586, 0.0149451, 0.299966, 0.762, -0.0742945, -0.29 )
+[node name="UfoHead" parent="." instance=ExtResource( 1 )]
 
-[node name="Turret003" parent="." index="4"]
-transform = Transform( 0.299993, 0.00626039, 0.000866127, -0.00186285, 0.999831, -0.00519317, -0.000898491, 0.0172922, 0.299954, 0.762, -0.0733832, 0.29 )
+[node name="UfoBody" parent="." instance=ExtResource( 2 )]
 
-[node name="Turret004" parent="." index="5"]
-transform = Transform( 0.3, 0, 0, 0, 0.999918, -0.00384834, 0, 0.0128278, 0.299975, 0.34, -0.072359, 0.71 )
+[node name="TargetPosition" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
 
-[node name="Heart" parent="." index="6"]
-mesh = ExtResource( 1 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+anims/Idle = SubResource( 2 )
+
+[connection signal="has_recovered" from="UfoHead" to="." method="_on_UfoHead_has_recovered"]
+[connection signal="was_defeated" from="UfoHead" to="." method="_on_UfoHead_was_defeated"]
