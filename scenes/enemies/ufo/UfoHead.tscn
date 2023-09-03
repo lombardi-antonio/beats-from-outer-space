@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://models/UfoHead.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://scenes/enemies/ufo/UfoHead.gd" type="Script" id=2]
@@ -39,6 +39,20 @@ nodes/Animation/node = SubResource( 42 )
 nodes/Animation/position = Vector2( -280, 150 )
 nodes/TimeScale/node = SubResource( 43 )
 nodes/TimeScale/position = Vector2( 0, 150 )
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
+
+[sub_resource type="AnimationNodeAnimation" id=55]
+animation = "Closed"
+
+[sub_resource type="AnimationNodeTimeScale" id=56]
+
+[sub_resource type="AnimationNodeBlendTree" id=57]
+graph_offset = Vector2( -193.245, -3 )
+nodes/Animation/node = SubResource( 55 )
+nodes/Animation/position = Vector2( 48, 177 )
+nodes/TimeScale/node = SubResource( 56 )
+nodes/TimeScale/position = Vector2( 440, 80 )
+nodes/output/position = Vector2( 620, 180 )
 node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Animation" ]
 
 [sub_resource type="AnimationNodeAnimation" id=47]
@@ -88,9 +102,9 @@ nodes/Blend2/position = Vector2( -50, 140 )
 nodes/TimeScale/node = SubResource( 37 )
 nodes/TimeScale/position = Vector2( 184.306, 190 )
 nodes/output/position = Vector2( 430, 160 )
-node_connections = [ "output", 0, "TimeScale", "Blend2", 0, "Animation", "Blend2", 1, "Animation 2", "TimeScale", 0, "Blend2" ]
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Blend2", "Blend2", 0, "Animation", "Blend2", 1, "Animation 2" ]
 
-[sub_resource type="AnimationNodeAnimation" id=26]
+[sub_resource type="AnimationNodeAnimation" id=58]
 animation = "Open"
 
 [sub_resource type="AnimationNodeAnimation" id=27]
@@ -101,23 +115,24 @@ animation = "Idle"
 [sub_resource type="AnimationNodeTimeScale" id=33]
 
 [sub_resource type="AnimationNodeBlendTree" id=29]
-graph_offset = Vector2( -408, -66.78 )
+graph_offset = Vector2( -413.695, 0 )
 nodes/Animation/node = SubResource( 27 )
 nodes/Animation/position = Vector2( -270, 40 )
-"nodes/Animation 2/node" = SubResource( 26 )
-"nodes/Animation 2/position" = Vector2( -270, 220 )
+"nodes/Animation 2/node" = SubResource( 58 )
+"nodes/Animation 2/position" = Vector2( -265.695, 250 )
 nodes/Blend2/node = SubResource( 28 )
 nodes/Blend2/position = Vector2( -30, 110 )
 nodes/TimeScale/node = SubResource( 33 )
 nodes/TimeScale/position = Vector2( 198.933, 239.22 )
 nodes/output/position = Vector2( 420, 210 )
-node_connections = [ "output", 0, "TimeScale", "Blend2", 0, "Animation", "Blend2", 1, "Animation 2", "TimeScale", 0, "Blend2" ]
+node_connections = [ "output", 0, "TimeScale", "TimeScale", 0, "Blend2", "Blend2", 0, "Animation", "Blend2", 1, "Animation 2" ]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=39]
 advance_condition = "is_opening"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=40]
-advance_condition = "is_closing"
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=41]
 switch_mode = 2
@@ -126,20 +141,26 @@ auto_advance = true
 [sub_resource type="AnimationNodeStateMachineTransition" id=45]
 advance_condition = "is_hit"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=46]
-switch_mode = 2
-advance_condition = "is_open"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=50]
 switch_mode = 2
 advance_condition = "is_defeated"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=55]
+[sub_resource type="AnimationNodeStateMachineTransition" id=59]
+switch_mode = 2
 advance_condition = "is_closing"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=60]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=61]
+advance_condition = "is_opening"
 
 [sub_resource type="AnimationNodeStateMachine" id=23]
 states/Blowback/node = SubResource( 44 )
-states/Blowback/position = Vector2( -891.362, 50.6396 )
+states/Blowback/position = Vector2( -891.378, 50.6396 )
+states/Blowback_Close/node = SubResource( 57 )
+states/Blowback_Close/position = Vector2( -558.35, 50.6396 )
 states/Defeated/node = SubResource( 49 )
 states/Defeated/position = Vector2( -684.346, -68.7926 )
 states/Idle/node = SubResource( 32 )
@@ -148,9 +169,9 @@ states/Idle_Close/node = SubResource( 38 )
 states/Idle_Close/position = Vector2( -477.846, 168.39 )
 states/Idle_Open/node = SubResource( 29 )
 states/Idle_Open/position = Vector2( -891.378, 168.702 )
-transitions = [ "Idle", "Idle_Open", SubResource( 39 ), "Idle_Open", "Idle_Close", SubResource( 40 ), "Idle_Close", "Idle", SubResource( 41 ), "Idle_Open", "Blowback", SubResource( 45 ), "Blowback", "Idle_Open", SubResource( 46 ), "Blowback", "Defeated", SubResource( 50 ), "Blowback", "Idle_Close", SubResource( 55 ) ]
+transitions = [ "Idle", "Idle_Open", SubResource( 39 ), "Idle_Open", "Idle_Close", SubResource( 40 ), "Idle_Close", "Idle", SubResource( 41 ), "Idle_Open", "Blowback", SubResource( 45 ), "Blowback", "Defeated", SubResource( 50 ), "Blowback", "Blowback_Close", SubResource( 59 ), "Blowback_Close", "Idle", SubResource( 60 ), "Idle_Close", "Idle_Open", SubResource( 61 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -1334.35, -156.293 )
+graph_offset = Vector2( -1276.35, -98.293 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=24]
 
@@ -190,6 +211,20 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 0.380392, 0.776471, 1 ), Color( 1, 0, 0, 1 ), Color( 0.380392, 0.380392, 0.380392, 1 ), Color( 1, 0, 0, 1 ), Color( 0.380392, 0.380392, 0.380392, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0.380392, 0.776471, 1 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ false ],
+"method": "reset_animation_parameters"
+} ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -266,17 +301,25 @@ tracks/6/keys = {
 "update": 0,
 "values": [ Color( 0.38, 0.38, 0.38, 1 ), Color( 1, 1, 1, 1 ) ]
 }
-tracks/7/type = "value"
-tracks/7/path = NodePath("CollisionShape:disabled")
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
+"times": PoolRealArray( 0, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [ false ],
+"method": "set_is_open"
+}, {
+"args": [  ],
+"method": "reset_animation_parameters"
+}, {
+"args": [  ],
+"method": "call_for_backup"
+} ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -377,6 +420,44 @@ tracks/8/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 0.4, 1.0 ]
+}
+tracks/9/type = "method"
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 10 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_boss_defeated"
+} ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("HeartMesh:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 3, 7.5 ),
+"transitions": PoolRealArray( 1, 0.378929 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0.1, 0.1, 0.1 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("HeartMesh:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 3, 7.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
 }
 
 [sub_resource type="Animation" id=25]
@@ -488,7 +569,7 @@ tracks/9/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "Open"
-length = 10.0
+length = 5.0
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("HeadMesh:rotation_degrees:x")
 tracks/0/interp = 1
@@ -568,10 +649,27 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ true, false ]
+}
+tracks/8/type = "method"
+tracks/8/path = NodePath(".")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 1, 4.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ true ],
+"method": "set_is_open"
+}, {
+"args": [  ],
+"method": "reset_animation_parameters"
+} ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -864,6 +962,30 @@ tracks/25/keys = {
 "update": 0,
 "values": [ 1.2 ]
 }
+tracks/26/type = "value"
+tracks/26/path = NodePath("HeartMesh:scale")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
+}
+tracks/27/type = "value"
+tracks/27/path = NodePath("HeartMesh:visible")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
 
 [node name="UfoHead" type="Area" groups=["enemies"]]
 transform = Transform( 1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.1, 0, 0, 0 )
@@ -905,13 +1027,14 @@ anim_speed = 7.86
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 23 )
 anim_player = NodePath("../AnimationPlayer")
+active = true
 parameters/playback = SubResource( 24 )
 parameters/conditions/is_closing = false
 parameters/conditions/is_defeated = false
 parameters/conditions/is_hit = false
-parameters/conditions/is_open = false
 parameters/conditions/is_opening = false
 parameters/Blowback/TimeScale/scale = 1.0
+parameters/Blowback_Close/TimeScale/scale = 1.0
 parameters/Defeated/TimeScale/scale = 1.0
 parameters/Idle/TimeScale/scale = 1.0
 parameters/Idle_Close/Blend2/blend_amount = 0.5
@@ -928,6 +1051,7 @@ anims/Open = SubResource( 2 )
 anims/RESET = SubResource( 3 )
 
 [node name="RecoveryTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_UfoHead_body_entered"]
 [connection signal="timeout" from="RecoveryTimer" to="." method="_on_RecoveryTimer_timeout"]

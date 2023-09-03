@@ -30,12 +30,15 @@ func deal_damage(damage):
 		animation_tree["parameters/conditions/is_hit"] = 1
 	else:
 		animation_tree["parameters/conditions/is_defeated"] = 1
-		if collision:
+		if is_instance_valid(collision):
 			collision.queue_free()
 		Space.kills += 1
 		Space.points += 10
 		emit_signal("was_defeated")
 
+
+func deal_shrapnel_damage():
+	deal_damage(100)
 
 
 func _process_time_scale():
@@ -69,3 +72,8 @@ func _on_UfoTurret_body_entered(body:Node):
 
 	body.deal_damage(20)
 	deal_damage(50)
+
+
+func set_collision_disabled(val:bool):
+	if is_instance_valid(collision):
+		collision.disabled = val

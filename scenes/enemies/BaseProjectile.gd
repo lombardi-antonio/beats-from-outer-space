@@ -25,7 +25,7 @@ func start(_transform, _target):
 
 func seek():
 	var steer = Vector3.ZERO
-	if target:
+	if is_instance_valid(target):
 		var desired = (target.global_transform.origin - global_transform.origin).normalized() * speed
 		steer = (desired - velocity).normalized() * steer_force
 	return steer

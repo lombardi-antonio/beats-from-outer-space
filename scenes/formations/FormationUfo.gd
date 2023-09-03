@@ -5,8 +5,11 @@ export var target_positon_min = -1.0
 export var target_positon_max = 1.0
 export(PackedScene) var underling
 
+onready var respawnTimer = $RespawnTimer
+
 var _ufo_defeated = false
 var _ready_to_respawn = false
+var _wait_for_recovery = false
 
 var target_position
 var left_bound
@@ -20,7 +23,6 @@ signal formation_defeated()
 
 func _ready():
 	enemy_count = get_children().size()
-	_spawn_underling()
 
 
 func _process(_delta):
@@ -61,10 +63,30 @@ func _on_Ufo_was_defeated():
 
 
 func _on_EnemyJaeger_was_defeated():
+	respawnTimer.start(4)
 	_ready_to_respawn = true
 
 
-func _on_Ufo_has_recovered():
-	if _ready_to_respawn:
-		_spawn_underling()
-		_ready_to_respawn = false
+# func _on_Ufo_has_recovered():
+# 	if _ready_to_respawn:
+# 		print("respawn by recovery")
+# 		_spawn_underling()
+# 		_ready_to_respawn = false
+
+
+func _on_Ufo_was_opend():
+	_wait_for_recovery = true
+
+
+func _on_Ufo_send_back_up():
+	print("spawn by backup")
+	_spawn_underling()
+
+
+func _on_RespawnTimer_timeout():
+	if _wait_for_recovery:
+		_wait_for_recovery = false
+		return
+
+	print("respawn by timeout")
+	_spawn_underling()
