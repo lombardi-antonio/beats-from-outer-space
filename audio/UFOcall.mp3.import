@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/UFOcall.mp3-28ef8a47320a5b6d50f17bc8e5f18c26.mp3str"
+
+[deps]
+
+source_file="res://audio/UFOcall.mp3"
+dest_files=[ "res://.import/UFOcall.mp3-28ef8a47320a5b6d50f17bc8e5f18c26.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

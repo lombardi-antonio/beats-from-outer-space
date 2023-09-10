@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/UFOendExplosion.mp3-2256128dcfa6f19f268343b08ab7e1c0.mp3str"
+
+[deps]
+
+source_file="res://audio/UFOendExplosion.mp3"
+dest_files=[ "res://.import/UFOendExplosion.mp3-2256128dcfa6f19f268343b08ab7e1c0.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

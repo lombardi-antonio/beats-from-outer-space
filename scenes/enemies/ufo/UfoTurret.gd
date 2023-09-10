@@ -5,6 +5,7 @@ export(int) var health: int = 50
 
 onready var collision: CollisionShape = $CollisionShape
 onready var animation_tree: AnimationTree = $AnimationTree
+onready var audio_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 var in_position: bool = false
 
@@ -30,6 +31,7 @@ func deal_damage(damage):
 		animation_tree["parameters/conditions/is_hit"] = 1
 	else:
 		animation_tree["parameters/conditions/is_defeated"] = 1
+		audio_player.play()
 		if is_instance_valid(collision):
 			collision.queue_free()
 		Space.kills += 1
@@ -45,6 +47,14 @@ func _process_time_scale():
 	animation_tree["parameters/Idle/TimeScale/scale"] = Space.time_scale
 	animation_tree["parameters/Shooting/TimeScale/scale"] = Space.time_scale
 	animation_tree["parameters/Blowback/TimeScale/scale"] = Space.time_scale
+
+	if Space.time_scale < 1.0:
+		if audio_player.pitch_scale > 0.03:
+			# make sure the pitch_scale can not dip below 0.01 because this will stop the music
+			audio_player.pitch_scale = audio_player.pitch_scale - 0.02
+	else:
+		if audio_player.pitch_scale < 1:
+			audio_player.pitch_scale = audio_player.pitch_scale + 0.02
 
 
 func _reset_animation_parameters():

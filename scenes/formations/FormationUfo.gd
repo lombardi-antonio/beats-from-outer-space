@@ -67,19 +67,11 @@ func _on_EnemyJaeger_was_defeated():
 	_ready_to_respawn = true
 
 
-# func _on_Ufo_has_recovered():
-# 	if _ready_to_respawn:
-# 		print("respawn by recovery")
-# 		_spawn_underling()
-# 		_ready_to_respawn = false
-
-
 func _on_Ufo_was_opend():
 	_wait_for_recovery = true
 
 
 func _on_Ufo_send_back_up():
-	print("spawn by backup")
 	_spawn_underling()
 
 
@@ -88,5 +80,4 @@ func _on_RespawnTimer_timeout():
 		_wait_for_recovery = false
 		return
 
-	print("respawn by timeout")
 	_spawn_underling()

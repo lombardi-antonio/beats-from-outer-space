@@ -8,6 +8,7 @@ onready var animation: AnimationPlayer = $AnimationPlayer
 onready var animation_tree: AnimationTree = $AnimationTree
 onready var heart: MeshInstance = $HeartMesh
 onready var recoveryTimer: Timer = $RecoveryTimer
+onready var audio_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 var _is_open: bool = false
 
@@ -35,17 +36,22 @@ func _process_time_scale():
 	animation_tree["parameters/Blowback_Close/TimeScale/scale"] = Space.time_scale
 	animation_tree["parameters/Defeated/TimeScale/scale"] = Space.time_scale
 
+	if Space.time_scale < 1.0:
+		if audio_player.pitch_scale > 0.03:
+			# make sure the pitch_scale can not dip below 0.01 because this will stop the music
+			audio_player.pitch_scale = audio_player.pitch_scale - 0.02
+	else:
+		if audio_player.pitch_scale < 1:
+			audio_player.pitch_scale = audio_player.pitch_scale + 0.02
+
 
 func deal_damage(damage):
 	if not _is_open: return
-
-	print('health: ' + str(health))
 
 	health -= damage
 	animation_tree["parameters/conditions/is_hit"] = true
 
 	if health <= 0:
-		print('defeated')
 		animation_tree["parameters/conditions/is_defeated"] = true
 		emit_signal("pepare_for_defeat")
 		return

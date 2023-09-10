@@ -1,9 +1,10 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://models/UfoTurret.tres" type="ArrayMesh" id=1]
 [ext_resource path="res://scenes/enemies/ufo/UfoTurret.gd" type="Script" id=2]
 [ext_resource path="res://scenes/enemies/bomber/projectiles/BomberProjectile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/LoadingParticle.png" type="Texture" id=4]
+[ext_resource path="res://audio/8_Bit_Explosion.wav" type="AudioStream" id=5]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.5, 2, 0.4 )
@@ -407,7 +408,7 @@ script = ExtResource( 2 )
 projectile = ExtResource( 3 )
 
 [node name="UfoTurretMesh" type="MeshInstance" parent="."]
-transform = Transform( 0.997787, 0, 0, 0, 1, 0, 0, 0, 0.909968, 0, 0, 0 )
+transform = Transform( 0.959559, 0, 0, 0, 1, 0, 0, 0, 1.09958, 0, 0, 0 )
 mesh = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -457,5 +458,9 @@ anims/Defeated = SubResource( 23 )
 anims/Idle = SubResource( 7 )
 anims/RESET = SubResource( 2 )
 anims/Shooting = SubResource( 3 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+unit_db = 8.0
 
 [connection signal="body_entered" from="." to="." method="_on_UfoTurret_body_entered"]
