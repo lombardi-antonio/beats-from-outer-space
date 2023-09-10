@@ -2,6 +2,7 @@ extends "res://scenes/enemies/BaseEnemy.gd"
 
 onready var shot_cooldown = $TripleShotCooldown
 onready var barrel = $Berrel
+onready var audio_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 export var damage = 10
 export var hit_damage = 20
@@ -14,16 +15,25 @@ func _ready():
 
 
 func _process(_delta):
-	# pause cooldown when in slow-mo
-	if Space.time_scale < 1:
-		cooldown.paused = true
-		shot_cooldown.paused = true
-	else:
-		cooldown.paused = false
-		shot_cooldown.paused = false
+	_process_time_scale()
 
 	if can_shoot:
 		_shoot()
+
+
+func _process_time_scale():
+
+	if Space.time_scale < 1.0:
+		cooldown.paused = true
+		shot_cooldown.paused = true
+		if audio_player.pitch_scale > 0.03:
+			# make sure the pitch_scale can not dip below 0.01 because this will stop the music
+			audio_player.pitch_scale = audio_player.pitch_scale - 0.02
+	else:
+		cooldown.paused = false
+		shot_cooldown.paused = false
+		if audio_player.pitch_scale < 1:
+			audio_player.pitch_scale = audio_player.pitch_scale + 0.02
 
 
 func _shoot():
@@ -40,6 +50,26 @@ func _shoot():
 
 func got_parried():
 	pass
+
+
+func deal_damage(recieved_damage):
+	if dead:
+		return
+
+	if _is_invincible: return
+
+	health -= recieved_damage
+	if health > 0:
+		animation.play("Blowback")
+	else:
+		print("Enemy defeated")
+		dead = true
+		release_upgrade()
+		space.kills += 1
+		space.points += points
+		print("Emit signal was_defeated")
+		animation.play("Defeated")
+		emit_signal("was_defeated")
 
 
 func deal_shrapnel_damage():

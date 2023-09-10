@@ -213,6 +213,8 @@ func update_weapon(level):
 
 	if level > weapon:
 		weapon = level
+	elif level == weapon:
+		weapon += 1
 
 
 func level_cleared():

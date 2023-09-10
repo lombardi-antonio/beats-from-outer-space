@@ -21,7 +21,14 @@ func _ready():
 	left_bound = translation.x -0.2
 	right_bound = translation.x +0.2
 	direction = 1 if rand_range(0, 100) > 50 else -1
-	enemy_count = get_children().size()
+
+	var enemies = []
+
+	for child in get_children():
+		if child is Area:
+			enemies.append(child)
+
+	enemy_count = enemies.size()
 
 
 func _process(_delta):
@@ -33,7 +40,7 @@ func movement(_delta):
 
 
 func _defeated():
-	timer.start()
+	timer.start(2)
 
 
 func _on_any_enemy_defeated():

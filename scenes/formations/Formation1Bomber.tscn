@@ -16,5 +16,5 @@ points = 1000
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="was_defeated" from="EnemyBomber" to="." method="_on_EnemyBomber_was_defeated"]
+[connection signal="was_defeated" from="EnemyBomber" to="." method="_on_any_enemy_defeated"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
