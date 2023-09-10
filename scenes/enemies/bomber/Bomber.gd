@@ -4,8 +4,9 @@ onready var shot_cooldown = $TripleShotCooldown
 onready var barrel = $Berrel
 onready var audio_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
-export var damage = 10
-export var hit_damage = 20
+export var damage: int = 10
+export var hit_damage: int = 20
+export var bullet_number: int = 3
 
 var shot_count: int = 0
 
@@ -77,7 +78,7 @@ func deal_shrapnel_damage():
 
 
 func _on_TripleShotCooldown_timeout():
-	if shot_count >= 3:
+	if shot_count >= bullet_number:
 		can_shoot = false
 	else:
 		shot_count += 1
