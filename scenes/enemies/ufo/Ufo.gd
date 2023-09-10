@@ -24,6 +24,11 @@ func _process(delta):
 
 	global_transform.origin = global_transform.origin.move_toward(target, delta * Space.time_scale)
 
+	if Space.is_muted:
+		audio_player.unit_db = -80
+	else:
+		audio_player.unit_db = 0
+
 	_process_time_scale()
 
 

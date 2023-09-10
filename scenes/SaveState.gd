@@ -9,7 +9,7 @@ func remove_save_game():
 	directory.remove(save_filename)
 
 
-func save_game():
+func save_game(_stats = null):
 	var save_file = File.new()
 	save_file.open(save_filename, File.WRITE)
 	var saved_nodes = get_tree().get_nodes_in_group("Saved")
@@ -18,32 +18,46 @@ func save_game():
 		if node.filename.empty():
 			break
 
-		var node_details = node.get_save_stats()
+		var node_details
+
+		if _stats != null:
+			node_details = _stats
+		else:
+			node_details = node.get_save_stats()
+		print(node_details)
 		save_file.store_line(to_json(node_details))
 
 	save_file.close()
 
 
-func load_game():
+func load_game(_node: String = ""):
 	var save_file = File.new()
 	if not save_file.file_exists(save_filename):
 		return
 
 	save_file.open(save_filename, File.READ)
 
-	var saved_nodes = get_tree().get_nodes_in_group("Saved")
+	if _node.empty():
+		var saved_nodes = get_tree().get_nodes_in_group("Saved")
 
-	for node in saved_nodes:
+		for node in saved_nodes:
+			while save_file.get_position() < save_file.get_len():
+				var node_data = parse_json(save_file.get_line())
+
+				if node.get_filename() != node_data.file_name:
+					save_file.close()
+					return
+				else:
+					node.load_save_stats(node_data)
+	else:
 		while save_file.get_position() < save_file.get_len():
 			var node_data = parse_json(save_file.get_line())
 
-			if node.get_filename() != node_data.file_name:
-				return
-			else:
-				node.load_save_stats(node_data)
+			if _node == node_data.file_name:
+				save_file.close()
+				return node_data
 
 	save_file.close()
-
 
 
 func _notification(what):

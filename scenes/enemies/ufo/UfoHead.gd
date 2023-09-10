@@ -25,6 +25,11 @@ func _ready():
 
 
 func _process(_delta):
+	if Space.is_muted:
+		audio_player.unit_db = -80
+	else:
+		audio_player.unit_db = 0
+
 	_process_time_scale()
 
 

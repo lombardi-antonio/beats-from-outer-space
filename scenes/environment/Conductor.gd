@@ -24,6 +24,9 @@ func _ready():
 
 
 func _physics_process(_delta):
+	if Space.is_muted:
+		unit_db = -80
+
 	if playing:
 		if last_reported_beat > song_position_in_beats:
 			last_reported_beat = 0
