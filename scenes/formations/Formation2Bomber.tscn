@@ -1,48 +1,9 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scenes/enemies/bomber/Bomber.gd" type="Script" id=1]
-[ext_resource path="res://models/Bomber.tres" type="ArrayMesh" id=2]
-[ext_resource path="res://scenes/enemies/bomber/projectiles/BomberProjectile.tscn" type="PackedScene" id=3]
-[ext_resource path="res://audio/UFOexplosion.mp3" type="AudioStream" id=4]
-[ext_resource path="res://sprites/LoadingParticle.png" type="Texture" id=5]
+[ext_resource path="res://scenes/formations/Formation2Bomber.gd" type="Script" id=1]
+[ext_resource path="res://scenes/enemies/bomber/Bomber.tscn" type="PackedScene" id=2]
 
-[sub_resource type="CapsuleShape" id=4]
-margin = 0.533
-radius = 7.475
-height = 0.479
-
-[sub_resource type="SpatialMaterial" id=8]
-flags_unshaded = true
-vertex_color_use_as_albedo = true
-params_blend_mode = 1
-params_billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-albedo_texture = ExtResource( 5 )
-
-[sub_resource type="Gradient" id=13]
-offsets = PoolRealArray( 0, 0.76824, 1 )
-colors = PoolColorArray( 0.882812, 0.106385, 0.106385, 1, 1, 0.9375, 0, 1, 1, 1, 1, 1 )
-
-[sub_resource type="GradientTexture" id=14]
-gradient = SubResource( 13 )
-
-[sub_resource type="SpatialMaterial" id=15]
-albedo_texture = SubResource( 14 )
-
-[sub_resource type="QuadMesh" id=16]
-material = SubResource( 15 )
-size = Vector2( 6, 6 )
-
-[sub_resource type="Curve" id=10]
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.308892, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.728549, 0.990991 ), 0.0, 0.0, 0, 0, Vector2( 0.99844, 0.0675676 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="Gradient" id=11]
-offsets = PoolRealArray( 0.416526, 0.939292, 1 )
-colors = PoolColorArray( 0.244965, 0.0144229, 0.966338, 1, 0, 0.952158, 0.885209, 1, 1, 1, 1, 1 )
-
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=1]
 resource_name = "Blowback"
 length = 0.5
 tracks/0/type = "bezier"
@@ -88,7 +49,7 @@ tracks/3/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=2]
 resource_name = "Defeated"
 length = 2.0
 tracks/0/type = "audio"
@@ -216,7 +177,7 @@ tracks/11/keys = {
 "times": PoolRealArray( 0, 1, 1.3, 1.6, 2 )
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "bezier"
 tracks/0/path = NodePath("ShipMesh:rotation_degrees:x")
@@ -273,82 +234,33 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="CylinderShape" id=7]
-height = 20.0
-radius = 159.536
-
-[node name="EnemyBomber" type="Area" groups=["enemies"]]
-transform = Transform( -0.01, 0, -8.74228e-10, 0, 0.01, 0, 8.74228e-10, 0, -0.01, 0, 0, 0 )
-collision_layer = 2
-collision_mask = 2
+[node name="BaseFormation" type="Spatial"]
 script = ExtResource( 1 )
-speed = 0.5
-health = 160
-collision_damage = 100
-points = 100
-projectile = ExtResource( 3 )
-damage = 20
-hit_damage = 100
 
-[node name="ShipMesh" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-mesh = ExtResource( 2 )
+[node name="EnemyBomber" parent="." instance=ExtResource( 2 )]
+health = 120
+collision_damage = 120
+points = 1000
+bullet_number = 1
 
-[node name="ShipCollision" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 7.10543e-15, 0, 1, 0, -7.10543e-15, 0, 1, 2.69708e-07, 0, -3.0851 )
-shape = SubResource( 4 )
-disabled = true
+[node name="EnemyBomber2" parent="." instance=ExtResource( 2 )]
+transform = Transform( -0.01, 0, -8.74228e-10, 0, 0.01, 0, 8.74228e-10, 0, -0.01, 0.54864, 0, -0.496572 )
+behaviour = 1
+health = 120
+collision_damage = 120
+points = 1000
+bullet_number = 1
 
-[node name="Cooldown" type="Timer" parent="."]
+[node name="AnimationPlayer" parent="EnemyBomber2" index="5"]
+anims/Blowback = SubResource( 1 )
+anims/Defeated = SubResource( 2 )
+anims/RESET = SubResource( 3 )
 
-[node name="TripleShotCooldown" type="Timer" parent="."]
-wait_time = 0.1
-
-[node name="Explosion" type="CPUParticles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.2912, 0 )
-material_override = SubResource( 8 )
-emitting = false
-amount = 100
-lifetime = 6.0
+[node name="Timer" type="Timer" parent="."]
 one_shot = true
-speed_scale = 4.0
-mesh = SubResource( 16 )
-emission_shape = 1
-emission_sphere_radius = 30.0
-spread = 0.0
-gravity = Vector3( 0, 0, 0 )
-angular_velocity = 30.0
-angular_velocity_random = 1.0
-tangential_accel = 0.6
-scale_amount = 2.5
-scale_amount_random = 0.5
-scale_amount_curve = SubResource( 10 )
-color_ramp = SubResource( 11 )
-anim_speed = 7.86
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Blowback = SubResource( 5 )
-anims/Defeated = SubResource( 12 )
-anims/RESET = SubResource( 6 )
+[connection signal="was_defeated" from="EnemyBomber" to="." method="_on_any_enemy_defeated"]
+[connection signal="was_defeated" from="EnemyBomber2" to="." method="_on_any_enemy_defeated"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
-[node name="Berrel" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0, 0.07 )
-
-[node name="TargetPosition" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100 )
-
-[node name="DetectionArea" type="Area" parent="."]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape" type="CollisionShape" parent="DetectionArea"]
-shape = SubResource( 7 )
-disabled = true
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 4 )
-unit_db = 5.0
-
-[connection signal="timeout" from="Cooldown" to="." method="_on_Cooldown_timeout"]
-[connection signal="timeout" from="TripleShotCooldown" to="." method="_on_TripleShotCooldown_timeout"]
-[connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
+[editable path="EnemyBomber2"]
