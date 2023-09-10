@@ -3,6 +3,7 @@ extends Spatial
 export(Array, Array, PackedScene) var levels
 export(Array, AudioStreamMP3) var music_list
 export(Array, int) var music_list_bpm
+export(bool) var is_muted = false
 
 var time_scale: float
 var kills: int
@@ -28,23 +29,34 @@ signal spawner_defeated()
 
 func _ready():
 	SaveState.load_game()
+	is_muted = Space.is_muted
 
 	time_scale = 1
 	points = 0
 	_movement_disabled = false
 	_init_next_spawner()
 
-	if is_instance_valid(conductor):
+	_load_universe_image()
 
+	if is_instance_valid(conductor):
 		_change_music_track(current_level)
+
+		if is_muted:
+			conductor.unit_db = -80
+		else:
+			conductor.unit_db = 0
 
 
 func get_save_stats():
+	print("current_wave: ", current_wave)
+	print("current_level: ", current_level)
+	print("is_muted: ", is_muted)
 	return {
 		'file_name': get_filename(),
 		'stats': {
 			'current_level': current_level,
-			'current_wave': current_wave
+			'current_wave': current_wave,
+			'is_muted': is_muted
 		}
 	}
 
@@ -52,6 +64,8 @@ func get_save_stats():
 func load_save_stats(saved_data):
 	current_level = saved_data.stats.current_level
 	current_wave = saved_data.stats.current_wave
+	is_muted = saved_data.stats.is_muted
+	print("Loaded Save Data: " + str(saved_data.stats))
 
 
 func _init_next_spawner():
@@ -166,3 +180,13 @@ func _on_DeathTimeOut_timeout():
 		get_tree().call_group("projectile", "remove_self")
 		_init_next_spawner()
 		_ready_for_next_spawn = false
+
+
+func _on_MuteButton_button_down():
+	is_muted = !is_muted
+	Space.is_muted = is_muted
+
+	if is_muted:
+		conductor.unit_db = -80
+	else:
+		conductor.unit_db = 0

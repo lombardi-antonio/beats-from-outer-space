@@ -22,7 +22,7 @@ onready var parry_timer: Timer = $ParryTimer
 onready var death_time_out: Timer = $DeathTimeOut
 onready var parry: CPUParticles = $Parry
 onready var explosion: CPUParticles = $Explosion
-onready var audio_stream_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
+onready var audio_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
 
 var _path: Array = []
 var _dead: bool = false
@@ -52,7 +52,7 @@ func add_to_path(position):
 
 func _ready():
 	randomize()
-	audio_stream_player.set_stream(notes_in_measure[_current_note_index])
+	audio_player.set_stream(notes_in_measure[_current_note_index])
 
 	_viewport_rect = get_viewport().get_visible_rect().size
 	_state = STATE.MOOVING
@@ -75,6 +75,11 @@ func load_save_stats(saved_data):
 
 
 func _physics_process(delta):
+
+	if Space.is_muted:
+		audio_player.unit_db = -80
+	else:
+		audio_player.unit_db = 0
 
 	# State Maschine
 	match _state:
@@ -158,7 +163,7 @@ func rotate_with(direction, distance):
 
 
 func shoot():
-	audio_stream_player.play()
+	audio_player.play()
 	match weapon:
 		0:
 			var new_projectile = projectile.instance()
@@ -190,8 +195,8 @@ func deal_damage(damage):
 
 	var sound_index = randi() % (player_hit_sounds.size() - 1)
 	animation.play("blowback")
-	audio_stream_player.set_stream(player_hit_sounds[sound_index])
-	audio_stream_player.play()
+	audio_player.set_stream(player_hit_sounds[sound_index])
+	audio_player.play()
 	health -= damage
 
 	if health <= 0:
@@ -201,9 +206,10 @@ func deal_damage(damage):
 		death_time_out.start()
 		emit_signal("was_defeated")
 		animation.play("death")
-		audio_stream_player.set_stream(explosion_sound)
-		audio_stream_player.unit_db = 2
-		audio_stream_player.play()
+		audio_player.set_stream(explosion_sound)
+		if not Space.is_muted:
+			audio_player.unit_db = 2
+		audio_player.play()
 		explosion.emitting = true
 
 
@@ -239,6 +245,6 @@ func _on_Conductor_beat(_position):
 func _on_Conductor_measure(_position):
 	# called for every measure in song (with 4 measure it will repeat after every 4 beats)
 	if _screen_touch:
-		audio_stream_player.set_stream(notes_in_measure[_position - 1])
-		if audio_stream_player.stream:
+		audio_player.set_stream(notes_in_measure[_position - 1])
+		if audio_player.stream:
 			shoot()

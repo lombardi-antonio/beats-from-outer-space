@@ -24,6 +24,11 @@ func _process(_delta):
 
 func _process_time_scale():
 
+	if Space.is_muted:
+		audio_player.unit_db = -80
+	else:
+		audio_player.unit_db = 0
+
 	if Space.time_scale < 1.0:
 		cooldown.paused = true
 		shot_cooldown.paused = true

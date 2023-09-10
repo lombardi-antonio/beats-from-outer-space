@@ -17,6 +17,11 @@ func _process(delta):
 	if was_defeated:
 		translate((Vector3.UP * Vector3.LEFT) + Vector3.BACK * 2 * Space.time_scale * delta)
 
+	if Space.is_muted:
+		audio_player.unit_db = -80
+	else:
+		audio_player.unit_db = 0
+
 	_process_time_scale()
 
 
