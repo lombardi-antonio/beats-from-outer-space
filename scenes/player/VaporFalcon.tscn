@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://scenes/player/projectiles/PlayerProjectile.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/player/VaporFalcon.gd" type="Script" id=2]
@@ -15,6 +15,21 @@
 [ext_resource path="res://scenes/player/audio/hitSound/Hit_3.mp3" type="AudioStream" id=13]
 [ext_resource path="res://scenes/player/audio/hitSound/Hit_1.mp3" type="AudioStream" id=14]
 [ext_resource path="res://scenes/player/audio/hitSound/Explosion_1.mp3" type="AudioStream" id=15]
+[ext_resource path="res://assets/health2sixth.png" type="Texture" id=16]
+[ext_resource path="res://assets/health3sixth.png" type="Texture" id=17]
+[ext_resource path="res://assets/health0sixth.png" type="Texture" id=18]
+[ext_resource path="res://assets/health6sixth.png" type="Texture" id=19]
+[ext_resource path="res://assets/health4sixth.png" type="Texture" id=20]
+[ext_resource path="res://assets/health5sixth.png" type="Texture" id=21]
+[ext_resource path="res://assets/health1sixth.png" type="Texture" id=22]
+
+[sub_resource type="SpriteFrames" id=32]
+animations = [ {
+"frames": [ ExtResource( 18 ), ExtResource( 22 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="CapsuleShape" id=6]
 radius = 0.698371
@@ -272,11 +287,18 @@ transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 2 )
+health = 60.0
 projectile = ExtResource( 1 )
 parry_area = ExtResource( 9 )
 notes_in_measure = [ ExtResource( 11 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 4 ) ]
 player_hit_sounds = [ ExtResource( 14 ), ExtResource( 12 ), ExtResource( 13 ) ]
 explosion_sound = ExtResource( 15 )
+
+[node name="HealthBar" type="AnimatedSprite3D" parent="."]
+transform = Transform( 5, -1.61559e-24, 5.42101e-17, 1.61559e-24, 5, -1.38778e-14, -5.42101e-17, 1.38778e-14, 5, 0, 0, -2 )
+billboard = 1
+frames = SubResource( 32 )
+frame = 6
 
 [node name="ShipMesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 7.07401e-11, -3.09215e-18, 0, -4.37114e-08, -1, -7.07401e-11, 1, -4.37114e-08, 0, 0, 0 )
