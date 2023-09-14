@@ -173,8 +173,10 @@ The Godot Docs describe how to compile for [Android](https://docs.godotengine.or
 
 ## License
 
-// Describe the license of the game
+[GNU GPLv3](./LICENSE)
 
 ## Contact
 
-// Provide contact information for the maintainer of the game
+|                   DON interactive                  |
+|----------------------------------------------------|
+| [don-interactive.com](https://don-interactive.com) |
