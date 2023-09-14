@@ -2,7 +2,7 @@ extends Spatial
 
 export var speed: float = 3
 export var offset: float = 0.2
-export var health: int = 50
+export var health: float = 50
 export var projectile: PackedScene
 export var parry_area: PackedScene
 export(int, "simple", "double", "tripple", "max") var weapon: int = 0
@@ -23,6 +23,7 @@ onready var death_time_out: Timer = $DeathTimeOut
 onready var parry: CPUParticles = $Parry
 onready var explosion: CPUParticles = $Explosion
 onready var audio_player: AudioStreamPlayer3D = $AudioStreamPlayer3D
+onready var health_bar: AnimatedSprite3D = $HealthBar
 
 var _path: Array = []
 var _dead: bool = false
@@ -34,6 +35,9 @@ var _state: int
 var _viewport_rect: Vector2 = Vector2.ZERO
 var _global_position: Vector2 = Vector2.ZERO
 var _current_note_index: int = 0
+var _max_health: float
+var _health_bar_segments: float
+var _is_paused: bool
 
 enum STATE {
 	IDLE,
@@ -56,6 +60,8 @@ func _ready():
 
 	_viewport_rect = get_viewport().get_visible_rect().size
 	_state = STATE.MOOVING
+	_max_health = float(health)
+	_health_bar_segments = _max_health / 6
 
 
 func get_save_stats():
@@ -106,6 +112,11 @@ func _physics_process(delta):
 
 	else:
 		weapon_mesh.visible = false
+
+	if Space.time_scale < 1:
+		health_bar.visible = true
+	else:
+		health_bar.visible = false
 
 
 func _input(event):
@@ -199,7 +210,10 @@ func deal_damage(damage):
 	audio_player.play()
 	health -= damage
 
+	health_bar.frame = int(health / _health_bar_segments)
+
 	if health <= 0:
+		health_bar.frame = 0
 		_state = STATE.DEATH
 		_dead = true
 		health = 0

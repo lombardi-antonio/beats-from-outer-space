@@ -20,8 +20,8 @@ boot_splash/show_image=false
 
 [autoload]
 
-Space="*res://scenes/Space.gd"
 SaveState="*res://scenes/SaveState.gd"
+Space="*res://scenes/SpaceTime.gd"
 
 [display]
 
@@ -55,6 +55,11 @@ colli=false
 [nt]
 
 layer_1=false
+
+[physics]
+
+common/physics_fps=50
+common/physics_jitter_fix=1.0
 
 [rendering]
 
