@@ -4,7 +4,8 @@ onready var animation: AnimationPlayer = $AnimationPlayer
 onready var conductor: AudioStreamPlayer3D = $Conductor
 onready var user_interface: Control = $UserInterface
 onready var transition: ColorRect = $UserInterface/Transition
-onready var start_button: Button = $UserInterface/StartButton
+onready var start_button: Button = $UserInterface/ContinueButton
+onready var new_game_button: Button = $UserInterface/NewGameButton
 onready var label_beats: Label = $UserInterface/BEATS
 onready var label_from_outer: Label = $UserInterface/FROMOUTER
 onready var label_space: Label = $UserInterface/SPACE
@@ -22,9 +23,9 @@ var space_save_data = null
 
 
 func _ready():
-	loader = ResourceLoader.load_interactive("res://scenes/space.tscn")
+	loader = ResourceLoader.load_interactive("res://scenes/Space.tscn")
 
-	space_save_data = SaveState.load_game("res://scenes/space.tscn")
+	space_save_data = SaveState.load_game("res://scenes/Space.tscn")
 	if space_save_data != null:
 		print(space_save_data)
 
@@ -99,6 +100,8 @@ func _on_viewport_size_changed():
 
 
 func _on_StartButton_button_up():
+	new_game_button.disabled = true
+
 	Space.is_muted = is_muted
 
 	animation.play("StartingAnimation")
@@ -110,15 +113,14 @@ func start_level():
 	if space_scene != null:
 		return get_tree().change_scene_to(space_scene)
 	else:
-		return get_tree().change_scene("res://scenes/space.tscn")
+		return get_tree().change_scene("res://scenes/Space.tscn")
 
 
 func _on_NewGameButton_button_up():
-	SaveState.remove_save_game()
-	animation.play("StartingNGAnimation")
+	animation.play("HomeAnimation")
 
-	if conductor.get_playback_position() < 36.0:
-		conductor.play(36.0)
+func _on_NewGameButton_button_down():
+	animation.play("StartingNGAnimation")
 
 
 func _on_Mute_button_up():
@@ -143,3 +145,11 @@ func _on_Mute_button_up():
 				'is_muted': is_muted
 			}
 		})
+
+
+func load_new_game():
+	SaveState.remove_save_game()
+	animation.play("StartingNGAnimation")
+
+	if conductor.get_playback_position() < 36.0:
+		conductor.play(36.0)
