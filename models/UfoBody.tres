@@ -1,9 +1,9 @@
 [gd_resource type="ArrayMesh" load_steps=5 format=2]
 
-[ext_resource path="res://material/ufo_palette/ufo_base.material" type="Material" id=1]
-[ext_resource path="res://material/ufo_palette/ufo_surface.material" type="Material" id=2]
-[ext_resource path="res://material/ufo_palette/ufo_base_wirframe.material" type="Material" id=3]
-[ext_resource path="res://material/ufo_palette/ufo_surface_wirefirame.material" type="Material" id=4]
+[ext_resource path="res://materials/ufo_palette/ufo_base.material" type="Material" id=1]
+[ext_resource path="res://materials/ufo_palette/ufo_surface.material" type="Material" id=2]
+[ext_resource path="res://materials/ufo_palette/ufo_base_wirframe.material" type="Material" id=3]
+[ext_resource path="res://materials/ufo_palette/ufo_surface_wirefirame.material" type="Material" id=4]
 
 [resource]
 resource_name = "ufo_body_Torus"

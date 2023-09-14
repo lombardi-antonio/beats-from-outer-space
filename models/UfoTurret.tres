@@ -1,7 +1,7 @@
 [gd_resource type="ArrayMesh" load_steps=3 format=2]
 
-[ext_resource path="res://material/ufo_palette/turret_base.material" type="Material" id=1]
-[ext_resource path="res://material/ufo_palette/turret_wireframe.material" type="Material" id=2]
+[ext_resource path="res://materials/ufo_palette/turret_base.material" type="Material" id=1]
+[ext_resource path="res://materials/ufo_palette/turret_wireframe.material" type="Material" id=2]
 
 [resource]
 resource_name = "ufo_Torus003"

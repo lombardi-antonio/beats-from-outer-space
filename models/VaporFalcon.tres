@@ -1,9 +1,9 @@
 [gd_resource type="ArrayMesh" load_steps=5 format=2]
 
-[ext_resource path="res://material/player_palette/GlowingPink.tres" type="Material" id=1]
-[ext_resource path="res://material/player_palette/GlowingLightblue.tres" type="Material" id=2]
-[ext_resource path="res://material/SpaceReflection.tres" type="Material" id=3]
-[ext_resource path="res://material/player_palette/MettalicGrey.tres" type="Material" id=4]
+[ext_resource path="res://materials/player_palette/GlowingPink.tres" type="Material" id=1]
+[ext_resource path="res://materials/player_palette/GlowingLightblue.tres" type="Material" id=2]
+[ext_resource path="res://materials/SpaceReflection.tres" type="Material" id=3]
+[ext_resource path="res://materials/player_palette/MettalicGrey.tres" type="Material" id=4]
 
 [resource]
 resource_name = "spaceCraft4"

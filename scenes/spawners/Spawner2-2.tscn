@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scenes/spawner/Spawner.gd" type="Script" id=1]
+[ext_resource path="res://scenes/spawners/Spawner.gd" type="Script" id=1]
 [ext_resource path="res://scenes/formations/FormationAsteroidsBlockerLeftRight.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/formations/Formation6RammerHomeing.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/formations/formation3Jaeger.tscn" type="PackedScene" id=4]

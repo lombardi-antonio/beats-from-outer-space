@@ -91,6 +91,90 @@ With godot you can compile the game for any platform.
 We recommend Android and iOS since the game is intended to be played with touch controls.
 The Godot Docs describe how to compile for [Android](https://docs.godotengine.org/en/stable/development/compiling/compiling_for_android.html) and [iOS](https://docs.godotengine.org/en/stable/development/compiling/compiling_for_ios.html).
 
-### Structure
+### Architecture
 
-TODO: Add information about the structure of the project (class diagram etc.)
+#### Overview
+
+``` bash
+|__assets
+|__audio
+|  |__"all audio files"
+|__materials
+|  |__enemy_palette
+|  |__player_palette
+|  |__ufo_palette
+|__models
+|  |__"all 3D model files"
+|__scenes
+|  |__enemies
+|  |  |__bomber
+|  |  |__jaeger
+|  |  |__rammer
+|  |  |__ufo
+|  |  |__BaseEnemy.gd
+|  |  |__BaseEnemy.tscn
+|  |  |__BaseProjectile.gd
+|  |__environment
+|  |  |__"all environment files"
+|  |__formations
+|  |__obstacles
+|  |__player
+|  |__powerups
+|  |__spawners
+|  |__Home..
+|  |__LoadingScreen..
+|  |__Space..
+|  |__"additional configuration files"
+|__sprites
+```
+
+|         Path         |                                                  Description                                                 |
+|----------------------|--------------------------------------------------------------------------------------------------------------|
+| /audio               | Holds all audio files                                                                                        |
+| /materials           | Holds all materials grouped by enemy, player and ufo (end boss)                                              |
+| /models              | Holds all 3D model files for the entire game as gltf files                                                   |
+| /scenes              | All files that make up the home screen: First screen after LoadingScreen where you may start the game        |
+|                      | All files that make up the loading screen: First screen on startup                                           |
+|                      | All files that make up the space screen: The actual game screen                                              |
+| /scenes/enemies      | Holds bomber scene, script and projectile scene                                                              |
+|                      | Holds jaeger scene, script and projectile scene                                                              |
+|                      | Holds rammer scene, script and projectile scene                                                              |
+|                      | Holds ufo scene, script and projectile scene                                                                 |
+|                      | Holds BaseEnemy script that all enemies inherit from                                                         |
+|                      | Holds BaseEnemy scene that all enemies inherit from                                                          |
+|                      | Holds BaseProjectile script that all projectile scenes inherit from                                          |
+| /scenes/environment  | Holds all scenes that are part of the games environment (Stars, Camera, Music Conductor, etc.)               |
+| /scenes/formations   | Holds formations that are clusters of enemies and/or obstacles that represent one wave created by a spawner  |
+| /scenes/obstacles    | Holds all obstacles that block the player from moving freely                                                 |
+| /scenes/player       | Holds player scene and script                                                                                |
+| /scenes/powerups     | Holds all powerups that can be collected by the player                                                       |
+| /scenes/spawners     | Holds all spawners that spawn formations and make up the waves within a level                                |
+| /sprites             | Holds all sprites for the game                                                                               |
+
+## Credits
+
+### Music
+
+- Everything you hear in the game is composed by [Marlon Jay](https://open.spotify.com/intl-de/artist/5ND58fFkWHwV7sHHPn14Ro?si=4xGWT1-SSS2ibFElLS9U_Q)
+
+### Assets
+
+- Spaceships by [Kenney](https://kenney.nl/assets/space-kit)
+
+- UFO and everything else by [DON interactive](https://don-interactive.com)
+
+### Art
+
+- Backdrop by [PiiiXL](https://piiixl.itch.io/space)
+
+- Celestial bodies by [Helianthus Games](https://helianthus-games.itch.io/)
+
+- Everything else by [DON interactive](https://don-interactive.com)
+
+## License
+
+// Describe the license of the game
+
+## Contact
+
+// Provide contact information for the maintainer of the game

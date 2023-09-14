@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/enemies/rammer/Rammer.gd" type="Script" id=1]
 [ext_resource path="res://models/rammer.tres" type="ArrayMesh" id=2]
-[ext_resource path="res://scenes/powerup/Powerup.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/powerups/Powerup.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.0283135

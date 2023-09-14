@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://models/Jaeger.tres" type="ArrayMesh" id=1]
-[ext_resource path="res://scenes/powerup/Powerup.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/powerups/Powerup.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/enemies/jaeger/projectiles/JaegerLaser.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/LoadingParticle.png" type="Texture" id=4]
 [ext_resource path="res://scenes/enemies/jaeger/Jaeger.gd" type="Script" id=5]

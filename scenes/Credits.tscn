@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scenes/Credits.gd" type="Script" id=1]
-[ext_resource path="res://material/HomeSpace.tres" type="Material" id=2]
+[ext_resource path="res://materials/HomeSpace.tres" type="Material" id=2]
 [ext_resource path="res://default_theme.tres" type="Theme" id=3]
 [ext_resource path="res://scenes/environment/HomeUniversMesh.gd" type="Script" id=4]
 [ext_resource path="res://sprites/StarlightTexture.png" type="Texture" id=5]
@@ -770,7 +770,7 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -
 [node name="PlayerCamera" type="Camera" parent="CameraBase"]
 
 [node name="VaporFalcon" type="MeshInstance" parent="CameraBase/PlayerCamera"]
-transform = Transform( 0.00473748, 0.0193805, 0.00139766, 0.00841895, -0.000750779, -0.0181262, -0.0175122, 0.00488196, -0.00833601, 0.042, -0.02, -0.3 )
+transform = Transform( 0.00473748, 0.0193805, 0.00139766, 0.00841895, -0.00075078, -0.0181262, -0.0175122, 0.00488196, -0.00833602, 0.042, -0.02, -0.3 )
 mesh = ExtResource( 6 )
 skeleton = NodePath("../..")
 

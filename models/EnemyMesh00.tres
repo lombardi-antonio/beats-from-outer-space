@@ -1,7 +1,7 @@
 [gd_resource type="ArrayMesh" load_steps=3 format=2]
 
-[ext_resource path="res://material/enemy_palette/GlowingBase.tres" type="Material" id=1]
-[ext_resource path="res://material/SpaceReflection.tres" type="Material" id=4]
+[ext_resource path="res://materials/enemy_palette/GlowingBase.tres" type="Material" id=1]
+[ext_resource path="res://materials/SpaceReflection.tres" type="Material" id=4]
 
 [resource]
 resource_name = "spaceCraft5"
