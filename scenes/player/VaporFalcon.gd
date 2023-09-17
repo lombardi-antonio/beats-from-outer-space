@@ -85,7 +85,7 @@ func _physics_process(delta):
 	if Space.is_muted:
 		audio_player.unit_db = -80
 	else:
-		audio_player.unit_db = 0
+		audio_player.unit_db = -8
 
 	# State Maschine
 	match _state:
@@ -222,7 +222,7 @@ func deal_damage(damage):
 		animation.play("death")
 		audio_player.set_stream(explosion_sound)
 		if not Space.is_muted:
-			audio_player.unit_db = 2
+			audio_player.unit_db = -8
 		audio_player.play()
 		explosion.emitting = true
 

@@ -770,7 +770,7 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -
 [node name="PlayerCamera" type="Camera" parent="CameraBase"]
 
 [node name="VaporFalcon" type="MeshInstance" parent="CameraBase/PlayerCamera"]
-transform = Transform( 0.00473748, 0.0193805, 0.00139766, 0.00841895, -0.00075078, -0.0181262, -0.0175122, 0.00488196, -0.00833602, 0.042, -0.02, -0.3 )
+transform = Transform( 0.00473748, 0.0193805, 0.00139766, 0.00841895, -0.00075078, -0.0181262, -0.0175122, 0.00488196, -0.00833603, 0.042, -0.02, -0.3 )
 mesh = ExtResource( 6 )
 skeleton = NodePath("../..")
 
