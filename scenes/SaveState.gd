@@ -24,7 +24,6 @@ func save_game(_stats = null):
 			node_details = _stats
 		else:
 			node_details = node.get_save_stats()
-		print(node_details)
 		save_file.store_line(to_json(node_details))
 
 	save_file.close()

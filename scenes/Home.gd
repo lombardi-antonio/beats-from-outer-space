@@ -27,7 +27,6 @@ func _ready():
 
 	space_save_data = SaveState.load_game("res://scenes/Space.tscn")
 	if space_save_data != null:
-		print(space_save_data)
 
 		is_muted = space_save_data.stats.is_muted
 
@@ -136,7 +135,6 @@ func _on_Mute_button_up():
 		conductor.unit_db = 0
 
 	if space_save_data != null:
-		print(space_save_data)
 		SaveState.save_game({
 			'file_name': get_filename(),
 			'stats': {
@@ -149,7 +147,5 @@ func _on_Mute_button_up():
 
 func load_new_game():
 	SaveState.remove_save_game()
-	animation.play("StartingNGAnimation")
 
-	if conductor.get_playback_position() < 36.0:
-		conductor.play(36.0)
+	start_level()

@@ -48,9 +48,6 @@ func _ready():
 
 
 func get_save_stats():
-	print("current_wave: ", current_wave)
-	print("current_level: ", current_level)
-	print("is_muted: ", is_muted)
 	return {
 		'file_name': get_filename(),
 		'stats': {
@@ -65,7 +62,6 @@ func load_save_stats(saved_data):
 	current_level = saved_data.stats.current_level
 	current_wave = saved_data.stats.current_wave
 	is_muted = saved_data.stats.is_muted
-	print("Loaded Save Data: " + str(saved_data.stats))
 
 
 func _init_next_spawner():

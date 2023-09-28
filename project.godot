@@ -18,6 +18,10 @@ config/name="beats-from-outer-space"
 run/main_scene="res://scenes/LoadingScreen.tscn"
 boot_splash/show_image=false
 
+[audio]
+
+driver=""
+
 [autoload]
 
 SaveState="*res://scenes/SaveState.gd"

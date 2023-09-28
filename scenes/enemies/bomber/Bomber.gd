@@ -68,12 +68,10 @@ func deal_damage(recieved_damage):
 	if health > 0:
 		animation.play("Blowback")
 	else:
-		print("Enemy defeated")
 		dead = true
 		release_upgrade()
 		space.kills += 1
 		space.points += points
-		print("Emit signal was_defeated")
 		animation.play("Defeated")
 		emit_signal("was_defeated")
 
